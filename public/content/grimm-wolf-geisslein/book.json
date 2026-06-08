@@ -81,8 +81,8 @@
     },
     {
       "id": 4,
-      "text": "Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf."",
-      "tts_prompt": "[warm, caring] Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf."",
+      "text": "Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf.“",
+      "tts_prompt": "[warm, caring] Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf.“",
       "words": [
         { "token": "Da", "lemma": "da", "translation": "Então" },
         { "token": "rief", "lemma": "rufen", "translation": "chamou" },
@@ -111,8 +111,8 @@
     },
     {
       "id": 5,
-      "text": "„Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar."",
-      "tts_prompt": "[warm, caring, slightly worried] „Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar."",
+      "text": "„Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar.“",
+      "tts_prompt": "[warm, caring, slightly worried] „Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar.“",
       "words": [
         { "token": "Wenn", "lemma": "wenn", "translation": "Se" },
         { "token": "er", "lemma": "er", "translation": "ele" },
@@ -131,8 +131,8 @@
     },
     {
       "id": 6,
-      "text": "„Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen."",
-      "tts_prompt": "[warm, caring] „Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen."",
+      "text": "„Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen.“",
+      "tts_prompt": "[warm, caring] „Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen.“",
       "words": [
         { "token": "Der", "lemma": "der", "translation": "O" },
         { "token": "Bösewicht", "lemma": "Bösewicht", "translation": "malvado" },
@@ -164,8 +164,8 @@
     },
     {
       "id": 7,
-      "text": "Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen."",
-      "tts_prompt": "[calm narrator] Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen."",
+      "text": "Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen.“",
+      "tts_prompt": "[calm narrator] Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen.“",
       "words": [
         { "token": "Die", "lemma": "die", "translation": "Os" },
         { "token": "Geißlein", "lemma": "Geißlein", "translation": "cabritinhos" },
@@ -208,8 +208,8 @@
     },
     {
       "id": 9,
-      "text": "Es dauerte nicht lange, so klopfte jemand an die Haustür und rief: „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht."",
-      "tts_prompt": "[threatening, deep voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht."",
+      "text": "Es dauerte nicht lange, so klopfte jemand an die Haustür und rief: „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
+      "tts_prompt": "[threatening, deep voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "words": [
         { "token": "Es", "lemma": "es", "translation": "Não" },
         { "token": "dauerte", "lemma": "dauern", "translation": "demorou" },
@@ -270,8 +270,8 @@
     },
     {
       "id": 11,
-      "text": "„Wir machen nicht auf", riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!"",
-      "tts_prompt": "[calm narrator] „Wir machen nicht auf", riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!"",
+      "text": "„Wir machen nicht auf“, riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!“",
+      "tts_prompt": "[calm narrator] „Wir machen nicht auf“, riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!“",
       "words": [
         { "token": "Wir", "lemma": "wir", "translation": "Nós" },
         { "token": "machen", "lemma": "machen", "translation": "abrimos" },
@@ -354,8 +354,8 @@
     },
     {
       "id": 14,
-      "text": "„Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht."",
-      "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht."",
+      "text": "„Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
+      "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "words": [
         { "token": "Macht", "lemma": "machen", "translation": "Abram" },
         { "token": "auf", "lemma": "auf", "translation": "a" },
@@ -376,8 +376,8 @@
     },
     {
       "id": 15,
-      "text": "Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!"",
-      "tts_prompt": "[calm narrator] Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!"",
+      "text": "Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!“",
+      "tts_prompt": "[calm narrator] Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!“",
       "words": [
         { "token": "Aber", "lemma": "aber", "translation": "Mas" },
         { "token": "der", "lemma": "der", "translation": "o" },
@@ -411,8 +411,8 @@
     },
     {
       "id": 16,
-      "text": "Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl."",
-      "tts_prompt": "[threatening, deep voice] Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl."",
+      "text": "Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl.“",
+      "tts_prompt": "[threatening, deep voice] Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl.“",
       "words": [
         { "token": "Da", "lemma": "da", "translation": "Então" },
         { "token": "lief", "lemma": "laufen", "translation": "correu" },
@@ -435,8 +435,8 @@
     },
     {
       "id": 17,
-      "text": "Der Müller dachte: „Der Wolf will jemanden betrügen" und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich."",
-      "tts_prompt": "[calm narrator] Der Müller dachte: „Der Wolf will jemanden betrügen" und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich."",
+      "text": "Der Müller dachte: „Der Wolf will jemanden betrügen“ und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich.“",
+      "tts_prompt": "[calm narrator] Der Müller dachte: „Der Wolf will jemanden betrügen“ und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich.“",
       "words": [
         { "token": "Der", "lemma": "der", "translation": "O" },
         { "token": "Müller", "lemma": "Müller", "translation": "moleiro" },
@@ -483,8 +483,8 @@
     },
     {
       "id": 19,
-      "text": "Nun gingder Wolf zum drittenmal zu der Haustür, klopfte an und sprach: „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen."",
-      "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen."",
+      "text": "Nun gingder Wolf zum drittenmal zu der Haustür, klopfte an und sprach: „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen.“",
+      "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen.“",
       "words": [
         { "token": "Nun", "lemma": "nun", "translation": "Agora" },
         { "token": "ging", "lemma": "gehen", "translation": "foi" },
@@ -724,8 +724,8 @@
     },
     {
       "id": 29,
-      "text": "Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen."",
-      "tts_prompt": "[calm narrator] Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen."",
+      "text": "Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen.“",
+      "tts_prompt": "[calm narrator] Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen.“",
       "words": [
         { "token": "Endlich", "lemma": "endlich", "translation": "Finalmente" },
         { "token": "als", "lemma": "als", "translation": "quando" },
