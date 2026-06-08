@@ -1,13 +1,32 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2, AlertCircle } from 'lucide-react';
 import type { Book, Segment, WordToken } from '@/types/book';
 import { tts } from '@/lib/tts';
 import { useAuthContext } from '@/lib/auth';
 import { useProgress } from '@/hooks/useProgress';
 import { ExerciseOverlay } from '@/components/ExerciseOverlay';
 import { Spinner } from '@/components/Spinner';
+
+// ---------- AudioContext helpers ----------
+
+function getOrCreateCtx(ref: React.MutableRefObject<AudioContext | null>): AudioContext {
+  if (!ref.current || ref.current.state === 'closed') {
+    ref.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+  }
+  if (ref.current.state === 'suspended') ref.current.resume();
+  return ref.current;
+}
+
+function stopNode(node: AudioBufferSourceNode | null) {
+  if (!node) return;
+  node.onended = null;
+  try { node.stop(); } catch { /* already stopped */ }
+  node.disconnect();
+}
+
+// ---------- Component ----------
 
 export function ReadingPage() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -20,11 +39,20 @@ export function ReadingPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const [showExercise, setShowExercise] = useState(false);
-  const [wordTooltip, setWordTooltip] = useState<{ token: string; translation: string; x: number; y: number } | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const wordAudioRef = useRef<HTMLAudioElement | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [wordTooltip, setWordTooltip] = useState<{
+    token: string; translation: string; x: number; y: number;
+  } | null>(null);
+
+  // AudioContext refs — persist across renders without causing re-renders
+  const ctxRef = useRef<AudioContext | null>(null);
+  const srcNodeRef = useRef<AudioBufferSourceNode | null>(null);
+  const bufferRef = useRef<AudioBuffer | null>(null);
+  const playStartRef = useRef(0);   // ctx.currentTime when source started
+  const playOffsetRef = useRef(0);  // position in buffer (seconds)
+  const activeIdxRef = useRef(activeIdx);
+  useEffect(() => { activeIdxRef.current = activeIdx; }, [activeIdx]);
 
   // Load book.json
   useEffect(() => {
@@ -44,76 +72,114 @@ export function ReadingPage() {
   const prefetch = useCallback(
     (idx: number) => {
       if (!book) return;
-      const upcoming = book.segments.slice(idx + 1, idx + 4);
       tts.prefetch(
-        upcoming.map(s => s.tts_prompt),
+        book.segments.slice(idx + 1, idx + 4).map(s => s.tts_prompt),
         book.meta.tts_voice
       );
     },
     [book]
   );
 
-  // Play current segment
+  // ---- Audio playback ----
+
+  function startPlayback(buffer: AudioBuffer, offset = 0) {
+    const ctx = ctxRef.current!;
+    stopNode(srcNodeRef.current);
+
+    const node = ctx.createBufferSource();
+    node.buffer = buffer;
+    node.connect(ctx.destination);
+    node.onended = () => {
+      if (srcNodeRef.current === node) {
+        srcNodeRef.current = null;
+        setIsPlaying(false);
+        onSegmentEnded();
+      }
+    };
+    node.start(0, Math.max(0, Math.min(offset, buffer.duration - 0.01)));
+    srcNodeRef.current = node;
+    playStartRef.current = ctx.currentTime - offset;
+    setIsPlaying(true);
+  }
+
   const playSegment = useCallback(async () => {
     if (!segment || !book) return;
+
+    // Unlock AudioContext synchronously (must be in user gesture call stack)
+    const ctx = getOrCreateCtx(ctxRef);
+
+    stopNode(srcNodeRef.current);
+    srcNodeRef.current = null;
+    bufferRef.current = null;
+    playOffsetRef.current = 0;
+    setIsPlaying(false);
     setAudioLoading(true);
+    setAudioError(null);
+
     try {
-      const url = await tts.segment(segment.tts_prompt, book.meta.tts_voice);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = url;
-        audioRef.current.play();
-        setIsPlaying(true);
-        prefetch(activeIdx);
-      }
+      const arrayBuf = await tts.segment(segment.tts_prompt, book.meta.tts_voice);
+      const audioBuf = await ctx.decodeAudioData(arrayBuf);
+      bufferRef.current = audioBuf;
+      startPlayback(audioBuf, 0);
+      prefetch(activeIdxRef.current);
+    } catch (e) {
+      console.error('TTS error:', e);
+      setAudioError('Falha no áudio. Verifique a conexão e a chave Gemini.');
     } finally {
       setAudioLoading(false);
     }
-  }, [segment, book, activeIdx, prefetch]);
+  }, [segment, book, prefetch]);
 
-  function togglePlay() {
-    if (!audioRef.current) return;
+  function handlePlayPause() {
+    const ctx = getOrCreateCtx(ctxRef);
+
     if (isPlaying) {
-      audioRef.current.pause();
+      playOffsetRef.current = ctx.currentTime - playStartRef.current;
+      stopNode(srcNodeRef.current);
+      srcNodeRef.current = null;
       setIsPlaying(false);
+    } else if (bufferRef.current) {
+      startPlayback(bufferRef.current, playOffsetRef.current);
     } else {
-      if (audioRef.current.src) {
-        audioRef.current.play();
-        setIsPlaying(true);
-      } else {
-        playSegment();
-      }
+      playSegment();
     }
   }
 
   function seekRelative(seconds: number) {
-    if (!audioRef.current) return;
-    audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime + seconds);
+    const ctx = getOrCreateCtx(ctxRef);
+    if (!bufferRef.current) return;
+
+    const current = isPlaying
+      ? ctx.currentTime - playStartRef.current
+      : playOffsetRef.current;
+    const next = Math.max(0, Math.min(bufferRef.current.duration, current + seconds));
+    playOffsetRef.current = next;
+    if (isPlaying) startPlayback(bufferRef.current, next);
   }
 
-  async function advanceSegment(direction: 1 | -1 = 1) {
-    if (!book) return;
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = '';
-    }
-    setIsPlaying(false);
-
-    const nextIdx = Math.max(0, Math.min(book.segments.length - 1, activeIdx + direction));
-    setActiveIdx(nextIdx);
-    if (direction > 0 && user) {
-      await markSegmentDone(bookId!, segment!.id);
-    }
-  }
-
-  // Auto-advance: when audio ends, check for exercise
-  function handleAudioEnded() {
-    setIsPlaying(false);
-    if (segment?.exercise) {
+  function onSegmentEnded() {
+    const seg = book?.segments[activeIdxRef.current];
+    if (seg?.exercise) {
       setShowExercise(true);
     } else {
       advanceSegment(1);
     }
+  }
+
+  async function advanceSegment(direction: 1 | -1 = 1) {
+    if (!book) return;
+    stopNode(srcNodeRef.current);
+    srcNodeRef.current = null;
+    bufferRef.current = null;
+    playOffsetRef.current = 0;
+    setIsPlaying(false);
+    setAudioError(null);
+
+    const nextIdx = Math.max(0, Math.min(book.segments.length - 1, activeIdxRef.current + direction));
+    if (direction > 0 && user && segment) {
+      await markSegmentDone(bookId!, segment.id);
+    }
+    setActiveIdx(nextIdx);
   }
 
   async function handleExerciseDone(correct: boolean) {
@@ -124,33 +190,47 @@ export function ReadingPage() {
     advanceSegment(1);
   }
 
-  // Word click: show tooltip + play pronunciation
+  // Word click: show tooltip + play pronunciation via AudioContext
   async function handleWordClick(word: WordToken, e: React.MouseEvent) {
     e.stopPropagation();
-    if (audioRef.current && isPlaying) {
-      audioRef.current.pause();
+
+    const ctx = getOrCreateCtx(ctxRef);
+
+    // Pause main narration if playing
+    if (isPlaying && bufferRef.current) {
+      playOffsetRef.current = ctx.currentTime - playStartRef.current;
+      stopNode(srcNodeRef.current);
+      srcNodeRef.current = null;
       setIsPlaying(false);
     }
+
     const rect = (e.target as HTMLElement).getBoundingClientRect();
-    setWordTooltip({ token: word.token, translation: word.translation, x: rect.left + rect.width / 2, y: rect.top });
+    setWordTooltip({
+      token: word.token,
+      translation: word.translation,
+      x: rect.left + rect.width / 2,
+      y: rect.top,
+    });
+
     try {
-      const url = await tts.word(word.token);
-      if (wordAudioRef.current) {
-        wordAudioRef.current.src = url;
-        wordAudioRef.current.play();
-      }
-    } catch {}
+      const arrayBuf = await tts.word(word.token);
+      const audioBuf = await ctx.decodeAudioData(arrayBuf);
+      const node = ctx.createBufferSource();
+      node.buffer = audioBuf;
+      node.connect(ctx.destination);
+      node.start();
+    } catch {
+      // word audio failure is non-critical
+    }
   }
 
   function dismissTooltip() {
     setWordTooltip(null);
-    if (wordAudioRef.current) wordAudioRef.current.pause();
   }
 
   // Scroll active sentence into view
   useEffect(() => {
-    const el = document.getElementById(`seg-${activeIdx}`);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById(`seg-${activeIdx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [activeIdx]);
 
   if (!book) {
@@ -169,10 +249,6 @@ export function ReadingPage() {
       style={{ background: 'var(--color-bg)' }}
       onClick={wordTooltip ? dismissTooltip : undefined}
     >
-      {/* Hidden audio elements */}
-      <audio ref={audioRef} onEnded={handleAudioEnded} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} />
-      <audio ref={wordAudioRef} />
-
       {/* Header */}
       <header
         className="flex items-center gap-3 px-4 pt-4 pb-3 border-b sticky top-0 z-10"
@@ -180,7 +256,7 @@ export function ReadingPage() {
       >
         <button
           onClick={() => navigate('/library')}
-          className="p-2 rounded-xl transition-colors"
+          className="p-2 rounded-xl"
           style={{ color: 'var(--color-muted)' }}
         >
           <ChevronLeft size={20} />
@@ -203,8 +279,16 @@ export function ReadingPage() {
         />
       </div>
 
+      {/* Error banner */}
+      {audioError && (
+        <div className="mx-4 mt-3 px-4 py-2.5 rounded-xl flex items-start gap-2 text-sm" style={{ background: 'rgba(248,113,113,0.12)', color: 'var(--color-error)' }}>
+          <AlertCircle size={16} className="shrink-0 mt-0.5" />
+          <span>{audioError}</span>
+        </div>
+      )}
+
       {/* Sentences */}
-      <div ref={containerRef} className="flex-1 overflow-y-auto px-5 py-6 space-y-6 scrollbar-none pb-40">
+      <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6 scrollbar-none pb-40">
         {book.segments.map((seg, idx) => (
           <SegmentBlock
             key={seg.id}
@@ -217,7 +301,7 @@ export function ReadingPage() {
         ))}
       </div>
 
-      {/* Tooltip */}
+      {/* Word tooltip */}
       <AnimatePresence>
         {wordTooltip && (
           <motion.div
@@ -228,7 +312,7 @@ export function ReadingPage() {
             className="fixed z-50 pointer-events-none"
             style={{
               left: Math.min(Math.max(wordTooltip.x - 70, 12), window.innerWidth - 152),
-              top: wordTooltip.y - 68,
+              top: Math.max(wordTooltip.y - 68, 8),
             }}
           >
             <div
@@ -277,8 +361,9 @@ export function ReadingPage() {
             −5s
           </button>
 
+          {/* Main play/pause button */}
           <button
-            onClick={isPlaying ? togglePlay : playSegment}
+            onClick={isPlaying ? handlePlayPause : playSegment}
             className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all active:scale-90 shadow-lg"
             style={{ background: 'var(--color-accent)', color: 'white' }}
           >
@@ -313,6 +398,8 @@ export function ReadingPage() {
   );
 }
 
+// ---------- Sub-components ----------
+
 interface SegmentBlockProps {
   id: string;
   segment: Segment;
@@ -322,13 +409,10 @@ interface SegmentBlockProps {
 }
 
 function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockProps) {
-  const opacity = past ? 0.3 : active ? 1 : 0.5;
-  const scale = active ? 1 : 0.97;
-
   return (
     <motion.div
       id={id}
-      animate={{ opacity, scale }}
+      animate={{ opacity: past ? 0.3 : active ? 1 : 0.5, scale: active ? 1 : 0.97 }}
       transition={{ duration: 0.3 }}
       className="rounded-2xl px-5 py-4"
       style={{
@@ -336,14 +420,9 @@ function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockPr
         border: active ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
     >
-      <p className="text-[17px] leading-relaxed font-normal flex flex-wrap gap-x-1 gap-y-1" style={{ color: 'var(--color-text)' }}>
+      <p className="text-[17px] leading-relaxed flex flex-wrap gap-x-1 gap-y-1" style={{ color: 'var(--color-text)' }}>
         {segment.words.map((word, i) => (
-          <WordChip
-            key={i}
-            word={word}
-            active={active}
-            onClick={e => onWordClick(word, e)}
-          />
+          <WordChip key={i} word={word} active={active} onClick={e => onWordClick(word, e)} />
         ))}
       </p>
     </motion.div>
@@ -352,7 +431,6 @@ function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockPr
 
 function WordChip({ word, active, onClick }: { word: WordToken; active: boolean; onClick: (e: React.MouseEvent) => void }) {
   const [hover, setHover] = useState(false);
-
   return (
     <span
       onClick={onClick}
@@ -360,11 +438,15 @@ function WordChip({ word, active, onClick }: { word: WordToken; active: boolean;
       onMouseLeave={() => setHover(false)}
       className="rounded-md cursor-pointer transition-all select-none"
       style={{
-        padding: '1px 3px',
+        padding: '2px 4px',
         background: hover && active ? 'var(--color-surface-2)' : 'transparent',
         textDecoration: active ? 'underline dotted' : 'none',
         textDecorationColor: 'var(--color-muted)',
         textUnderlineOffset: '3px',
+        WebkitTapHighlightColor: 'transparent',
+        minHeight: 44,       // touch target
+        display: 'inline-flex',
+        alignItems: 'center',
       }}
     >
       {word.token}
