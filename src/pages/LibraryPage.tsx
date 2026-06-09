@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, LogOut } from 'lucide-react';
+import { BookOpen, LogOut, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthContext } from '@/lib/auth';
 import { useProgress } from '@/hooks/useProgress';
 import type { UserBookStats } from '@/types/book';
+
+const LANGUAGES = [
+  { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
+  { code: 'en', flag: '🇺🇸', name: 'English' },
+  { code: 'it', flag: '🇮🇹', name: 'Italiano' },
+  { code: 'fr', flag: '🇫🇷', name: 'Français' },
+];
 
 const BOOKS = [
   {
@@ -13,8 +21,8 @@ const BOOKS = [
     year: 1812,
     sourceLang: 'de',
     targetLang: 'pt-BR',
-    totalSegments: 30,
-    estimatedMinutes: 10,
+    totalSegments: 43,
+    estimatedMinutes: 14,
     coverGradient: 'from-indigo-900 via-purple-900 to-slate-900',
   },
 ];
@@ -24,6 +32,7 @@ const FLAG: Record<string, string> = {
   'pt-BR': '🇧🇷',
   en: '🇺🇸',
   fr: '🇫🇷',
+  it: '🇮🇹',
   es: '🇪🇸',
 };
 
@@ -32,6 +41,11 @@ export function LibraryPage() {
   const { getStats, ensureInLibrary } = useProgress(user?.id);
   const navigate = useNavigate();
   const [stats, setStats] = useState<Record<string, UserBookStats>>({});
+  const [selectedLang, setSelectedLang] = useState('de');
+  const [showLangPicker, setShowLangPicker] = useState(false);
+
+  const filteredBooks = BOOKS.filter(b => b.sourceLang === selectedLang);
+  const selectedLanguage = LANGUAGES.find(l => l.code === selectedLang)!;
 
   useEffect(() => {
     async function load() {
@@ -58,16 +72,47 @@ export function LibraryPage() {
     return Math.round((s.segments_done / total) * 100);
   };
 
+  function selectLang(code: string) {
+    setSelectedLang(code);
+    setShowLangPicker(false);
+  }
+
   return (
     <div className="min-h-dvh flex flex-col" style={{ background: 'var(--color-bg)' }}>
       {/* Header */}
-      <header className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: 'var(--color-border)' }}>
+      <header
+        className="flex items-center justify-between px-5 py-4 border-b sticky top-0 z-30"
+        style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg)' }}
+      >
         <div className="flex items-center gap-2">
           <BookOpen size={22} style={{ color: 'var(--color-accent)' }} />
           <span className="text-lg font-semibold tracking-tight" style={{ color: 'var(--color-text)' }}>
             Fremda Libro
           </span>
         </div>
+
+        {/* Language picker button */}
+        <button
+          onClick={() => setShowLangPicker(v => !v)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all"
+          style={{
+            borderColor: showLangPicker ? 'var(--color-accent)' : 'var(--color-border)',
+            background: showLangPicker ? 'var(--color-surface)' : 'transparent',
+            color: 'var(--color-text)',
+          }}
+        >
+          <span className="text-lg leading-none">{selectedLanguage.flag}</span>
+          <span className="text-sm font-medium">{selectedLanguage.name}</span>
+          <ChevronDown
+            size={13}
+            style={{
+              color: 'var(--color-muted)',
+              transform: showLangPicker ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s',
+            }}
+          />
+        </button>
+
         <button
           onClick={signOut}
           className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg transition-colors"
@@ -80,71 +125,143 @@ export function LibraryPage() {
         </button>
       </header>
 
+      {/* Language picker dropdown */}
+      <AnimatePresence>
+        {showLangPicker && (
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 z-20"
+              onClick={() => setShowLangPicker(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -6, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.97 }}
+              transition={{ duration: 0.15 }}
+              className="absolute left-1/2 z-30 mt-1 rounded-2xl border shadow-2xl p-3"
+              style={{
+                top: 64,
+                transform: 'translateX(-50%)',
+                width: 'min(340px, calc(100vw - 32px))',
+                background: 'var(--color-surface)',
+                borderColor: 'var(--color-border)',
+              }}
+            >
+              <p className="text-xs uppercase tracking-widest mb-3 px-1" style={{ color: 'var(--color-muted)' }}>
+                Idioma dos livros
+              </p>
+              <div className="grid grid-cols-4 gap-2">
+                {LANGUAGES.map(lang => {
+                  const bookCount = BOOKS.filter(b => b.sourceLang === lang.code).length;
+                  const isSelected = lang.code === selectedLang;
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={() => selectLang(lang.code)}
+                      className="flex flex-col items-center gap-1.5 py-3 rounded-xl border transition-all active:scale-95 relative"
+                      style={{
+                        background: isSelected ? 'var(--color-surface-2)' : 'transparent',
+                        borderColor: isSelected ? 'var(--color-accent)' : 'var(--color-border)',
+                      }}
+                    >
+                      <span className="text-2xl leading-none">{lang.flag}</span>
+                      <span
+                        className="text-xs font-medium"
+                        style={{ color: isSelected ? 'var(--color-accent)' : 'var(--color-muted)' }}
+                      >
+                        {lang.name}
+                      </span>
+                      {bookCount > 0 && (
+                        <span
+                          className="absolute top-1.5 right-1.5 text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
+                          style={{ background: 'var(--color-accent)', color: 'white' }}
+                        >
+                          {bookCount}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Body */}
       <main className="flex-1 px-5 pt-8 pb-12 max-w-2xl w-full mx-auto">
         <p className="text-xs uppercase tracking-widest mb-6" style={{ color: 'var(--color-muted)' }}>
           Sua biblioteca
         </p>
 
-        <div className="grid gap-4">
-          {BOOKS.map(book => {
-            const pct = progressPct(book.id, book.totalSegments);
-            const hasStarted = pct > 0;
+        {filteredBooks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-4">
+            <span className="text-5xl">{selectedLanguage.flag}</span>
+            <p className="text-base font-semibold" style={{ color: 'var(--color-text)' }}>
+              Em breve!
+            </p>
+            <p className="text-sm text-center" style={{ color: 'var(--color-muted)' }}>
+              Estamos preparando livros em {selectedLanguage.name}.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-4">
+            {filteredBooks.map(book => {
+              const pct = progressPct(book.id, book.totalSegments);
+              const hasStarted = pct > 0;
 
-            return (
-              <div
-                key={book.id}
-                className="rounded-2xl overflow-hidden border"
-                style={{ borderColor: 'var(--color-border)', background: 'var(--color-surface)' }}
-              >
-                {/* Cover strip */}
-                <div className={`h-28 bg-gradient-to-br ${book.coverGradient} flex items-end p-4 relative`}>
-                  <div className="absolute inset-0 bg-black/30" />
-                  <div className="relative z-10">
-                    <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                      {FLAG[book.sourceLang]} → {FLAG[book.targetLang]}
-                    </p>
-                    <h2 className="text-base font-semibold text-white leading-snug">
-                      {book.title}
-                    </h2>
-                    <p className="text-xs text-white/60">{book.author}, {book.year}</p>
-                  </div>
-                </div>
-
-                {/* Footer */}
-                <div className="px-4 py-3 flex items-center justify-between gap-4">
-                  <div className="flex-1">
-                    {/* Progress bar */}
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-xs" style={{ color: 'var(--color-muted)' }}>
-                        {hasStarted ? `${pct}% concluído` : `~${book.estimatedMinutes} min`}
-                      </span>
-                    </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--color-surface-2)' }}>
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{ width: `${pct}%`, background: 'var(--color-accent)' }}
-                      />
+              return (
+                <div
+                  key={book.id}
+                  className="rounded-2xl overflow-hidden border"
+                  style={{ borderColor: 'var(--color-border)', background: 'var(--color-surface)' }}
+                >
+                  {/* Cover strip */}
+                  <div className={`h-28 bg-gradient-to-br ${book.coverGradient} flex items-end p-4 relative`}>
+                    <div className="absolute inset-0 bg-black/30" />
+                    <div className="relative z-10">
+                      <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {FLAG[book.sourceLang]} → {FLAG[book.targetLang]}
+                      </p>
+                      <h2 className="text-base font-semibold text-white leading-snug">
+                        {book.title}
+                      </h2>
+                      <p className="text-xs text-white/60">{book.author}, {book.year}</p>
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleOpen(book.id)}
-                    className="shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all active:scale-95"
-                    style={{
-                      background: 'var(--color-accent)',
-                      color: 'white',
-                    }}
-                    onMouseOver={e => (e.currentTarget.style.background = 'var(--color-accent-light)')}
-                    onMouseOut={e => (e.currentTarget.style.background = 'var(--color-accent)')}
-                  >
-                    {hasStarted ? 'Continuar' : 'Começar'}
-                  </button>
+                  {/* Footer */}
+                  <div className="px-4 py-3 flex items-center justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs" style={{ color: 'var(--color-muted)' }}>
+                          {hasStarted ? `${pct}% concluído` : `~${book.estimatedMinutes} min`}
+                        </span>
+                      </div>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--color-surface-2)' }}>
+                        <div
+                          className="h-full rounded-full transition-all duration-700"
+                          style={{ width: `${pct}%`, background: 'var(--color-accent)' }}
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleOpen(book.id)}
+                      className="shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all active:scale-95"
+                      style={{ background: 'var(--color-accent)', color: 'white' }}
+                      onMouseOver={e => (e.currentTarget.style.background = 'var(--color-accent-light)')}
+                      onMouseOut={e => (e.currentTarget.style.background = 'var(--color-accent)')}
+                    >
+                      {hasStarted ? 'Continuar' : 'Começar'}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </main>
     </div>
   );
