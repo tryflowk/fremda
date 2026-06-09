@@ -57,9 +57,9 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
   }
 
   const bgColor = feedback === 'correct'
-    ? '#162a1e'
+    ? 'var(--color-success-bg)'
     : feedback === 'wrong'
-    ? '#2a1616'
+    ? 'var(--color-error-bg)'
     : 'var(--color-surface)';
 
   return (
@@ -102,11 +102,11 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
               let border = 'var(--color-border)';
               let color = 'var(--color-text)';
               if (feedback && isCorrect) {
-                bg = '#1a3324';
+                bg = 'var(--color-success-bg)';
                 border = 'var(--color-success)';
                 color = 'var(--color-success)';
               } else if (feedback && isSelected && !isCorrect) {
-                bg = '#3a1a1a';
+                bg = 'var(--color-error-bg)';
                 border = 'var(--color-error)';
                 color = 'var(--color-error)';
               }
@@ -173,8 +173,8 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
               let bg = 'var(--color-surface-2)';
               let border = 'var(--color-border)';
               let color = 'var(--color-text)';
-              if (feedback && isCorrect) { bg = '#1a3324'; border = 'var(--color-success)'; color = 'var(--color-success)'; }
-              else if (feedback && isSelected) { bg = '#3a1a1a'; border = 'var(--color-error)'; color = 'var(--color-error)'; }
+              if (feedback && isCorrect) { bg = 'var(--color-success-bg)'; border = 'var(--color-success)'; color = 'var(--color-success)'; }
+              else if (feedback && isSelected) { bg = 'var(--color-error-bg)'; border = 'var(--color-error)'; color = 'var(--color-error)'; }
               return (
                 <button
                   key={opt}

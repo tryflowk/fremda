@@ -113,12 +113,12 @@ export function AuthPage() {
           />
 
           {error && (
-            <p className="text-sm rounded-lg px-3 py-2" style={{ background: 'rgba(248,113,113,0.1)', color: 'var(--color-error)' }}>
+            <p className="text-sm rounded-lg px-3 py-2" style={{ background: 'var(--color-error-bg)', color: 'var(--color-error)' }}>
               {error}
             </p>
           )}
           {success && (
-            <p className="text-sm rounded-lg px-3 py-2" style={{ background: 'rgba(74,222,128,0.1)', color: 'var(--color-success)' }}>
+            <p className="text-sm rounded-lg px-3 py-2" style={{ background: 'var(--color-success-bg)', color: 'var(--color-success)' }}>
               {success}
             </p>
           )}
