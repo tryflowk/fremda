@@ -289,6 +289,8 @@ interface SegmentBlockProps {
 }
 
 function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockProps) {
+  const parts = buildTextParts(segment.text, segment.words);
+
   return (
     <motion.div
       id={id}
@@ -300,13 +302,60 @@ function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockPr
         border: active ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
     >
-      <p className="text-[17px] leading-relaxed flex flex-wrap gap-x-1 gap-y-1" style={{ color: 'var(--color-text)' }}>
-        {segment.words.map((word, i) => (
-          <WordChip key={i} word={word} active={active} onClick={e => onWordClick(word, e)} />
-        ))}
+      <p className="text-[17px] leading-relaxed" style={{ color: 'var(--color-text)' }}>
+        {parts.map((part, i) =>
+          part.word ? (
+            <WordChip
+              key={i}
+              word={part.word}
+              active={active}
+              onClick={e => onWordClick(part.word!, e)}
+            />
+          ) : (
+            <span key={i}>{part.text}</span>
+          )
+        )}
       </p>
     </motion.div>
   );
+}
+
+type TextPart = { text: string; word?: WordToken };
+
+// Constrói a lista de partes: alterna entre texto puro e tokens clicáveis,
+// usando segment.text como fonte da verdade (nada se perde visualmente)
+function buildTextParts(text: string, words: WordToken[]): TextPart[] {
+  const parts: TextPart[] = [];
+  let remaining = text;
+  let wordIdx = 0;
+
+  while (remaining.length > 0) {
+    if (wordIdx >= words.length) {
+      parts.push({ text: remaining });
+      break;
+    }
+
+    const word = words[wordIdx];
+    const pos = remaining.indexOf(word.token);
+
+    if (pos < 0) {
+      // Token não encontrado no restante — pula para o próximo
+      wordIdx++;
+      continue;
+    }
+
+    // Texto antes do token (pontuação, espaços, aspas, etc.)
+    if (pos > 0) {
+      parts.push({ text: remaining.slice(0, pos) });
+    }
+
+    // Token clicável
+    parts.push({ text: word.token, word });
+    remaining = remaining.slice(pos + word.token.length);
+    wordIdx++;
+  }
+
+  return parts;
 }
 
 function WordChip({ word, active, onClick }: { word: WordToken; active: boolean; onClick: (e: React.MouseEvent) => void }) {
@@ -316,17 +365,14 @@ function WordChip({ word, active, onClick }: { word: WordToken; active: boolean;
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="rounded-md cursor-pointer transition-all select-none"
+      className="rounded-md cursor-pointer select-none"
       style={{
-        padding: '2px 4px',
+        padding: '1px 3px',
         background: hover && active ? 'var(--color-surface-2)' : 'transparent',
         textDecoration: active ? 'underline dotted' : 'none',
         textDecorationColor: 'var(--color-muted)',
         textUnderlineOffset: '3px',
         WebkitTapHighlightColor: 'transparent',
-        minHeight: 44,
-        display: 'inline-flex',
-        alignItems: 'center',
       }}
     >
       {word.token}
