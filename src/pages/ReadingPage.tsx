@@ -1,32 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
 import type { Book, Segment, WordToken } from '@/types/book';
 import { tts } from '@/lib/tts';
 import { useAuthContext } from '@/lib/auth';
 import { useProgress } from '@/hooks/useProgress';
 import { ExerciseOverlay } from '@/components/ExerciseOverlay';
 import { Spinner } from '@/components/Spinner';
-
-// ---------- AudioContext helpers ----------
-
-function getOrCreateCtx(ref: React.MutableRefObject<AudioContext | null>): AudioContext {
-  if (!ref.current || ref.current.state === 'closed') {
-    ref.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-  }
-  if (ref.current.state === 'suspended') ref.current.resume();
-  return ref.current;
-}
-
-function stopNode(node: AudioBufferSourceNode | null) {
-  if (!node) return;
-  node.onended = null;
-  try { node.stop(); } catch { /* already stopped */ }
-  node.disconnect();
-}
-
-// ---------- Component ----------
 
 export function ReadingPage() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -38,21 +19,15 @@ export function ReadingPage() {
   const [book, setBook] = useState<Book | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioLoading, setAudioLoading] = useState(false);
-  const [audioError, setAudioError] = useState<string | null>(null);
   const [showExercise, setShowExercise] = useState(false);
   const [wordTooltip, setWordTooltip] = useState<{
     token: string; translation: string; x: number; y: number;
   } | null>(null);
 
-  // AudioContext refs — persist across renders without causing re-renders
-  const ctxRef = useRef<AudioContext | null>(null);
-  const srcNodeRef = useRef<AudioBufferSourceNode | null>(null);
-  const bufferRef = useRef<AudioBuffer | null>(null);
-  const playStartRef = useRef(0);   // ctx.currentTime when source started
-  const playOffsetRef = useRef(0);  // position in buffer (seconds)
   const activeIdxRef = useRef(activeIdx);
+  const bookRef = useRef<Book | null>(null);
   useEffect(() => { activeIdxRef.current = activeIdx; }, [activeIdx]);
+  useEffect(() => { bookRef.current = book; }, [book]);
 
   // Load book.json
   useEffect(() => {
@@ -68,142 +43,75 @@ export function ReadingPage() {
 
   const segment = book?.segments[activeIdx];
 
-  // Prefetch upcoming segments
-  const prefetch = useCallback(
-    (idx: number) => {
-      if (!book) return;
-      tts.prefetch(
-        book.segments.slice(idx + 1, idx + 4).map(s => s.tts_prompt),
-        book.meta.tts_voice
-      );
-    },
-    [book]
-  );
-
-  // ---- Audio playback ----
-
-  function startPlayback(buffer: AudioBuffer, offset = 0) {
-    const ctx = ctxRef.current!;
-    stopNode(srcNodeRef.current);
-
-    const node = ctx.createBufferSource();
-    node.buffer = buffer;
-    node.connect(ctx.destination);
-    node.onended = () => {
-      if (srcNodeRef.current === node) {
-        srcNodeRef.current = null;
-        setIsPlaying(false);
-        onSegmentEnded();
-      }
-    };
-    node.start(0, Math.max(0, Math.min(offset, buffer.duration - 0.01)));
-    srcNodeRef.current = node;
-    playStartRef.current = ctx.currentTime - offset;
-    setIsPlaying(true);
-  }
-
-  const playSegment = useCallback(async () => {
-    if (!segment || !book) return;
-
-    // Unlock AudioContext synchronously (must be in user gesture call stack)
-    const ctx = getOrCreateCtx(ctxRef);
-
-    stopNode(srcNodeRef.current);
-    srcNodeRef.current = null;
-    bufferRef.current = null;
-    playOffsetRef.current = 0;
-    setIsPlaying(false);
-    setAudioLoading(true);
-    setAudioError(null);
-
-    try {
-      const arrayBuf = await tts.segment(segment.tts_prompt, book.meta.tts_voice);
-      const audioBuf = await ctx.decodeAudioData(arrayBuf);
-      bufferRef.current = audioBuf;
-      startPlayback(audioBuf, 0);
-      prefetch(activeIdxRef.current);
-    } catch (e) {
-      console.error('TTS error:', e);
-      setAudioError('Falha no áudio. Verifique a conexão e a chave Gemini.');
-    } finally {
-      setAudioLoading(false);
-    }
-  }, [segment, book, prefetch]);
-
-  function handlePlayPause() {
-    const ctx = getOrCreateCtx(ctxRef);
-
-    if (isPlaying) {
-      playOffsetRef.current = ctx.currentTime - playStartRef.current;
-      stopNode(srcNodeRef.current);
-      srcNodeRef.current = null;
-      setIsPlaying(false);
-    } else if (bufferRef.current) {
-      startPlayback(bufferRef.current, playOffsetRef.current);
-    } else {
-      playSegment();
-    }
-  }
-
-  function seekRelative(seconds: number) {
-    const ctx = getOrCreateCtx(ctxRef);
-    if (!bufferRef.current) return;
-
-    const current = isPlaying
-      ? ctx.currentTime - playStartRef.current
-      : playOffsetRef.current;
-    const next = Math.max(0, Math.min(bufferRef.current.duration, current + seconds));
-    playOffsetRef.current = next;
-    if (isPlaying) startPlayback(bufferRef.current, next);
-  }
-
   function onSegmentEnded() {
-    const seg = book?.segments[activeIdxRef.current];
+    const b = bookRef.current;
+    const idx = activeIdxRef.current;
+    if (!b) return;
+    const seg = b.segments[idx];
     if (seg?.exercise) {
       setShowExercise(true);
     } else {
-      advanceSegment(1);
+      doAdvance(idx, 1);
     }
   }
 
-  async function advanceSegment(direction: 1 | -1 = 1) {
-    if (!book) return;
-    stopNode(srcNodeRef.current);
-    srcNodeRef.current = null;
-    bufferRef.current = null;
-    playOffsetRef.current = 0;
+  const doAdvance = useCallback(async (fromIdx: number, direction: 1 | -1) => {
+    tts.stop();
     setIsPlaying(false);
-    setAudioError(null);
-
-    const nextIdx = Math.max(0, Math.min(book.segments.length - 1, activeIdxRef.current + direction));
-    if (direction > 0 && user && segment) {
-      await markSegmentDone(bookId!, segment.id);
+    setShowExercise(false);
+    const b = bookRef.current;
+    if (!b) return;
+    const nextIdx = Math.max(0, Math.min(b.segments.length - 1, fromIdx + direction));
+    if (direction > 0 && user) {
+      const seg = b.segments[fromIdx];
+      if (seg) await markSegmentDone(bookId!, seg.id);
     }
     setActiveIdx(nextIdx);
+  }, [user, bookId, markSegmentDone]);
+
+  function playCurrentSegment() {
+    if (!segment) return;
+    tts.stop();
+    setIsPlaying(false);
+    tts.play(segment.text, {
+      lang: 'de-DE',
+      onStart: () => setIsPlaying(true),
+      onEnd: () => {
+        setIsPlaying(false);
+        onSegmentEnded();
+      },
+      onError: (msg) => {
+        console.error('TTS error:', msg);
+        setIsPlaying(false);
+      },
+    });
   }
 
-  async function handleExerciseDone(correct: boolean) {
-    setShowExercise(false);
-    if (user && segment?.exercise) {
-      await markExerciseDone(bookId!, segment.id, correct);
+  function handlePlayPause() {
+    if (isPlaying) {
+      tts.pause();
+      setIsPlaying(false);
+    } else if (tts.paused) {
+      tts.resume();
+      setIsPlaying(true);
+    } else {
+      playCurrentSegment();
     }
-    advanceSegment(1);
   }
 
-  // Word click: show tooltip + play pronunciation via AudioContext
-  async function handleWordClick(word: WordToken, e: React.MouseEvent) {
-    e.stopPropagation();
-
-    const ctx = getOrCreateCtx(ctxRef);
-
-    // Pause main narration if playing
-    if (isPlaying && bufferRef.current) {
-      playOffsetRef.current = ctx.currentTime - playStartRef.current;
-      stopNode(srcNodeRef.current);
-      srcNodeRef.current = null;
+  // Quando o segmento muda, limpar estado de play
+  const prevActiveIdx = useRef(activeIdx);
+  useEffect(() => {
+    if (prevActiveIdx.current !== activeIdx) {
+      prevActiveIdx.current = activeIdx;
+      tts.stop();
       setIsPlaying(false);
     }
+  }, [activeIdx]);
 
+  // Word click: tooltip + pronúncia
+  function handleWordClick(word: WordToken, e: React.MouseEvent) {
+    e.stopPropagation();
     const rect = (e.target as HTMLElement).getBoundingClientRect();
     setWordTooltip({
       token: word.token,
@@ -211,21 +119,19 @@ export function ReadingPage() {
       x: rect.left + rect.width / 2,
       y: rect.top,
     });
-
-    try {
-      const arrayBuf = await tts.word(word.token);
-      const audioBuf = await ctx.decodeAudioData(arrayBuf);
-      const node = ctx.createBufferSource();
-      node.buffer = audioBuf;
-      node.connect(ctx.destination);
-      node.start();
-    } catch {
-      // word audio failure is non-critical
-    }
+    tts.playWord(word.token, 'de-DE');
   }
 
   function dismissTooltip() {
     setWordTooltip(null);
+  }
+
+  async function handleExerciseDone(correct: boolean) {
+    setShowExercise(false);
+    if (user && segment?.exercise) {
+      await markExerciseDone(bookId!, segment.id, correct);
+    }
+    doAdvance(activeIdxRef.current, 1);
   }
 
   // Scroll active sentence into view
@@ -255,7 +161,7 @@ export function ReadingPage() {
         style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg)' }}
       >
         <button
-          onClick={() => navigate('/library')}
+          onClick={() => { tts.stop(); navigate('/library'); }}
           className="p-2 rounded-xl"
           style={{ color: 'var(--color-muted)' }}
         >
@@ -278,14 +184,6 @@ export function ReadingPage() {
           style={{ width: `${progress}%`, background: 'var(--color-accent)' }}
         />
       </div>
-
-      {/* Error banner */}
-      {audioError && (
-        <div className="mx-4 mt-3 px-4 py-2.5 rounded-xl flex items-start gap-2 text-sm" style={{ background: 'rgba(248,113,113,0.12)', color: 'var(--color-error)' }}>
-          <AlertCircle size={16} className="shrink-0 mt-0.5" />
-          <span>{audioError}</span>
-        </div>
-      )}
 
       {/* Sentences */}
       <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6 scrollbar-none pb-40">
@@ -345,7 +243,7 @@ export function ReadingPage() {
           style={{ background: 'var(--color-bg)', borderColor: 'var(--color-border)' }}
         >
           <button
-            onClick={() => advanceSegment(-1)}
+            onClick={() => doAdvance(activeIdx, -1)}
             disabled={activeIdx === 0}
             className="p-3 rounded-xl transition-all active:scale-90 disabled:opacity-30"
             style={{ background: 'var(--color-surface)', color: 'var(--color-text)' }}
@@ -353,39 +251,21 @@ export function ReadingPage() {
             <SkipBack size={18} />
           </button>
 
-          <button
-            onClick={() => seekRelative(-5)}
-            className="text-xs font-medium px-3 py-2 rounded-xl transition-all active:scale-90"
-            style={{ background: 'var(--color-surface)', color: 'var(--color-muted)' }}
-          >
-            −5s
-          </button>
+          {/* Spacers where ±5s were — mantém layout simétrico */}
+          <div className="w-12" />
 
-          {/* Main play/pause button */}
           <button
-            onClick={isPlaying ? handlePlayPause : playSegment}
+            onClick={handlePlayPause}
             className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all active:scale-90 shadow-lg"
             style={{ background: 'var(--color-accent)', color: 'white' }}
           >
-            {audioLoading ? (
-              <Spinner size={22} />
-            ) : isPlaying ? (
-              <Pause size={22} />
-            ) : (
-              <Play size={22} className="ml-0.5" />
-            )}
+            {isPlaying ? <Pause size={22} /> : <Play size={22} className="ml-0.5" />}
           </button>
 
-          <button
-            onClick={() => seekRelative(5)}
-            className="text-xs font-medium px-3 py-2 rounded-xl transition-all active:scale-90"
-            style={{ background: 'var(--color-surface)', color: 'var(--color-muted)' }}
-          >
-            +5s
-          </button>
+          <div className="w-12" />
 
           <button
-            onClick={() => advanceSegment(1)}
+            onClick={() => doAdvance(activeIdx, 1)}
             disabled={activeIdx === book.segments.length - 1}
             className="p-3 rounded-xl transition-all active:scale-90 disabled:opacity-30"
             style={{ background: 'var(--color-surface)', color: 'var(--color-text)' }}
@@ -444,7 +324,7 @@ function WordChip({ word, active, onClick }: { word: WordToken; active: boolean;
         textDecorationColor: 'var(--color-muted)',
         textUnderlineOffset: '3px',
         WebkitTapHighlightColor: 'transparent',
-        minHeight: 44,       // touch target
+        minHeight: 44,
         display: 'inline-flex',
         alignItems: 'center',
       }}
