@@ -31,14 +31,25 @@ export function ReadingPage() {
 
   // Load book.json
   useEffect(() => {
-    fetch(`/content/${bookId}/book.json`)
-      .then(r => r.json())
-      .then((data: Book) => {
-        setBook(data);
-        const fromParam = parseInt(searchParams.get('from') ?? '0', 10);
-        const startIdx = data.segments.findIndex(s => s.id >= fromParam);
-        setActiveIdx(Math.max(0, startIdx));
-      });
+    async function load() {
+      // Try local static file first (dev + legacy); fall back to Supabase Storage
+      const localUrl = `/content/${bookId}/book.json`;
+      const storageUrl = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/books/${bookId}/book.json`;
+      let data: Book | null = null;
+      try {
+        const r = await fetch(localUrl);
+        if (r.ok) data = await r.json();
+      } catch { /* ignore */ }
+      if (!data) {
+        const r = await fetch(storageUrl);
+        data = await r.json();
+      }
+      setBook(data);
+      const fromParam = parseInt(searchParams.get('from') ?? '0', 10);
+      const startIdx = data!.segments.findIndex(s => s.id >= fromParam);
+      setActiveIdx(Math.max(0, startIdx));
+    }
+    load();
   }, [bookId, searchParams]);
 
   const segment = book?.segments[activeIdx];

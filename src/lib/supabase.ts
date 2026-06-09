@@ -5,9 +5,28 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export type BookRow = {
+  id: string;
+  title: string;
+  author: string | null;
+  year: number | null;
+  source_language: string;
+  target_language: string;
+  total_segments: number;
+  estimated_minutes: number | null;
+  cover_gradient: string | null;
+  published: boolean;
+  created_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
+      books: {
+        Row: BookRow;
+        Insert: Omit<BookRow, 'created_at'>;
+        Update: Partial<Omit<BookRow, 'id' | 'created_at'>>;
+      };
       user_library: {
         Row: { user_id: string; book_id: string; added_at: string };
         Insert: { user_id: string; book_id: string };
