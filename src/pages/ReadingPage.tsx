@@ -209,7 +209,7 @@ export function ReadingPage() {
             transition={{ duration: 0.15 }}
             className="fixed z-50 pointer-events-none"
             style={{
-              left: Math.min(Math.max(wordTooltip.x - 70, 12), window.innerWidth - 152),
+              left: Math.min(Math.max(wordTooltip.x - 110, 12), window.innerWidth - 232),
               top: Math.max(wordTooltip.y - 68, 8),
             }}
           >
@@ -220,6 +220,7 @@ export function ReadingPage() {
                 borderColor: 'var(--color-border)',
                 color: 'var(--color-text)',
                 minWidth: 140,
+                maxWidth: 220,
               }}
             >
               <Volume2 size={13} style={{ color: 'var(--color-accent)' }} />

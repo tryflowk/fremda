@@ -12,11 +12,13 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [chips, setChips] = useState<string[]>(exercise.chips ?? []);
   const [order, setOrder] = useState<string[]>([]);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>(() => shuffle(exercise.options ?? []));
 
   useEffect(() => {
     setSelected(null);
     setFeedback(null);
     setChips(shuffle(exercise.chips ?? []));
+    setShuffledOptions(shuffle(exercise.options ?? []));
     setOrder([]);
   }, [exercise.id]);
 
@@ -93,7 +95,7 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
         {/* word_select | fill_blank with options | yes_no */}
         {(exercise.type === 'word_select' || (exercise.type === 'fill_blank' && exercise.options) || exercise.type === 'yes_no') && (
           <div className="grid grid-cols-2 gap-2.5">
-            {(exercise.type === 'yes_no' ? ['sim', 'não'] : exercise.options!).map(opt => {
+            {(exercise.type === 'yes_no' ? ['sim', 'não'] : shuffledOptions).map(opt => {
               const isSelected = selected === opt;
               const isCorrect = opt.toLowerCase() === exercise.answer.toLowerCase();
               let bg = 'var(--color-surface-2)';
@@ -165,7 +167,7 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
         {/* translate_word */}
         {exercise.type === 'translate_word' && exercise.options && (
           <div className="flex flex-wrap gap-2">
-            {exercise.options.map(opt => {
+            {shuffledOptions.map(opt => {
               const isCorrect = opt === exercise.answer;
               const isSelected = selected === opt;
               let bg = 'var(--color-surface-2)';
