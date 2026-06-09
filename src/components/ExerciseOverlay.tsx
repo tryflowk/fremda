@@ -27,7 +27,9 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
       if (feedback) return;
       const correct = answer.trim().toLowerCase() === exercise.answer.trim().toLowerCase();
       setFeedback(correct ? 'correct' : 'wrong');
-      setTimeout(() => onDone(correct), correct ? 800 : 1500);
+      // Correct: keep the flow snappy and auto-advance.
+      // Wrong: stay open so the user can study the mistake; they tap "Continuar".
+      if (correct) setTimeout(() => onDone(true), 800);
     },
     [exercise.answer, feedback, onDone]
   );
@@ -188,6 +190,20 @@ export function ExerciseOverlay({ exercise, onDone }: Props) {
               );
             })}
           </div>
+        )}
+
+        {/* Wrong answer: stay open until the user is ready to move on */}
+        {feedback === 'wrong' && (
+          <motion.button
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            onClick={() => onDone(false)}
+            className="w-full mt-5 py-3.5 rounded-xl text-sm font-semibold transition-all active:scale-95"
+            style={{ background: 'var(--color-accent)', color: 'white' }}
+          >
+            Continuar
+          </motion.button>
         )}
       </motion.div>
     </AnimatePresence>
