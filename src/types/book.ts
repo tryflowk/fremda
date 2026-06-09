@@ -23,10 +23,14 @@ export interface Exercise {
   source_segment_ids: number[];
 }
 
+export type SegmentType = 'paragraph' | 'chapter_title' | 'section_break';
+
 export interface Segment {
   id: number;
+  segment_type?: SegmentType;
   text: string;
   tts_prompt: string;
+  image_url?: string | null;
   words: WordToken[];
   exercise: Exercise | null;
 }

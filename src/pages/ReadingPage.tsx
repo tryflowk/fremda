@@ -84,8 +84,23 @@ export function ReadingPage() {
     if (!segment) return;
     tts.stop();
     setIsPlaying(false);
-    tts.play(segment.text, {
-      lang: 'de-DE',
+
+    // section_break: no TTS, auto-advance after short pause
+    if (segment.segment_type === 'section_break') {
+      setIsPlaying(true);
+      setTimeout(() => {
+        setIsPlaying(false);
+        onSegmentEnded();
+      }, 800);
+      return;
+    }
+
+    tts.play(segment.tts_prompt || segment.text, {
+      lang: book?.meta.source_language === 'de' ? 'de-DE'
+        : book?.meta.source_language === 'fr' ? 'fr-FR'
+        : book?.meta.source_language === 'it' ? 'it-IT'
+        : book?.meta.source_language === 'es' ? 'es-ES'
+        : 'en-US',
       onStart: () => setIsPlaying(true),
       onEnd: () => {
         setIsPlaying(false);
@@ -130,7 +145,12 @@ export function ReadingPage() {
       x: rect.left + rect.width / 2,
       y: rect.top,
     });
-    tts.playWord(word.token, 'de-DE');
+    const lang = book?.meta.source_language === 'de' ? 'de-DE'
+      : book?.meta.source_language === 'fr' ? 'fr-FR'
+      : book?.meta.source_language === 'it' ? 'it-IT'
+      : book?.meta.source_language === 'es' ? 'es-ES'
+      : 'en-US';
+    tts.playWord(word.token, lang);
   }
 
   function dismissTooltip() {
@@ -301,6 +321,39 @@ interface SegmentBlockProps {
 }
 
 function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockProps) {
+  const type = segment.segment_type ?? 'paragraph';
+
+  if (type === 'section_break') {
+    return (
+      <motion.div
+        id={id}
+        animate={{ opacity: past ? 0.2 : active ? 0.8 : 0.4 }}
+        transition={{ duration: 0.3 }}
+        className="flex items-center justify-center py-2"
+      >
+        <span className="text-xl tracking-widest" style={{ color: 'var(--color-border)' }}>✦ ✦ ✦</span>
+      </motion.div>
+    );
+  }
+
+  if (type === 'chapter_title') {
+    return (
+      <motion.div
+        id={id}
+        animate={{ opacity: past ? 0.3 : active ? 1 : 0.6 }}
+        transition={{ duration: 0.3 }}
+        className="py-6 text-center"
+      >
+        <p className="text-xs uppercase tracking-widest mb-1" style={{ color: 'var(--color-accent)' }}>
+          Capítulo
+        </p>
+        <p className="text-xl font-bold uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>
+          {segment.text}
+        </p>
+      </motion.div>
+    );
+  }
+
   const parts = buildTextParts(segment.text, segment.words);
 
   return (
@@ -314,6 +367,14 @@ function SegmentBlock({ id, segment, active, past, onWordClick }: SegmentBlockPr
         border: active ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
     >
+      {segment.image_url && (
+        <img
+          src={segment.image_url}
+          alt=""
+          className="w-full rounded-xl mb-3 object-cover"
+          style={{ maxHeight: 220 }}
+        />
+      )}
       <p className="text-[17px] leading-relaxed" style={{ color: 'var(--color-text)' }}>
         {parts.map((part, i) =>
           part.word ? (
