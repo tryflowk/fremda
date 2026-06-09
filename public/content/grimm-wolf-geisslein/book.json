@@ -8,7 +8,7 @@
     "target_language": "pt-BR",
     "cover_image": "/content/grimm-wolf-geisslein/cover.jpg",
     "tts_voice": "Charon",
-    "total_segments": 30,
+    "total_segments": 43,
     "estimated_minutes": 10,
     "exercise_every_n_segments": 3
   },
@@ -18,17 +18,61 @@
       "text": "Es war einmal eine alte Geiß, die hatte sieben junge Geißlein.",
       "tts_prompt": "[calm narrator, storytelling pace, warm tone] Es war einmal eine alte Geiß, die hatte sieben junge Geißlein.",
       "words": [
-        { "token": "Es", "lemma": "es", "translation": "Era" },
-        { "token": "war", "lemma": "sein", "translation": "era" },
-        { "token": "einmal", "lemma": "einmal", "translation": "uma vez" },
-        { "token": "eine", "lemma": "ein", "translation": "uma" },
-        { "token": "alte", "lemma": "alt", "translation": "velha" },
-        { "token": "Geiß", "lemma": "Geiß", "translation": "cabra" },
-        { "token": "die", "lemma": "die", "translation": "que" },
-        { "token": "hatte", "lemma": "haben", "translation": "tinha" },
-        { "token": "sieben", "lemma": "sieben", "translation": "sete" },
-        { "token": "junge", "lemma": "jung", "translation": "jovens" },
-        { "token": "Geißlein", "lemma": "Geißlein", "translation": "cabritinhos" }
+        {
+          "token": "Es",
+          "lemma": "es",
+          "translation": "Era"
+        },
+        {
+          "token": "war",
+          "lemma": "sein",
+          "translation": "era"
+        },
+        {
+          "token": "einmal",
+          "lemma": "einmal",
+          "translation": "uma vez"
+        },
+        {
+          "token": "eine",
+          "lemma": "ein",
+          "translation": "uma"
+        },
+        {
+          "token": "alte",
+          "lemma": "alt",
+          "translation": "velha"
+        },
+        {
+          "token": "Geiß",
+          "lemma": "Geiß",
+          "translation": "cabra"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "que"
+        },
+        {
+          "token": "hatte",
+          "lemma": "haben",
+          "translation": "tinha"
+        },
+        {
+          "token": "sieben",
+          "lemma": "sieben",
+          "translation": "sete"
+        },
+        {
+          "token": "junge",
+          "lemma": "jung",
+          "translation": "jovens"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritinhos"
+        }
       ],
       "exercise": null
     },
@@ -37,19 +81,71 @@
       "text": "Sie hatte sie so lieb, wie eben eine Mutter ihre Kinder lieb hat.",
       "tts_prompt": "[calm narrator, warm tone] Sie hatte sie so lieb, wie eben eine Mutter ihre Kinder lieb hat.",
       "words": [
-        { "token": "Sie", "lemma": "sie", "translation": "Ela" },
-        { "token": "hatte", "lemma": "haben", "translation": "tinha" },
-        { "token": "sie", "lemma": "sie", "translation": "eles" },
-        { "token": "so", "lemma": "so", "translation": "tão" },
-        { "token": "lieb", "lemma": "lieb", "translation": "queridos" },
-        { "token": "wie", "lemma": "wie", "translation": "como" },
-        { "token": "eben", "lemma": "eben", "translation": "justamente" },
-        { "token": "eine", "lemma": "ein", "translation": "uma" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "ihre", "lemma": "ihr", "translation": "seus" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "lieb", "lemma": "lieb", "translation": "amada" },
-        { "token": "hat", "lemma": "haben", "translation": "tem" }
+        {
+          "token": "Sie",
+          "lemma": "sie",
+          "translation": "Ela"
+        },
+        {
+          "token": "hatte",
+          "lemma": "haben",
+          "translation": "tinha"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "eles"
+        },
+        {
+          "token": "so",
+          "lemma": "so",
+          "translation": "tão"
+        },
+        {
+          "token": "lieb",
+          "lemma": "lieb",
+          "translation": "queridos"
+        },
+        {
+          "token": "wie",
+          "lemma": "wie",
+          "translation": "como"
+        },
+        {
+          "token": "eben",
+          "lemma": "eben",
+          "translation": "justamente"
+        },
+        {
+          "token": "eine",
+          "lemma": "ein",
+          "translation": "uma"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "ihre",
+          "lemma": "ihr",
+          "translation": "seus"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "lieb",
+          "lemma": "lieb",
+          "translation": "amada"
+        },
+        {
+          "token": "hat",
+          "lemma": "haben",
+          "translation": "tem"
+        }
       ],
       "exercise": null
     },
@@ -58,25 +154,78 @@
       "text": "Eines Tages wollte sie in den Wald gehen und Futter holen.",
       "tts_prompt": "[calm narrator] Eines Tages wollte sie in den Wald gehen und Futter holen.",
       "words": [
-        { "token": "Eines", "lemma": "ein", "translation": "Certo" },
-        { "token": "Tages", "lemma": "Tag", "translation": "dia" },
-        { "token": "wollte", "lemma": "wollen", "translation": "quis" },
-        { "token": "sie", "lemma": "sie", "translation": "ela" },
-        { "token": "in", "lemma": "in", "translation": "na" },
-        { "token": "den", "lemma": "der", "translation": "a" },
-        { "token": "Wald", "lemma": "Wald", "translation": "floresta" },
-        { "token": "gehen", "lemma": "gehen", "translation": "ir" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "Futter", "lemma": "Futter", "translation": "comida" },
-        { "token": "holen", "lemma": "holen", "translation": "buscar" }
+        {
+          "token": "Eines",
+          "lemma": "ein",
+          "translation": "Certo"
+        },
+        {
+          "token": "Tages",
+          "lemma": "Tag",
+          "translation": "dia"
+        },
+        {
+          "token": "wollte",
+          "lemma": "wollen",
+          "translation": "quis"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "ela"
+        },
+        {
+          "token": "in",
+          "lemma": "in",
+          "translation": "na"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "Wald",
+          "lemma": "Wald",
+          "translation": "floresta"
+        },
+        {
+          "token": "gehen",
+          "lemma": "gehen",
+          "translation": "ir"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "Futter",
+          "lemma": "Futter",
+          "translation": "comida"
+        },
+        {
+          "token": "holen",
+          "lemma": "holen",
+          "translation": "buscar"
+        }
       ],
       "exercise": {
         "id": "ex_003",
         "type": "word_select",
         "prompt": "Como se diz \"floresta\" em alemão?",
-        "options": ["Wald", "Futter", "Geiß", "Tag"],
+        "options": [
+          "Wald",
+          "Futter",
+          "Geiß",
+          "Tag"
+        ],
         "answer": "Wald",
-        "source_segment_ids": [1, 2, 3]
+        "source_segment_ids": [
+          1,
+          2,
+          3
+        ]
       }
     },
     {
@@ -84,28 +233,116 @@
       "text": "Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf.“",
       "tts_prompt": "[warm, caring] Da rief sie alle sieben herbei und sprach: „Liebe Kinder, ich muss in den Wald, nehmt euch in acht vor dem Wolf.“",
       "words": [
-        { "token": "Da", "lemma": "da", "translation": "Então" },
-        { "token": "rief", "lemma": "rufen", "translation": "chamou" },
-        { "token": "sie", "lemma": "sie", "translation": "ela" },
-        { "token": "alle", "lemma": "alle", "translation": "todos" },
-        { "token": "sieben", "lemma": "sieben", "translation": "sete" },
-        { "token": "herbei", "lemma": "herbei", "translation": "até ela" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "sprach", "lemma": "sprechen", "translation": "disse" },
-        { "token": "Liebe", "lemma": "lieb", "translation": "Queridos" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "ich", "lemma": "ich", "translation": "eu" },
-        { "token": "muss", "lemma": "müssen", "translation": "preciso" },
-        { "token": "in", "lemma": "in", "translation": "na" },
-        { "token": "den", "lemma": "der", "translation": "a" },
-        { "token": "Wald", "lemma": "Wald", "translation": "floresta" },
-        { "token": "nehmt", "lemma": "nehmen", "translation": "cuidai" },
-        { "token": "euch", "lemma": "euch", "translation": "vós" },
-        { "token": "in", "lemma": "in", "translation": "em" },
-        { "token": "acht", "lemma": "acht", "translation": "atenção" },
-        { "token": "vor", "lemma": "vor", "translation": "do" },
-        { "token": "dem", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" }
+        {
+          "token": "Da",
+          "lemma": "da",
+          "translation": "Então"
+        },
+        {
+          "token": "rief",
+          "lemma": "rufen",
+          "translation": "chamou"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "ela"
+        },
+        {
+          "token": "alle",
+          "lemma": "alle",
+          "translation": "todos"
+        },
+        {
+          "token": "sieben",
+          "lemma": "sieben",
+          "translation": "sete"
+        },
+        {
+          "token": "herbei",
+          "lemma": "herbei",
+          "translation": "até ela"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "sprach",
+          "lemma": "sprechen",
+          "translation": "disse"
+        },
+        {
+          "token": "Liebe",
+          "lemma": "lieb",
+          "translation": "Queridos"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "ich",
+          "lemma": "ich",
+          "translation": "eu"
+        },
+        {
+          "token": "muss",
+          "lemma": "müssen",
+          "translation": "preciso"
+        },
+        {
+          "token": "in",
+          "lemma": "in",
+          "translation": "na"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "Wald",
+          "lemma": "Wald",
+          "translation": "floresta"
+        },
+        {
+          "token": "nehmt",
+          "lemma": "nehmen",
+          "translation": "cuidai"
+        },
+        {
+          "token": "euch",
+          "lemma": "euch",
+          "translation": "vós"
+        },
+        {
+          "token": "in",
+          "lemma": "in",
+          "translation": "em"
+        },
+        {
+          "token": "acht",
+          "lemma": "acht",
+          "translation": "atenção"
+        },
+        {
+          "token": "vor",
+          "lemma": "vor",
+          "translation": "do"
+        },
+        {
+          "token": "dem",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        }
       ],
       "exercise": null
     },
@@ -114,18 +351,66 @@
       "text": "„Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar.“",
       "tts_prompt": "[warm, caring, slightly worried] „Wenn er hereinkommt, so frisst er euch alle mit Haut und Haar.“",
       "words": [
-        { "token": "Wenn", "lemma": "wenn", "translation": "Se" },
-        { "token": "er", "lemma": "er", "translation": "ele" },
-        { "token": "hereinkommt", "lemma": "hereinkommen", "translation": "entrar" },
-        { "token": "so", "lemma": "so", "translation": "então" },
-        { "token": "frisst", "lemma": "fressen", "translation": "devora" },
-        { "token": "er", "lemma": "er", "translation": "ele" },
-        { "token": "euch", "lemma": "euch", "translation": "vocês" },
-        { "token": "alle", "lemma": "alle", "translation": "todos" },
-        { "token": "mit", "lemma": "mit", "translation": "com" },
-        { "token": "Haut", "lemma": "Haut", "translation": "pele" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "Haar", "lemma": "Haar", "translation": "cabelo" }
+        {
+          "token": "Wenn",
+          "lemma": "wenn",
+          "translation": "Se"
+        },
+        {
+          "token": "er",
+          "lemma": "er",
+          "translation": "ele"
+        },
+        {
+          "token": "hereinkommt",
+          "lemma": "hereinkommen",
+          "translation": "entrar"
+        },
+        {
+          "token": "so",
+          "lemma": "so",
+          "translation": "então"
+        },
+        {
+          "token": "frisst",
+          "lemma": "fressen",
+          "translation": "devora"
+        },
+        {
+          "token": "er",
+          "lemma": "er",
+          "translation": "ele"
+        },
+        {
+          "token": "euch",
+          "lemma": "euch",
+          "translation": "vocês"
+        },
+        {
+          "token": "alle",
+          "lemma": "alle",
+          "translation": "todos"
+        },
+        {
+          "token": "mit",
+          "lemma": "mit",
+          "translation": "com"
+        },
+        {
+          "token": "Haut",
+          "lemma": "Haut",
+          "translation": "pele"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "Haar",
+          "lemma": "Haar",
+          "translation": "cabelo"
+        }
       ],
       "exercise": null
     },
@@ -134,32 +419,112 @@
       "text": "„Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen.“",
       "tts_prompt": "[warm, caring] „Der Bösewicht verstellt sich oft, aber an seiner rauen Stimme und seinen schwarzen Füßen werdet ihr ihn schon erkennen.“",
       "words": [
-        { "token": "Der", "lemma": "der", "translation": "O" },
-        { "token": "Bösewicht", "lemma": "Bösewicht", "translation": "malvado" },
-        { "token": "verstellt", "lemma": "verstellen", "translation": "disfarça" },
-        { "token": "sich", "lemma": "sich", "translation": "a si mesmo" },
-        { "token": "oft", "lemma": "oft", "translation": "frequentemente" },
-        { "token": "aber", "lemma": "aber", "translation": "mas" },
-        { "token": "an", "lemma": "an", "translation": "por" },
-        { "token": "seiner", "lemma": "sein", "translation": "sua" },
-        { "token": "rauen", "lemma": "rau", "translation": "rouca" },
-        { "token": "Stimme", "lemma": "Stimme", "translation": "voz" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "seinen", "lemma": "sein", "translation": "seus" },
-        { "token": "schwarzen", "lemma": "schwarz", "translation": "negros" },
-        { "token": "Füßen", "lemma": "Fuß", "translation": "pés" },
-        { "token": "werdet", "lemma": "werden", "translation": "vós ireis" },
-        { "token": "ihr", "lemma": "ihr", "translation": "vocês" },
-        { "token": "ihn", "lemma": "er", "translation": "o" },
-        { "token": "schon", "lemma": "schon", "translation": "certamente" },
-        { "token": "erkennen", "lemma": "erkennen", "translation": "reconhecer" }
+        {
+          "token": "Der",
+          "lemma": "der",
+          "translation": "O"
+        },
+        {
+          "token": "Bösewicht",
+          "lemma": "Bösewicht",
+          "translation": "malvado"
+        },
+        {
+          "token": "verstellt",
+          "lemma": "verstellen",
+          "translation": "disfarça"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "a si mesmo"
+        },
+        {
+          "token": "oft",
+          "lemma": "oft",
+          "translation": "frequentemente"
+        },
+        {
+          "token": "aber",
+          "lemma": "aber",
+          "translation": "mas"
+        },
+        {
+          "token": "an",
+          "lemma": "an",
+          "translation": "por"
+        },
+        {
+          "token": "seiner",
+          "lemma": "sein",
+          "translation": "sua"
+        },
+        {
+          "token": "rauen",
+          "lemma": "rau",
+          "translation": "rouca"
+        },
+        {
+          "token": "Stimme",
+          "lemma": "Stimme",
+          "translation": "voz"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "seinen",
+          "lemma": "sein",
+          "translation": "seus"
+        },
+        {
+          "token": "schwarzen",
+          "lemma": "schwarz",
+          "translation": "negros"
+        },
+        {
+          "token": "Füßen",
+          "lemma": "Fuß",
+          "translation": "pés"
+        },
+        {
+          "token": "werdet",
+          "lemma": "werden",
+          "translation": "vós ireis"
+        },
+        {
+          "token": "ihr",
+          "lemma": "ihr",
+          "translation": "vocês"
+        },
+        {
+          "token": "ihn",
+          "lemma": "er",
+          "translation": "o"
+        },
+        {
+          "token": "schon",
+          "lemma": "schon",
+          "translation": "certamente"
+        },
+        {
+          "token": "erkennen",
+          "lemma": "erkennen",
+          "translation": "reconhecer"
+        }
       ],
       "exercise": {
         "id": "ex_006",
         "type": "yes_no",
         "prompt": "O lobo tem uma voz suave e pés brancos?",
         "answer": "não",
-        "source_segment_ids": [4, 5, 6]
+        "source_segment_ids": [
+          4,
+          5,
+          6
+        ]
       }
     },
     {
@@ -167,23 +532,91 @@
       "text": "Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen.“",
       "tts_prompt": "[calm narrator] Die Geißlein sagten: „Liebe Mutter, wir wollen uns schon in acht nehmen, ihr könnt ohne Sorge fortgehen.“",
       "words": [
-        { "token": "Die", "lemma": "die", "translation": "Os" },
-        { "token": "Geißlein", "lemma": "Geißlein", "translation": "cabritinhos" },
-        { "token": "sagten", "lemma": "sagen", "translation": "disseram" },
-        { "token": "Liebe", "lemma": "lieb", "translation": "Querida" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "wir", "lemma": "wir", "translation": "nós" },
-        { "token": "wollen", "lemma": "wollen", "translation": "queremos" },
-        { "token": "uns", "lemma": "uns", "translation": "nos" },
-        { "token": "schon", "lemma": "schon", "translation": "certamente" },
-        { "token": "in", "lemma": "in", "translation": "em" },
-        { "token": "acht", "lemma": "acht", "translation": "atenção" },
-        { "token": "nehmen", "lemma": "nehmen", "translation": "tomar" },
-        { "token": "ihr", "lemma": "ihr", "translation": "a senhora" },
-        { "token": "könnt", "lemma": "können", "translation": "pode" },
-        { "token": "ohne", "lemma": "ohne", "translation": "sem" },
-        { "token": "Sorge", "lemma": "Sorge", "translation": "preocupação" },
-        { "token": "fortgehen", "lemma": "fortgehen", "translation": "partir" }
+        {
+          "token": "Die",
+          "lemma": "die",
+          "translation": "Os"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritinhos"
+        },
+        {
+          "token": "sagten",
+          "lemma": "sagen",
+          "translation": "disseram"
+        },
+        {
+          "token": "Liebe",
+          "lemma": "lieb",
+          "translation": "Querida"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "wir",
+          "lemma": "wir",
+          "translation": "nós"
+        },
+        {
+          "token": "wollen",
+          "lemma": "wollen",
+          "translation": "queremos"
+        },
+        {
+          "token": "uns",
+          "lemma": "uns",
+          "translation": "nos"
+        },
+        {
+          "token": "schon",
+          "lemma": "schon",
+          "translation": "certamente"
+        },
+        {
+          "token": "in",
+          "lemma": "in",
+          "translation": "em"
+        },
+        {
+          "token": "acht",
+          "lemma": "acht",
+          "translation": "atenção"
+        },
+        {
+          "token": "nehmen",
+          "lemma": "nehmen",
+          "translation": "tomar"
+        },
+        {
+          "token": "ihr",
+          "lemma": "ihr",
+          "translation": "a senhora"
+        },
+        {
+          "token": "könnt",
+          "lemma": "können",
+          "translation": "pode"
+        },
+        {
+          "token": "ohne",
+          "lemma": "ohne",
+          "translation": "sem"
+        },
+        {
+          "token": "Sorge",
+          "lemma": "Sorge",
+          "translation": "preocupação"
+        },
+        {
+          "token": "fortgehen",
+          "lemma": "fortgehen",
+          "translation": "partir"
+        }
       ],
       "exercise": null
     },
@@ -192,17 +625,61 @@
       "text": "Da meckerte die Alte und machte sich getrost auf den Weg.",
       "tts_prompt": "[calm narrator] Da meckerte die Alte und machte sich getrost auf den Weg.",
       "words": [
-        { "token": "Da", "lemma": "da", "translation": "Então" },
-        { "token": "meckerte", "lemma": "meckern", "translation": "baliu" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "Alte", "lemma": "alt", "translation": "velha" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "machte", "lemma": "machen", "translation": "foi" },
-        { "token": "sich", "lemma": "sich", "translation": "se" },
-        { "token": "getrost", "lemma": "getrost", "translation": "confiante" },
-        { "token": "auf", "lemma": "auf", "translation": "para" },
-        { "token": "den", "lemma": "der", "translation": "o" },
-        { "token": "Weg", "lemma": "Weg", "translation": "caminho" }
+        {
+          "token": "Da",
+          "lemma": "da",
+          "translation": "Então"
+        },
+        {
+          "token": "meckerte",
+          "lemma": "meckern",
+          "translation": "baliu"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "Alte",
+          "lemma": "alt",
+          "translation": "velha"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "machte",
+          "lemma": "machen",
+          "translation": "foi"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "se"
+        },
+        {
+          "token": "getrost",
+          "lemma": "getrost",
+          "translation": "confiante"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "para"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Weg",
+          "lemma": "Weg",
+          "translation": "caminho"
+        }
       ],
       "exercise": null
     },
@@ -211,40 +688,153 @@
       "text": "Es dauerte nicht lange, so klopfte jemand an die Haustür und rief: „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "tts_prompt": "[threatening, deep voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "words": [
-        { "token": "Es", "lemma": "es", "translation": "Não" },
-        { "token": "dauerte", "lemma": "dauern", "translation": "demorou" },
-        { "token": "nicht", "lemma": "nicht", "translation": "não" },
-        { "token": "lange", "lemma": "lang", "translation": "muito" },
-        { "token": "so", "lemma": "so", "translation": "quando" },
-        { "token": "klopfte", "lemma": "klopfen", "translation": "bateu" },
-        { "token": "jemand", "lemma": "jemand", "translation": "alguém" },
-        { "token": "an", "lemma": "an", "translation": "à" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "Haustür", "lemma": "Haustür", "translation": "porta da frente" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "rief", "lemma": "rufen", "translation": "gritou" },
-        { "token": "Macht", "lemma": "machen", "translation": "Abram" },
-        { "token": "auf", "lemma": "auf", "translation": "a" },
-        { "token": "lieben", "lemma": "lieb", "translation": "queridos" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "eure", "lemma": "euer", "translation": "vossa" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "ist", "lemma": "sein", "translation": "está" },
-        { "token": "da", "lemma": "da", "translation": "aqui" },
-        { "token": "hat", "lemma": "haben", "translation": "trouxe" },
-        { "token": "jedem", "lemma": "jeder", "translation": "para cada" },
-        { "token": "von", "lemma": "von", "translation": "de" },
-        { "token": "euch", "lemma": "euch", "translation": "vocês" },
-        { "token": "etwas", "lemma": "etwas", "translation": "algo" },
-        { "token": "mitgebracht", "lemma": "mitbringen", "translation": "trazido" }
+        {
+          "token": "Es",
+          "lemma": "es",
+          "translation": "Não"
+        },
+        {
+          "token": "dauerte",
+          "lemma": "dauern",
+          "translation": "demorou"
+        },
+        {
+          "token": "nicht",
+          "lemma": "nicht",
+          "translation": "não"
+        },
+        {
+          "token": "lange",
+          "lemma": "lang",
+          "translation": "muito"
+        },
+        {
+          "token": "so",
+          "lemma": "so",
+          "translation": "quando"
+        },
+        {
+          "token": "klopfte",
+          "lemma": "klopfen",
+          "translation": "bateu"
+        },
+        {
+          "token": "jemand",
+          "lemma": "jemand",
+          "translation": "alguém"
+        },
+        {
+          "token": "an",
+          "lemma": "an",
+          "translation": "à"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "Haustür",
+          "lemma": "Haustür",
+          "translation": "porta da frente"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "rief",
+          "lemma": "rufen",
+          "translation": "gritou"
+        },
+        {
+          "token": "Macht",
+          "lemma": "machen",
+          "translation": "Abram"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "a"
+        },
+        {
+          "token": "lieben",
+          "lemma": "lieb",
+          "translation": "queridos"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "eure",
+          "lemma": "euer",
+          "translation": "vossa"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "ist",
+          "lemma": "sein",
+          "translation": "está"
+        },
+        {
+          "token": "da",
+          "lemma": "da",
+          "translation": "aqui"
+        },
+        {
+          "token": "hat",
+          "lemma": "haben",
+          "translation": "trouxe"
+        },
+        {
+          "token": "jedem",
+          "lemma": "jeder",
+          "translation": "para cada"
+        },
+        {
+          "token": "von",
+          "lemma": "von",
+          "translation": "de"
+        },
+        {
+          "token": "euch",
+          "lemma": "euch",
+          "translation": "vocês"
+        },
+        {
+          "token": "etwas",
+          "lemma": "etwas",
+          "translation": "algo"
+        },
+        {
+          "token": "mitgebracht",
+          "lemma": "mitbringen",
+          "translation": "trazido"
+        }
       ],
       "exercise": {
         "id": "ex_009",
         "type": "word_select",
         "prompt": "Quem bateu na porta?",
-        "options": ["O lobo", "A mãe", "Um vizinho", "Um anjo"],
+        "options": [
+          "O lobo",
+          "A mãe",
+          "Um vizinho",
+          "Um anjo"
+        ],
         "answer": "O lobo",
-        "source_segment_ids": [7, 8, 9]
+        "source_segment_ids": [
+          7,
+          8,
+          9
+        ]
       }
     },
     {
@@ -252,19 +842,71 @@
       "text": "Aber die Geißlein hörten an der rauen Stimme, dass es der Wolf war.",
       "tts_prompt": "[calm narrator] Aber die Geißlein hörten an der rauen Stimme, dass es der Wolf war.",
       "words": [
-        { "token": "Aber", "lemma": "aber", "translation": "Mas" },
-        { "token": "die", "lemma": "die", "translation": "os" },
-        { "token": "Geißlein", "lemma": "Geißlein", "translation": "cabritinhos" },
-        { "token": "hörten", "lemma": "hören", "translation": "ouviram" },
-        { "token": "an", "lemma": "an", "translation": "pela" },
-        { "token": "der", "lemma": "der", "translation": "a" },
-        { "token": "rauen", "lemma": "rau", "translation": "rouca" },
-        { "token": "Stimme", "lemma": "Stimme", "translation": "voz" },
-        { "token": "dass", "lemma": "dass", "translation": "que" },
-        { "token": "es", "lemma": "es", "translation": "era" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "war", "lemma": "sein", "translation": "era" }
+        {
+          "token": "Aber",
+          "lemma": "aber",
+          "translation": "Mas"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "os"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritinhos"
+        },
+        {
+          "token": "hörten",
+          "lemma": "hören",
+          "translation": "ouviram"
+        },
+        {
+          "token": "an",
+          "lemma": "an",
+          "translation": "pela"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "rauen",
+          "lemma": "rau",
+          "translation": "rouca"
+        },
+        {
+          "token": "Stimme",
+          "lemma": "Stimme",
+          "translation": "voz"
+        },
+        {
+          "token": "dass",
+          "lemma": "dass",
+          "translation": "que"
+        },
+        {
+          "token": "es",
+          "lemma": "es",
+          "translation": "era"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "war",
+          "lemma": "sein",
+          "translation": "era"
+        }
       ],
       "exercise": null
     },
@@ -273,28 +915,116 @@
       "text": "„Wir machen nicht auf“, riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!“",
       "tts_prompt": "[calm narrator] „Wir machen nicht auf“, riefen sie, „du bist nicht unsere Mutter, die hat eine feine und liebliche Stimme, aber deine Stimme ist rau: du bist der Wolf!“",
       "words": [
-        { "token": "Wir", "lemma": "wir", "translation": "Nós" },
-        { "token": "machen", "lemma": "machen", "translation": "abrimos" },
-        { "token": "nicht", "lemma": "nicht", "translation": "não" },
-        { "token": "auf", "lemma": "auf", "translation": "a" },
-        { "token": "riefen", "lemma": "rufen", "translation": "gritaram" },
-        { "token": "du", "lemma": "du", "translation": "tu" },
-        { "token": "bist", "lemma": "sein", "translation": "és" },
-        { "token": "nicht", "lemma": "nicht", "translation": "não" },
-        { "token": "unsere", "lemma": "unser", "translation": "nossa" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "die", "lemma": "die", "translation": "que" },
-        { "token": "hat", "lemma": "haben", "translation": "tem" },
-        { "token": "eine", "lemma": "ein", "translation": "uma" },
-        { "token": "feine", "lemma": "fein", "translation": "fina" },
-        { "token": "liebliche", "lemma": "lieblich", "translation": "doce" },
-        { "token": "Stimme", "lemma": "Stimme", "translation": "voz" },
-        { "token": "deine", "lemma": "dein", "translation": "tua" },
-        { "token": "rau", "lemma": "rau", "translation": "rouca" },
-        { "token": "du", "lemma": "du", "translation": "tu" },
-        { "token": "bist", "lemma": "sein", "translation": "és" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" }
+        {
+          "token": "Wir",
+          "lemma": "wir",
+          "translation": "Nós"
+        },
+        {
+          "token": "machen",
+          "lemma": "machen",
+          "translation": "abrimos"
+        },
+        {
+          "token": "nicht",
+          "lemma": "nicht",
+          "translation": "não"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "a"
+        },
+        {
+          "token": "riefen",
+          "lemma": "rufen",
+          "translation": "gritaram"
+        },
+        {
+          "token": "du",
+          "lemma": "du",
+          "translation": "tu"
+        },
+        {
+          "token": "bist",
+          "lemma": "sein",
+          "translation": "és"
+        },
+        {
+          "token": "nicht",
+          "lemma": "nicht",
+          "translation": "não"
+        },
+        {
+          "token": "unsere",
+          "lemma": "unser",
+          "translation": "nossa"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "que"
+        },
+        {
+          "token": "hat",
+          "lemma": "haben",
+          "translation": "tem"
+        },
+        {
+          "token": "eine",
+          "lemma": "ein",
+          "translation": "uma"
+        },
+        {
+          "token": "feine",
+          "lemma": "fein",
+          "translation": "fina"
+        },
+        {
+          "token": "liebliche",
+          "lemma": "lieblich",
+          "translation": "doce"
+        },
+        {
+          "token": "Stimme",
+          "lemma": "Stimme",
+          "translation": "voz"
+        },
+        {
+          "token": "deine",
+          "lemma": "dein",
+          "translation": "tua"
+        },
+        {
+          "token": "rau",
+          "lemma": "rau",
+          "translation": "rouca"
+        },
+        {
+          "token": "du",
+          "lemma": "du",
+          "translation": "tu"
+        },
+        {
+          "token": "bist",
+          "lemma": "sein",
+          "translation": "és"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        }
       ],
       "exercise": null
     },
@@ -303,29 +1033,98 @@
       "text": "Da ging der Wolf fort zu einem Krämer und kaufte sich ein großes Stück Kreide.",
       "tts_prompt": "[calm narrator] Da ging der Wolf fort zu einem Krämer und kaufte sich ein großes Stück Kreide.",
       "words": [
-        { "token": "Da", "lemma": "da", "translation": "Então" },
-        { "token": "ging", "lemma": "gehen", "translation": "foi" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "fort", "lemma": "fort", "translation": "embora" },
-        { "token": "zu", "lemma": "zu", "translation": "a" },
-        { "token": "einem", "lemma": "ein", "translation": "um" },
-        { "token": "Krämer", "lemma": "Krämer", "translation": "merceeiro" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "kaufte", "lemma": "kaufen", "translation": "comprou" },
-        { "token": "sich", "lemma": "sich", "translation": "para si" },
-        { "token": "ein", "lemma": "ein", "translation": "um" },
-        { "token": "großes", "lemma": "groß", "translation": "grande" },
-        { "token": "Stück", "lemma": "Stück", "translation": "pedaço" },
-        { "token": "Kreide", "lemma": "Kreide", "translation": "giz" }
+        {
+          "token": "Da",
+          "lemma": "da",
+          "translation": "Então"
+        },
+        {
+          "token": "ging",
+          "lemma": "gehen",
+          "translation": "foi"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "fort",
+          "lemma": "fort",
+          "translation": "embora"
+        },
+        {
+          "token": "zu",
+          "lemma": "zu",
+          "translation": "a"
+        },
+        {
+          "token": "einem",
+          "lemma": "ein",
+          "translation": "um"
+        },
+        {
+          "token": "Krämer",
+          "lemma": "Krämer",
+          "translation": "merceeiro"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "kaufte",
+          "lemma": "kaufen",
+          "translation": "comprou"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "para si"
+        },
+        {
+          "token": "ein",
+          "lemma": "ein",
+          "translation": "um"
+        },
+        {
+          "token": "großes",
+          "lemma": "groß",
+          "translation": "grande"
+        },
+        {
+          "token": "Stück",
+          "lemma": "Stück",
+          "translation": "pedaço"
+        },
+        {
+          "token": "Kreide",
+          "lemma": "Kreide",
+          "translation": "giz"
+        }
       ],
       "exercise": {
         "id": "ex_012",
         "type": "fill_blank",
         "prompt": "O lobo foi ao merceeiro e comprou um pedaço de ___.",
-        "options": ["Kreide", "Futter", "Wald", "Stimme"],
+        "options": [
+          "Kreide",
+          "Futter",
+          "Wald",
+          "Stimme"
+        ],
         "answer": "Kreide",
-        "source_segment_ids": [10, 11, 12]
+        "source_segment_ids": [
+          10,
+          11,
+          12
+        ]
       }
     },
     {
@@ -333,22 +1132,86 @@
       "text": "Die aß er, damit seine Stimme fein wurde, und ging dann nochmals hin und klopfte an die Haustür.",
       "tts_prompt": "[calm narrator] Die aß er, damit seine Stimme fein wurde, und ging dann nochmals hin und klopfte an die Haustür.",
       "words": [
-        { "token": "Die", "lemma": "die", "translation": "Isso" },
-        { "token": "aß", "lemma": "essen", "translation": "comeu" },
-        { "token": "er", "lemma": "er", "translation": "ele" },
-        { "token": "damit", "lemma": "damit", "translation": "para que" },
-        { "token": "seine", "lemma": "sein", "translation": "sua" },
-        { "token": "Stimme", "lemma": "Stimme", "translation": "voz" },
-        { "token": "fein", "lemma": "fein", "translation": "fina" },
-        { "token": "wurde", "lemma": "werden", "translation": "ficasse" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "ging", "lemma": "gehen", "translation": "foi" },
-        { "token": "nochmals", "lemma": "nochmals", "translation": "novamente" },
-        { "token": "hin", "lemma": "hin", "translation": "lá" },
-        { "token": "klopfte", "lemma": "klopfen", "translation": "bateu" },
-        { "token": "an", "lemma": "an", "translation": "à" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "Haustür", "lemma": "Haustür", "translation": "porta" }
+        {
+          "token": "Die",
+          "lemma": "die",
+          "translation": "Isso"
+        },
+        {
+          "token": "aß",
+          "lemma": "essen",
+          "translation": "comeu"
+        },
+        {
+          "token": "er",
+          "lemma": "er",
+          "translation": "ele"
+        },
+        {
+          "token": "damit",
+          "lemma": "damit",
+          "translation": "para que"
+        },
+        {
+          "token": "seine",
+          "lemma": "sein",
+          "translation": "sua"
+        },
+        {
+          "token": "Stimme",
+          "lemma": "Stimme",
+          "translation": "voz"
+        },
+        {
+          "token": "fein",
+          "lemma": "fein",
+          "translation": "fina"
+        },
+        {
+          "token": "wurde",
+          "lemma": "werden",
+          "translation": "ficasse"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "ging",
+          "lemma": "gehen",
+          "translation": "foi"
+        },
+        {
+          "token": "nochmals",
+          "lemma": "nochmals",
+          "translation": "novamente"
+        },
+        {
+          "token": "hin",
+          "lemma": "hin",
+          "translation": "lá"
+        },
+        {
+          "token": "klopfte",
+          "lemma": "klopfen",
+          "translation": "bateu"
+        },
+        {
+          "token": "an",
+          "lemma": "an",
+          "translation": "à"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "Haustür",
+          "lemma": "Haustür",
+          "translation": "porta"
+        }
       ],
       "exercise": null
     },
@@ -357,20 +1220,76 @@
       "text": "„Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, ihr lieben Kinder, eure Mutter ist da und hat jedem von euch etwas mitgebracht.“",
       "words": [
-        { "token": "Macht", "lemma": "machen", "translation": "Abram" },
-        { "token": "auf", "lemma": "auf", "translation": "a" },
-        { "token": "lieben", "lemma": "lieb", "translation": "queridos" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "eure", "lemma": "euer", "translation": "vossa" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "ist", "lemma": "sein", "translation": "está" },
-        { "token": "da", "lemma": "da", "translation": "aqui" },
-        { "token": "hat", "lemma": "haben", "translation": "trouxe" },
-        { "token": "jedem", "lemma": "jeder", "translation": "para cada" },
-        { "token": "von", "lemma": "von", "translation": "de" },
-        { "token": "euch", "lemma": "euch", "translation": "vocês" },
-        { "token": "etwas", "lemma": "etwas", "translation": "algo" },
-        { "token": "mitgebracht", "lemma": "mitbringen", "translation": "trazido" }
+        {
+          "token": "Macht",
+          "lemma": "machen",
+          "translation": "Abram"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "a"
+        },
+        {
+          "token": "lieben",
+          "lemma": "lieb",
+          "translation": "queridos"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "eure",
+          "lemma": "euer",
+          "translation": "vossa"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "ist",
+          "lemma": "sein",
+          "translation": "está"
+        },
+        {
+          "token": "da",
+          "lemma": "da",
+          "translation": "aqui"
+        },
+        {
+          "token": "hat",
+          "lemma": "haben",
+          "translation": "trouxe"
+        },
+        {
+          "token": "jedem",
+          "lemma": "jeder",
+          "translation": "para cada"
+        },
+        {
+          "token": "von",
+          "lemma": "von",
+          "translation": "de"
+        },
+        {
+          "token": "euch",
+          "lemma": "euch",
+          "translation": "vocês"
+        },
+        {
+          "token": "etwas",
+          "lemma": "etwas",
+          "translation": "algo"
+        },
+        {
+          "token": "mitgebracht",
+          "lemma": "mitbringen",
+          "translation": "trazido"
+        }
       ],
       "exercise": null
     },
@@ -379,34 +1298,123 @@
       "text": "Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!“",
       "tts_prompt": "[calm narrator] Aber der Wolf hatte seine schwarze Pfote in das Fenster gelegt, das sahen die Kinder und riefen: „Wir machen nicht auf, unsere Mutter hat keine schwarze Pfote wie du: du bist der Wolf!“",
       "words": [
-        { "token": "Aber", "lemma": "aber", "translation": "Mas" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "hatte", "lemma": "haben", "translation": "tinha" },
-        { "token": "seine", "lemma": "sein", "translation": "sua" },
-        { "token": "schwarze", "lemma": "schwarz", "translation": "negra" },
-        { "token": "Pfote", "lemma": "Pfote", "translation": "pata" },
-        { "token": "in", "lemma": "in", "translation": "na" },
-        { "token": "das", "lemma": "das", "translation": "a" },
-        { "token": "Fenster", "lemma": "Fenster", "translation": "janela" },
-        { "token": "gelegt", "lemma": "legen", "translation": "colocado" },
-        { "token": "das", "lemma": "das", "translation": "isso" },
-        { "token": "sahen", "lemma": "sehen", "translation": "viram" },
-        { "token": "die", "lemma": "die", "translation": "os" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "Pfote", "lemma": "Pfote", "translation": "pata" },
-        { "token": "du", "lemma": "du", "translation": "tu" },
-        { "token": "bist", "lemma": "sein", "translation": "és" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" }
+        {
+          "token": "Aber",
+          "lemma": "aber",
+          "translation": "Mas"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "hatte",
+          "lemma": "haben",
+          "translation": "tinha"
+        },
+        {
+          "token": "seine",
+          "lemma": "sein",
+          "translation": "sua"
+        },
+        {
+          "token": "schwarze",
+          "lemma": "schwarz",
+          "translation": "negra"
+        },
+        {
+          "token": "Pfote",
+          "lemma": "Pfote",
+          "translation": "pata"
+        },
+        {
+          "token": "in",
+          "lemma": "in",
+          "translation": "na"
+        },
+        {
+          "token": "das",
+          "lemma": "das",
+          "translation": "a"
+        },
+        {
+          "token": "Fenster",
+          "lemma": "Fenster",
+          "translation": "janela"
+        },
+        {
+          "token": "gelegt",
+          "lemma": "legen",
+          "translation": "colocado"
+        },
+        {
+          "token": "das",
+          "lemma": "das",
+          "translation": "isso"
+        },
+        {
+          "token": "sahen",
+          "lemma": "sehen",
+          "translation": "viram"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "os"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "Pfote",
+          "lemma": "Pfote",
+          "translation": "pata"
+        },
+        {
+          "token": "du",
+          "lemma": "du",
+          "translation": "tu"
+        },
+        {
+          "token": "bist",
+          "lemma": "sein",
+          "translation": "és"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        }
       ],
       "exercise": {
         "id": "ex_015",
         "type": "word_select",
         "prompt": "Por que os cabritinhos não abriram a porta desta vez?",
-        "options": ["Viram a pata negra", "Ouviram a voz rouca", "Estavam dormindo", "A porta estava trancada"],
+        "options": [
+          "Viram a pata negra",
+          "Ouviram a voz rouca",
+          "Estavam dormindo",
+          "A porta estava trancada"
+        ],
         "answer": "Viram a pata negra",
-        "source_segment_ids": [13, 14, 15]
+        "source_segment_ids": [
+          13,
+          14,
+          15
+        ]
       }
     },
     {
@@ -414,22 +1422,86 @@
       "text": "Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl.“",
       "tts_prompt": "[threatening, deep voice] Da lief der Wolf zu einem Müller und sprach: „Bestreich mir meinen Fuß mit weißem Mehl.“",
       "words": [
-        { "token": "Da", "lemma": "da", "translation": "Então" },
-        { "token": "lief", "lemma": "laufen", "translation": "correu" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "zu", "lemma": "zu", "translation": "a" },
-        { "token": "einem", "lemma": "ein", "translation": "um" },
-        { "token": "Müller", "lemma": "Müller", "translation": "moleiro" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "sprach", "lemma": "sprechen", "translation": "disse" },
-        { "token": "Bestreich", "lemma": "bestreichen", "translation": "Cubra" },
-        { "token": "mir", "lemma": "ich", "translation": "me" },
-        { "token": "meinen", "lemma": "mein", "translation": "meu" },
-        { "token": "Fuß", "lemma": "Fuß", "translation": "pé" },
-        { "token": "mit", "lemma": "mit", "translation": "com" },
-        { "token": "weißem", "lemma": "weiß", "translation": "branca" },
-        { "token": "Mehl", "lemma": "Mehl", "translation": "farinha" }
+        {
+          "token": "Da",
+          "lemma": "da",
+          "translation": "Então"
+        },
+        {
+          "token": "lief",
+          "lemma": "laufen",
+          "translation": "correu"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "zu",
+          "lemma": "zu",
+          "translation": "a"
+        },
+        {
+          "token": "einem",
+          "lemma": "ein",
+          "translation": "um"
+        },
+        {
+          "token": "Müller",
+          "lemma": "Müller",
+          "translation": "moleiro"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "sprach",
+          "lemma": "sprechen",
+          "translation": "disse"
+        },
+        {
+          "token": "Bestreich",
+          "lemma": "bestreichen",
+          "translation": "Cubra"
+        },
+        {
+          "token": "mir",
+          "lemma": "ich",
+          "translation": "me"
+        },
+        {
+          "token": "meinen",
+          "lemma": "mein",
+          "translation": "meu"
+        },
+        {
+          "token": "Fuß",
+          "lemma": "Fuß",
+          "translation": "pé"
+        },
+        {
+          "token": "mit",
+          "lemma": "mit",
+          "translation": "com"
+        },
+        {
+          "token": "weißem",
+          "lemma": "weiß",
+          "translation": "branca"
+        },
+        {
+          "token": "Mehl",
+          "lemma": "Mehl",
+          "translation": "farinha"
+        }
       ],
       "exercise": null
     },
@@ -438,21 +1510,81 @@
       "text": "Der Müller dachte: „Der Wolf will jemanden betrügen“ und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich.“",
       "tts_prompt": "[calm narrator] Der Müller dachte: „Der Wolf will jemanden betrügen“ und weigerte sich; aber der Wolf sprach: „Wenn du es nicht tust, so fresse ich dich.“",
       "words": [
-        { "token": "Der", "lemma": "der", "translation": "O" },
-        { "token": "Müller", "lemma": "Müller", "translation": "moleiro" },
-        { "token": "dachte", "lemma": "denken", "translation": "pensou" },
-        { "token": "betrügen", "lemma": "betrügen", "translation": "enganar" },
-        { "token": "weigerte", "lemma": "weigern", "translation": "recusou" },
-        { "token": "sich", "lemma": "sich", "translation": "se" },
-        { "token": "Wenn", "lemma": "wenn", "translation": "Se" },
-        { "token": "du", "lemma": "du", "translation": "tu" },
-        { "token": "es", "lemma": "es", "translation": "isso" },
-        { "token": "nicht", "lemma": "nicht", "translation": "não" },
-        { "token": "tust", "lemma": "tun", "translation": "fizeres" },
-        { "token": "so", "lemma": "so", "translation": "então" },
-        { "token": "fresse", "lemma": "fressen", "translation": "devoro" },
-        { "token": "ich", "lemma": "ich", "translation": "eu" },
-        { "token": "dich", "lemma": "du", "translation": "te" }
+        {
+          "token": "Der",
+          "lemma": "der",
+          "translation": "O"
+        },
+        {
+          "token": "Müller",
+          "lemma": "Müller",
+          "translation": "moleiro"
+        },
+        {
+          "token": "dachte",
+          "lemma": "denken",
+          "translation": "pensou"
+        },
+        {
+          "token": "betrügen",
+          "lemma": "betrügen",
+          "translation": "enganar"
+        },
+        {
+          "token": "weigerte",
+          "lemma": "weigern",
+          "translation": "recusou"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "se"
+        },
+        {
+          "token": "Wenn",
+          "lemma": "wenn",
+          "translation": "Se"
+        },
+        {
+          "token": "du",
+          "lemma": "du",
+          "translation": "tu"
+        },
+        {
+          "token": "es",
+          "lemma": "es",
+          "translation": "isso"
+        },
+        {
+          "token": "nicht",
+          "lemma": "nicht",
+          "translation": "não"
+        },
+        {
+          "token": "tust",
+          "lemma": "tun",
+          "translation": "fizeres"
+        },
+        {
+          "token": "so",
+          "lemma": "so",
+          "translation": "então"
+        },
+        {
+          "token": "fresse",
+          "lemma": "fressen",
+          "translation": "devoro"
+        },
+        {
+          "token": "ich",
+          "lemma": "ich",
+          "translation": "eu"
+        },
+        {
+          "token": "dich",
+          "lemma": "du",
+          "translation": "te"
+        }
       ],
       "exercise": null
     },
@@ -461,24 +1593,75 @@
       "text": "Da erschrak der Müller und machte ihm den Fuß weiß.",
       "tts_prompt": "[calm narrator] Da erschrak der Müller und machte ihm den Fuß weiß.",
       "words": [
-        { "token": "Da", "lemma": "da", "translation": "Então" },
-        { "token": "erschrak", "lemma": "erschrecken", "translation": "assustou-se" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Müller", "lemma": "Müller", "translation": "moleiro" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "machte", "lemma": "machen", "translation": "pintou" },
-        { "token": "ihm", "lemma": "er", "translation": "para ele" },
-        { "token": "den", "lemma": "der", "translation": "o" },
-        { "token": "Fuß", "lemma": "Fuß", "translation": "pé" },
-        { "token": "weiß", "lemma": "weiß", "translation": "branco" }
+        {
+          "token": "Da",
+          "lemma": "da",
+          "translation": "Então"
+        },
+        {
+          "token": "erschrak",
+          "lemma": "erschrecken",
+          "translation": "assustou-se"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Müller",
+          "lemma": "Müller",
+          "translation": "moleiro"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "machte",
+          "lemma": "machen",
+          "translation": "pintou"
+        },
+        {
+          "token": "ihm",
+          "lemma": "er",
+          "translation": "para ele"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Fuß",
+          "lemma": "Fuß",
+          "translation": "pé"
+        },
+        {
+          "token": "weiß",
+          "lemma": "weiß",
+          "translation": "branco"
+        }
       ],
       "exercise": {
         "id": "ex_018",
         "type": "word_order",
         "prompt": "Ordene as palavras para dizer: 'O moleiro pintou o pé branco'",
-        "chips": ["der", "Müller", "Fuß", "den", "machte", "weiß"],
+        "chips": [
+          "der",
+          "Müller",
+          "Fuß",
+          "den",
+          "machte",
+          "weiß"
+        ],
         "answer": "der Müller machte den Fuß weiß",
-        "source_segment_ids": [16, 17, 18]
+        "source_segment_ids": [
+          16,
+          17,
+          18
+        ]
       }
     },
     {
@@ -486,25 +1669,101 @@
       "text": "Nun gingder Wolf zum drittenmal zu der Haustür, klopfte an und sprach: „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen.“",
       "tts_prompt": "[threatening, disguised sweet voice] „Macht auf, Kinder, euer liebes Mütterchen ist heimgekommen.“",
       "words": [
-        { "token": "Nun", "lemma": "nun", "translation": "Agora" },
-        { "token": "ging", "lemma": "gehen", "translation": "foi" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "zum", "lemma": "zu", "translation": "à" },
-        { "token": "drittenmal", "lemma": "drittenmal", "translation": "terceira vez" },
-        { "token": "zu", "lemma": "zu", "translation": "à" },
-        { "token": "der", "lemma": "der", "translation": "a" },
-        { "token": "Haustür", "lemma": "Haustür", "translation": "porta" },
-        { "token": "klopfte", "lemma": "klopfen", "translation": "bateu" },
-        { "token": "an", "lemma": "an", "translation": "na" },
-        { "token": "Macht", "lemma": "machen", "translation": "Abram" },
-        { "token": "auf", "lemma": "auf", "translation": "a" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "euer", "lemma": "euer", "translation": "vossa" },
-        { "token": "liebes", "lemma": "lieb", "translation": "querida" },
-        { "token": "Mütterchen", "lemma": "Mutter", "translation": "mamãezinha" },
-        { "token": "ist", "lemma": "sein", "translation": "chegou" },
-        { "token": "heimgekommen", "lemma": "heimkommen", "translation": "em casa" }
+        {
+          "token": "Nun",
+          "lemma": "nun",
+          "translation": "Agora"
+        },
+        {
+          "token": "ging",
+          "lemma": "gehen",
+          "translation": "foi"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "zum",
+          "lemma": "zu",
+          "translation": "à"
+        },
+        {
+          "token": "drittenmal",
+          "lemma": "drittenmal",
+          "translation": "terceira vez"
+        },
+        {
+          "token": "zu",
+          "lemma": "zu",
+          "translation": "à"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "Haustür",
+          "lemma": "Haustür",
+          "translation": "porta"
+        },
+        {
+          "token": "klopfte",
+          "lemma": "klopfen",
+          "translation": "bateu"
+        },
+        {
+          "token": "an",
+          "lemma": "an",
+          "translation": "na"
+        },
+        {
+          "token": "Macht",
+          "lemma": "machen",
+          "translation": "Abram"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "a"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "euer",
+          "lemma": "euer",
+          "translation": "vossa"
+        },
+        {
+          "token": "liebes",
+          "lemma": "lieb",
+          "translation": "querida"
+        },
+        {
+          "token": "Mütterchen",
+          "lemma": "Mutter",
+          "translation": "mamãezinha"
+        },
+        {
+          "token": "ist",
+          "lemma": "sein",
+          "translation": "chegou"
+        },
+        {
+          "token": "heimgekommen",
+          "lemma": "heimkommen",
+          "translation": "em casa"
+        }
       ],
       "exercise": null
     },
@@ -513,22 +1772,86 @@
       "text": "Die Geißlein sahen den weißen Fuß, glaubten, es wäre die Mutter, und machten die Tür auf.",
       "tts_prompt": "[dramatic] Die Geißlein sahen den weißen Fuß, glaubten, es wäre die Mutter, und machten die Tür auf.",
       "words": [
-        { "token": "Die", "lemma": "die", "translation": "Os" },
-        { "token": "Geißlein", "lemma": "Geißlein", "translation": "cabritinhos" },
-        { "token": "sahen", "lemma": "sehen", "translation": "viram" },
-        { "token": "den", "lemma": "der", "translation": "o" },
-        { "token": "weißen", "lemma": "weiß", "translation": "branco" },
-        { "token": "Fuß", "lemma": "Fuß", "translation": "pé" },
-        { "token": "glaubten", "lemma": "glauben", "translation": "acreditaram" },
-        { "token": "es", "lemma": "es", "translation": "que era" },
-        { "token": "wäre", "lemma": "sein", "translation": "seria" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "machten", "lemma": "machen", "translation": "abriram" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "Tür", "lemma": "Tür", "translation": "porta" },
-        { "token": "auf", "lemma": "auf", "translation": "a" }
+        {
+          "token": "Die",
+          "lemma": "die",
+          "translation": "Os"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritinhos"
+        },
+        {
+          "token": "sahen",
+          "lemma": "sehen",
+          "translation": "viram"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "weißen",
+          "lemma": "weiß",
+          "translation": "branco"
+        },
+        {
+          "token": "Fuß",
+          "lemma": "Fuß",
+          "translation": "pé"
+        },
+        {
+          "token": "glaubten",
+          "lemma": "glauben",
+          "translation": "acreditaram"
+        },
+        {
+          "token": "es",
+          "lemma": "es",
+          "translation": "que era"
+        },
+        {
+          "token": "wäre",
+          "lemma": "sein",
+          "translation": "seria"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "machten",
+          "lemma": "machen",
+          "translation": "abriram"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "Tür",
+          "lemma": "Tür",
+          "translation": "porta"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "a"
+        }
       ],
       "exercise": null
     },
@@ -537,20 +1860,52 @@
       "text": "Wer aber hereinkam, das war der Wolf.",
       "tts_prompt": "[dramatic] Wer aber hereinkam, das war der Wolf.",
       "words": [
-        { "token": "Wer", "lemma": "wer", "translation": "Quem" },
-        { "token": "aber", "lemma": "aber", "translation": "porém" },
-        { "token": "hereinkam", "lemma": "hereinkommen", "translation": "entrou" },
-        { "token": "das", "lemma": "das", "translation": "isso" },
-        { "token": "war", "lemma": "sein", "translation": "era" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" }
+        {
+          "token": "Wer",
+          "lemma": "wer",
+          "translation": "Quem"
+        },
+        {
+          "token": "aber",
+          "lemma": "aber",
+          "translation": "porém"
+        },
+        {
+          "token": "hereinkam",
+          "lemma": "hereinkommen",
+          "translation": "entrou"
+        },
+        {
+          "token": "das",
+          "lemma": "das",
+          "translation": "isso"
+        },
+        {
+          "token": "war",
+          "lemma": "sein",
+          "translation": "era"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        }
       ],
       "exercise": {
         "id": "ex_021",
         "type": "yes_no",
         "prompt": "Os cabritinhos foram enganados pelo lobo na terceira tentativa?",
         "answer": "sim",
-        "source_segment_ids": [19, 20, 21]
+        "source_segment_ids": [
+          19,
+          20,
+          21
+        ]
       }
     },
     {
@@ -558,12 +1913,36 @@
       "text": "Sie erschraken und wollten sich verstecken.",
       "tts_prompt": "[dramatic] Sie erschraken und wollten sich verstecken.",
       "words": [
-        { "token": "Sie", "lemma": "sie", "translation": "Eles" },
-        { "token": "erschraken", "lemma": "erschrecken", "translation": "assustaram-se" },
-        { "token": "und", "lemma": "und", "translation": "e" },
-        { "token": "wollten", "lemma": "wollen", "translation": "quiseram" },
-        { "token": "sich", "lemma": "sich", "translation": "se" },
-        { "token": "verstecken", "lemma": "verstecken", "translation": "esconder" }
+        {
+          "token": "Sie",
+          "lemma": "sie",
+          "translation": "Eles"
+        },
+        {
+          "token": "erschraken",
+          "lemma": "erschrecken",
+          "translation": "assustaram-se"
+        },
+        {
+          "token": "und",
+          "lemma": "und",
+          "translation": "e"
+        },
+        {
+          "token": "wollten",
+          "lemma": "wollen",
+          "translation": "quiseram"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "se"
+        },
+        {
+          "token": "verstecken",
+          "lemma": "verstecken",
+          "translation": "esconder"
+        }
       ],
       "exercise": null
     },
@@ -572,25 +1951,101 @@
       "text": "Das eine sprang unter den Tisch, das zweite ins Bett, das dritte in den Ofen, das vierte in die Küche, das fünfte in den Schrank, das sechste unter die Waschschüssel, das siebte in den Kasten der Wanduhr.",
       "tts_prompt": "[dramatic, fast pace] Das eine sprang unter den Tisch, das zweite ins Bett, das dritte in den Ofen, das vierte in die Küche, das fünfte in den Schrank, das sechste unter die Waschschüssel, das siebte in den Kasten der Wanduhr.",
       "words": [
-        { "token": "Das", "lemma": "das", "translation": "O" },
-        { "token": "eine", "lemma": "ein", "translation": "primeiro" },
-        { "token": "sprang", "lemma": "springen", "translation": "saltou" },
-        { "token": "unter", "lemma": "unter", "translation": "embaixo de" },
-        { "token": "den", "lemma": "der", "translation": "a" },
-        { "token": "Tisch", "lemma": "Tisch", "translation": "mesa" },
-        { "token": "zweite", "lemma": "zweite", "translation": "segundo" },
-        { "token": "Bett", "lemma": "Bett", "translation": "cama" },
-        { "token": "dritte", "lemma": "dritte", "translation": "terceiro" },
-        { "token": "Ofen", "lemma": "Ofen", "translation": "forno" },
-        { "token": "vierte", "lemma": "vierte", "translation": "quarto" },
-        { "token": "Küche", "lemma": "Küche", "translation": "cozinha" },
-        { "token": "fünfte", "lemma": "fünfte", "translation": "quinto" },
-        { "token": "Schrank", "lemma": "Schrank", "translation": "armário" },
-        { "token": "sechste", "lemma": "sechste", "translation": "sexto" },
-        { "token": "Waschschüssel", "lemma": "Waschschüssel", "translation": "bacia" },
-        { "token": "siebte", "lemma": "siebte", "translation": "sétimo" },
-        { "token": "Kasten", "lemma": "Kasten", "translation": "caixa" },
-        { "token": "Wanduhr", "lemma": "Wanduhr", "translation": "relógio de parede" }
+        {
+          "token": "Das",
+          "lemma": "das",
+          "translation": "O"
+        },
+        {
+          "token": "eine",
+          "lemma": "ein",
+          "translation": "primeiro"
+        },
+        {
+          "token": "sprang",
+          "lemma": "springen",
+          "translation": "saltou"
+        },
+        {
+          "token": "unter",
+          "lemma": "unter",
+          "translation": "embaixo de"
+        },
+        {
+          "token": "den",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "Tisch",
+          "lemma": "Tisch",
+          "translation": "mesa"
+        },
+        {
+          "token": "zweite",
+          "lemma": "zweite",
+          "translation": "segundo"
+        },
+        {
+          "token": "Bett",
+          "lemma": "Bett",
+          "translation": "cama"
+        },
+        {
+          "token": "dritte",
+          "lemma": "dritte",
+          "translation": "terceiro"
+        },
+        {
+          "token": "Ofen",
+          "lemma": "Ofen",
+          "translation": "forno"
+        },
+        {
+          "token": "vierte",
+          "lemma": "vierte",
+          "translation": "quarto"
+        },
+        {
+          "token": "Küche",
+          "lemma": "Küche",
+          "translation": "cozinha"
+        },
+        {
+          "token": "fünfte",
+          "lemma": "fünfte",
+          "translation": "quinto"
+        },
+        {
+          "token": "Schrank",
+          "lemma": "Schrank",
+          "translation": "armário"
+        },
+        {
+          "token": "sechste",
+          "lemma": "sechste",
+          "translation": "sexto"
+        },
+        {
+          "token": "Waschschüssel",
+          "lemma": "Waschschüssel",
+          "translation": "bacia"
+        },
+        {
+          "token": "siebte",
+          "lemma": "siebte",
+          "translation": "sétimo"
+        },
+        {
+          "token": "Kasten",
+          "lemma": "Kasten",
+          "translation": "caixa"
+        },
+        {
+          "token": "Wanduhr",
+          "lemma": "Wanduhr",
+          "translation": "relógio de parede"
+        }
       ],
       "exercise": null
     },
@@ -599,27 +2054,88 @@
       "text": "Aber der Wolf fand sie alle und machte kurzen Prozess: eins nach dem andern schluckte er hinunter, nur das jüngste in dem Uhrkästen fand er nicht.",
       "tts_prompt": "[dramatic] Aber der Wolf fand sie alle und machte kurzen Prozess: eins nach dem andern schluckte er hinunter, nur das jüngste in dem Uhrkästen fand er nicht.",
       "words": [
-        { "token": "Aber", "lemma": "aber", "translation": "Mas" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "fand", "lemma": "finden", "translation": "encontrou" },
-        { "token": "sie", "lemma": "sie", "translation": "todos eles" },
-        { "token": "alle", "lemma": "alle", "translation": "todos" },
-        { "token": "schluckte", "lemma": "schlucken", "translation": "engoliu" },
-        { "token": "er", "lemma": "er", "translation": "ele" },
-        { "token": "hinunter", "lemma": "hinunter", "translation": "para baixo" },
-        { "token": "jüngste", "lemma": "jung", "translation": "mais jovem" },
-        { "token": "Uhrkästen", "lemma": "Uhrkästen", "translation": "caixa do relógio" },
-        { "token": "fand", "lemma": "finden", "translation": "encontrou" },
-        { "token": "nicht", "lemma": "nicht", "translation": "não" }
+        {
+          "token": "Aber",
+          "lemma": "aber",
+          "translation": "Mas"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "fand",
+          "lemma": "finden",
+          "translation": "encontrou"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "todos eles"
+        },
+        {
+          "token": "alle",
+          "lemma": "alle",
+          "translation": "todos"
+        },
+        {
+          "token": "schluckte",
+          "lemma": "schlucken",
+          "translation": "engoliu"
+        },
+        {
+          "token": "er",
+          "lemma": "er",
+          "translation": "ele"
+        },
+        {
+          "token": "hinunter",
+          "lemma": "hinunter",
+          "translation": "para baixo"
+        },
+        {
+          "token": "jüngste",
+          "lemma": "jung",
+          "translation": "mais jovem"
+        },
+        {
+          "token": "Uhrkästen",
+          "lemma": "Uhrkästen",
+          "translation": "caixa do relógio"
+        },
+        {
+          "token": "fand",
+          "lemma": "finden",
+          "translation": "encontrou"
+        },
+        {
+          "token": "nicht",
+          "lemma": "nicht",
+          "translation": "não"
+        }
       ],
       "exercise": {
         "id": "ex_024",
         "type": "word_select",
         "prompt": "Quantos cabritinhos o lobo engoliu?",
-        "options": ["Seis", "Sete", "Cinco", "Todos"],
+        "options": [
+          "Seis",
+          "Sete",
+          "Cinco",
+          "Todos"
+        ],
         "answer": "Seis",
-        "source_segment_ids": [22, 23, 24]
+        "source_segment_ids": [
+          22,
+          23,
+          24
+        ]
       }
     },
     {
@@ -627,21 +2143,81 @@
       "text": "Als der Wolf seinen Willen gehabt hatte, trollte er sich fort, legte sich auf einer grünen Wiese unter einen Baum und fing an zu schlafen.",
       "tts_prompt": "[calm narrator] Als der Wolf seinen Willen gehabt hatte, trollte er sich fort, legte sich auf einer grünen Wiese unter einen Baum und fing an zu schlafen.",
       "words": [
-        { "token": "Als", "lemma": "als", "translation": "Quando" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "Willen", "lemma": "Wille", "translation": "vontade" },
-        { "token": "gehabt", "lemma": "haben", "translation": "obtido" },
-        { "token": "hatte", "lemma": "haben", "translation": "tinha" },
-        { "token": "trollte", "lemma": "trollen", "translation": "foi embora" },
-        { "token": "er", "lemma": "er", "translation": "ele" },
-        { "token": "fort", "lemma": "fort", "translation": "embora" },
-        { "token": "legte", "lemma": "legen", "translation": "deitou" },
-        { "token": "sich", "lemma": "sich", "translation": "se" },
-        { "token": "grünen", "lemma": "grün", "translation": "verde" },
-        { "token": "Wiese", "lemma": "Wiese", "translation": "prado" },
-        { "token": "Baum", "lemma": "Baum", "translation": "árvore" },
-        { "token": "schlafen", "lemma": "schlafen", "translation": "dormir" }
+        {
+          "token": "Als",
+          "lemma": "als",
+          "translation": "Quando"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "Willen",
+          "lemma": "Wille",
+          "translation": "vontade"
+        },
+        {
+          "token": "gehabt",
+          "lemma": "haben",
+          "translation": "obtido"
+        },
+        {
+          "token": "hatte",
+          "lemma": "haben",
+          "translation": "tinha"
+        },
+        {
+          "token": "trollte",
+          "lemma": "trollen",
+          "translation": "foi embora"
+        },
+        {
+          "token": "er",
+          "lemma": "er",
+          "translation": "ele"
+        },
+        {
+          "token": "fort",
+          "lemma": "fort",
+          "translation": "embora"
+        },
+        {
+          "token": "legte",
+          "lemma": "legen",
+          "translation": "deitou"
+        },
+        {
+          "token": "sich",
+          "lemma": "sich",
+          "translation": "se"
+        },
+        {
+          "token": "grünen",
+          "lemma": "grün",
+          "translation": "verde"
+        },
+        {
+          "token": "Wiese",
+          "lemma": "Wiese",
+          "translation": "prado"
+        },
+        {
+          "token": "Baum",
+          "lemma": "Baum",
+          "translation": "árvore"
+        },
+        {
+          "token": "schlafen",
+          "lemma": "schlafen",
+          "translation": "dormir"
+        }
       ],
       "exercise": null
     },
@@ -650,18 +2226,66 @@
       "text": "Nicht lange danach kam die alte Geiß aus dem Walde wieder heim.",
       "tts_prompt": "[calm narrator] Nicht lange danach kam die alte Geiß aus dem Walde wieder heim.",
       "words": [
-        { "token": "Nicht", "lemma": "nicht", "translation": "Não" },
-        { "token": "lange", "lemma": "lang", "translation": "muito" },
-        { "token": "danach", "lemma": "danach", "translation": "depois" },
-        { "token": "kam", "lemma": "kommen", "translation": "chegou" },
-        { "token": "die", "lemma": "die", "translation": "a" },
-        { "token": "alte", "lemma": "alt", "translation": "velha" },
-        { "token": "Geiß", "lemma": "Geiß", "translation": "cabra" },
-        { "token": "aus", "lemma": "aus", "translation": "da" },
-        { "token": "dem", "lemma": "der", "translation": "a" },
-        { "token": "Walde", "lemma": "Wald", "translation": "floresta" },
-        { "token": "wieder", "lemma": "wieder", "translation": "de volta" },
-        { "token": "heim", "lemma": "heim", "translation": "para casa" }
+        {
+          "token": "Nicht",
+          "lemma": "nicht",
+          "translation": "Não"
+        },
+        {
+          "token": "lange",
+          "lemma": "lang",
+          "translation": "muito"
+        },
+        {
+          "token": "danach",
+          "lemma": "danach",
+          "translation": "depois"
+        },
+        {
+          "token": "kam",
+          "lemma": "kommen",
+          "translation": "chegou"
+        },
+        {
+          "token": "die",
+          "lemma": "die",
+          "translation": "a"
+        },
+        {
+          "token": "alte",
+          "lemma": "alt",
+          "translation": "velha"
+        },
+        {
+          "token": "Geiß",
+          "lemma": "Geiß",
+          "translation": "cabra"
+        },
+        {
+          "token": "aus",
+          "lemma": "aus",
+          "translation": "da"
+        },
+        {
+          "token": "dem",
+          "lemma": "der",
+          "translation": "a"
+        },
+        {
+          "token": "Walde",
+          "lemma": "Wald",
+          "translation": "floresta"
+        },
+        {
+          "token": "wieder",
+          "lemma": "wieder",
+          "translation": "de volta"
+        },
+        {
+          "token": "heim",
+          "lemma": "heim",
+          "translation": "para casa"
+        }
       ],
       "exercise": null
     },
@@ -670,31 +2294,107 @@
       "text": "Ach, was musste sie da erblicken! Die Haustür stand sperrweit auf; Tisch, Stühle und Bänke waren umgeworfen, die Waschschüssel lag in Stücken, Decke und Kissen waren aus dem Bett gezogen.",
       "tts_prompt": "[warm, caring, horrified] Ach, was musste sie da erblicken! Die Haustür stand sperrweit auf; Tisch, Stühle und Bänke waren umgeworfen, die Waschschüssel lag in Stücken, Decke und Kissen waren aus dem Bett gezogen.",
       "words": [
-        { "token": "Ach", "lemma": "ach", "translation": "Ah" },
-        { "token": "was", "lemma": "was", "translation": "o que" },
-        { "token": "musste", "lemma": "müssen", "translation": "teve de" },
-        { "token": "sie", "lemma": "sie", "translation": "ela" },
-        { "token": "erblicken", "lemma": "erblicken", "translation": "ver" },
-        { "token": "Haustür", "lemma": "Haustür", "translation": "porta" },
-        { "token": "stand", "lemma": "stehen", "translation": "estava" },
-        { "token": "sperrweit", "lemma": "sperrweit", "translation": "escancarada" },
-        { "token": "auf", "lemma": "auf", "translation": "aberta" },
-        { "token": "Tisch", "lemma": "Tisch", "translation": "mesa" },
-        { "token": "Stühle", "lemma": "Stuhl", "translation": "cadeiras" },
-        { "token": "Bänke", "lemma": "Bank", "translation": "bancos" },
-        { "token": "umgeworfen", "lemma": "umwerfen", "translation": "derrubados" },
-        { "token": "Waschschüssel", "lemma": "Waschschüssel", "translation": "bacia" },
-        { "token": "lag", "lemma": "liegen", "translation": "estava" },
-        { "token": "Stücken", "lemma": "Stück", "translation": "pedaços" },
-        { "token": "Decke", "lemma": "Decke", "translation": "cobertor" },
-        { "token": "Kissen", "lemma": "Kissen", "translation": "travesseiro" }
+        {
+          "token": "Ach",
+          "lemma": "ach",
+          "translation": "Ah"
+        },
+        {
+          "token": "was",
+          "lemma": "was",
+          "translation": "o que"
+        },
+        {
+          "token": "musste",
+          "lemma": "müssen",
+          "translation": "teve de"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "ela"
+        },
+        {
+          "token": "erblicken",
+          "lemma": "erblicken",
+          "translation": "ver"
+        },
+        {
+          "token": "Haustür",
+          "lemma": "Haustür",
+          "translation": "porta"
+        },
+        {
+          "token": "stand",
+          "lemma": "stehen",
+          "translation": "estava"
+        },
+        {
+          "token": "sperrweit",
+          "lemma": "sperrweit",
+          "translation": "escancarada"
+        },
+        {
+          "token": "auf",
+          "lemma": "auf",
+          "translation": "aberta"
+        },
+        {
+          "token": "Tisch",
+          "lemma": "Tisch",
+          "translation": "mesa"
+        },
+        {
+          "token": "Stühle",
+          "lemma": "Stuhl",
+          "translation": "cadeiras"
+        },
+        {
+          "token": "Bänke",
+          "lemma": "Bank",
+          "translation": "bancos"
+        },
+        {
+          "token": "umgeworfen",
+          "lemma": "umwerfen",
+          "translation": "derrubados"
+        },
+        {
+          "token": "Waschschüssel",
+          "lemma": "Waschschüssel",
+          "translation": "bacia"
+        },
+        {
+          "token": "lag",
+          "lemma": "liegen",
+          "translation": "estava"
+        },
+        {
+          "token": "Stücken",
+          "lemma": "Stück",
+          "translation": "pedaços"
+        },
+        {
+          "token": "Decke",
+          "lemma": "Decke",
+          "translation": "cobertor"
+        },
+        {
+          "token": "Kissen",
+          "lemma": "Kissen",
+          "translation": "travesseiro"
+        }
       ],
       "exercise": {
         "id": "ex_027",
         "type": "yes_no",
         "prompt": "A casa estava em ordem quando a mãe voltou da floresta?",
         "answer": "não",
-        "source_segment_ids": [25, 26, 27]
+        "source_segment_ids": [
+          25,
+          26,
+          27
+        ]
       }
     },
     {
@@ -702,23 +2402,91 @@
       "text": "Sie suchte ihre Kinder, aber nirgends waren sie zu finden; sie rief sie eins nach dem andern bei Namen, aber niemand antwortete.",
       "tts_prompt": "[warm, caring, desperate] Sie suchte ihre Kinder, aber nirgends waren sie zu finden; sie rief sie eins nach dem andern bei Namen, aber niemand antwortete.",
       "words": [
-        { "token": "Sie", "lemma": "sie", "translation": "Ela" },
-        { "token": "suchte", "lemma": "suchen", "translation": "procurou" },
-        { "token": "ihre", "lemma": "ihr", "translation": "seus" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" },
-        { "token": "aber", "lemma": "aber", "translation": "mas" },
-        { "token": "nirgends", "lemma": "nirgends", "translation": "em nenhum lugar" },
-        { "token": "waren", "lemma": "sein", "translation": "estavam" },
-        { "token": "zu", "lemma": "zu", "translation": "para" },
-        { "token": "finden", "lemma": "finden", "translation": "encontrar" },
-        { "token": "rief", "lemma": "rufen", "translation": "chamou" },
-        { "token": "eins", "lemma": "ein", "translation": "um" },
-        { "token": "nach", "lemma": "nach", "translation": "após" },
-        { "token": "dem", "lemma": "der", "translation": "o" },
-        { "token": "andern", "lemma": "ander", "translation": "outro" },
-        { "token": "Namen", "lemma": "Name", "translation": "pelo nome" },
-        { "token": "niemand", "lemma": "niemand", "translation": "ninguém" },
-        { "token": "antwortete", "lemma": "antworten", "translation": "respondeu" }
+        {
+          "token": "Sie",
+          "lemma": "sie",
+          "translation": "Ela"
+        },
+        {
+          "token": "suchte",
+          "lemma": "suchen",
+          "translation": "procurou"
+        },
+        {
+          "token": "ihre",
+          "lemma": "ihr",
+          "translation": "seus"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "aber",
+          "lemma": "aber",
+          "translation": "mas"
+        },
+        {
+          "token": "nirgends",
+          "lemma": "nirgends",
+          "translation": "em nenhum lugar"
+        },
+        {
+          "token": "waren",
+          "lemma": "sein",
+          "translation": "estavam"
+        },
+        {
+          "token": "zu",
+          "lemma": "zu",
+          "translation": "para"
+        },
+        {
+          "token": "finden",
+          "lemma": "finden",
+          "translation": "encontrar"
+        },
+        {
+          "token": "rief",
+          "lemma": "rufen",
+          "translation": "chamou"
+        },
+        {
+          "token": "eins",
+          "lemma": "ein",
+          "translation": "um"
+        },
+        {
+          "token": "nach",
+          "lemma": "nach",
+          "translation": "após"
+        },
+        {
+          "token": "dem",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "andern",
+          "lemma": "ander",
+          "translation": "outro"
+        },
+        {
+          "token": "Namen",
+          "lemma": "Name",
+          "translation": "pelo nome"
+        },
+        {
+          "token": "niemand",
+          "lemma": "niemand",
+          "translation": "ninguém"
+        },
+        {
+          "token": "antwortete",
+          "lemma": "antworten",
+          "translation": "respondeu"
+        }
       ],
       "exercise": null
     },
@@ -727,23 +2495,91 @@
       "text": "Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen.“",
       "tts_prompt": "[calm narrator] Endlich, als sie zu dem jüngsten kam, rief eine feine Stimme: „Liebe Mutter, ich stecke im Uhrkästchen.“",
       "words": [
-        { "token": "Endlich", "lemma": "endlich", "translation": "Finalmente" },
-        { "token": "als", "lemma": "als", "translation": "quando" },
-        { "token": "sie", "lemma": "sie", "translation": "ela" },
-        { "token": "zu", "lemma": "zu", "translation": "ao" },
-        { "token": "dem", "lemma": "der", "translation": "o" },
-        { "token": "jüngsten", "lemma": "jung", "translation": "mais jovem" },
-        { "token": "kam", "lemma": "kommen", "translation": "chegou" },
-        { "token": "rief", "lemma": "rufen", "translation": "gritou" },
-        { "token": "eine", "lemma": "ein", "translation": "uma" },
-        { "token": "feine", "lemma": "fein", "translation": "fina" },
-        { "token": "Stimme", "lemma": "Stimme", "translation": "voz" },
-        { "token": "Liebe", "lemma": "lieb", "translation": "Querida" },
-        { "token": "Mutter", "lemma": "Mutter", "translation": "mãe" },
-        { "token": "ich", "lemma": "ich", "translation": "eu" },
-        { "token": "stecke", "lemma": "stecken", "translation": "estou escondido" },
-        { "token": "im", "lemma": "in", "translation": "na" },
-        { "token": "Uhrkästchen", "lemma": "Uhrkästchen", "translation": "caixinha do relógio" }
+        {
+          "token": "Endlich",
+          "lemma": "endlich",
+          "translation": "Finalmente"
+        },
+        {
+          "token": "als",
+          "lemma": "als",
+          "translation": "quando"
+        },
+        {
+          "token": "sie",
+          "lemma": "sie",
+          "translation": "ela"
+        },
+        {
+          "token": "zu",
+          "lemma": "zu",
+          "translation": "ao"
+        },
+        {
+          "token": "dem",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "jüngsten",
+          "lemma": "jung",
+          "translation": "mais jovem"
+        },
+        {
+          "token": "kam",
+          "lemma": "kommen",
+          "translation": "chegou"
+        },
+        {
+          "token": "rief",
+          "lemma": "rufen",
+          "translation": "gritou"
+        },
+        {
+          "token": "eine",
+          "lemma": "ein",
+          "translation": "uma"
+        },
+        {
+          "token": "feine",
+          "lemma": "fein",
+          "translation": "fina"
+        },
+        {
+          "token": "Stimme",
+          "lemma": "Stimme",
+          "translation": "voz"
+        },
+        {
+          "token": "Liebe",
+          "lemma": "lieb",
+          "translation": "Querida"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "ich",
+          "lemma": "ich",
+          "translation": "eu"
+        },
+        {
+          "token": "stecke",
+          "lemma": "stecken",
+          "translation": "estou escondido"
+        },
+        {
+          "token": "im",
+          "lemma": "in",
+          "translation": "na"
+        },
+        {
+          "token": "Uhrkästchen",
+          "lemma": "Uhrkästchen",
+          "translation": "caixinha do relógio"
+        }
       ],
       "exercise": null
     },
@@ -752,32 +2588,835 @@
       "text": "Sie holte es heraus, und es erzählte ihr, dass der Wolf gekommen war und die andern alle gefressen hatte. Da könnt ihr denken, wie sie geweint hat über ihre armen Kinder.",
       "tts_prompt": "[warm, caring, sad] Sie holte es heraus, und es erzählte ihr, dass der Wolf gekommen war und die andern alle gefressen hatte. Da könnt ihr denken, wie sie geweint hat über ihre armen Kinder.",
       "words": [
-        { "token": "Sie", "lemma": "sie", "translation": "Ela" },
-        { "token": "holte", "lemma": "holen", "translation": "tirou" },
-        { "token": "es", "lemma": "es", "translation": "ele" },
-        { "token": "heraus", "lemma": "heraus", "translation": "de lá" },
-        { "token": "erzählte", "lemma": "erzählen", "translation": "contou" },
-        { "token": "ihr", "lemma": "sie", "translation": "a ela" },
-        { "token": "dass", "lemma": "dass", "translation": "que" },
-        { "token": "der", "lemma": "der", "translation": "o" },
-        { "token": "Wolf", "lemma": "Wolf", "translation": "lobo" },
-        { "token": "gekommen", "lemma": "kommen", "translation": "veio" },
-        { "token": "war", "lemma": "sein", "translation": "tinha" },
-        { "token": "andern", "lemma": "ander", "translation": "outros" },
-        { "token": "alle", "lemma": "alle", "translation": "todos" },
-        { "token": "gefressen", "lemma": "fressen", "translation": "comido" },
-        { "token": "hatte", "lemma": "haben", "translation": "tinha" },
-        { "token": "geweint", "lemma": "weinen", "translation": "chorado" },
-        { "token": "armen", "lemma": "arm", "translation": "pobres" },
-        { "token": "Kinder", "lemma": "Kind", "translation": "filhos" }
+        {
+          "token": "Sie",
+          "lemma": "sie",
+          "translation": "Ela"
+        },
+        {
+          "token": "holte",
+          "lemma": "holen",
+          "translation": "tirou"
+        },
+        {
+          "token": "es",
+          "lemma": "es",
+          "translation": "ele"
+        },
+        {
+          "token": "heraus",
+          "lemma": "heraus",
+          "translation": "de lá"
+        },
+        {
+          "token": "erzählte",
+          "lemma": "erzählen",
+          "translation": "contou"
+        },
+        {
+          "token": "ihr",
+          "lemma": "sie",
+          "translation": "a ela"
+        },
+        {
+          "token": "dass",
+          "lemma": "dass",
+          "translation": "que"
+        },
+        {
+          "token": "der",
+          "lemma": "der",
+          "translation": "o"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "gekommen",
+          "lemma": "kommen",
+          "translation": "veio"
+        },
+        {
+          "token": "war",
+          "lemma": "sein",
+          "translation": "tinha"
+        },
+        {
+          "token": "andern",
+          "lemma": "ander",
+          "translation": "outros"
+        },
+        {
+          "token": "alle",
+          "lemma": "alle",
+          "translation": "todos"
+        },
+        {
+          "token": "gefressen",
+          "lemma": "fressen",
+          "translation": "comido"
+        },
+        {
+          "token": "hatte",
+          "lemma": "haben",
+          "translation": "tinha"
+        },
+        {
+          "token": "geweint",
+          "lemma": "weinen",
+          "translation": "chorado"
+        },
+        {
+          "token": "armen",
+          "lemma": "arm",
+          "translation": "pobres"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        }
       ],
       "exercise": {
         "id": "ex_030",
         "type": "word_select",
         "prompt": "Quem sobreviveu escondido na caixinha do relógio?",
-        "options": ["O mais novo", "O mais velho", "O segundo", "Nenhum"],
+        "options": [
+          "O mais novo",
+          "O mais velho",
+          "O segundo",
+          "Nenhum"
+        ],
         "answer": "O mais novo",
-        "source_segment_ids": [28, 29, 30]
+        "source_segment_ids": [
+          28,
+          29,
+          30
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "text": "Die Mutter Geiß ging hinaus auf die Wiese, und als sie an den großen Baum kam, lag der Wolf darunter und schlief, daß die Äste zitterten.",
+      "tts_prompt": "[calm narrator] Die Mutter Geiß ging hinaus auf die Wiese, und als sie an den großen Baum kam, lag der Wolf darunter und schlief, daß die Äste zitterten.",
+      "words": [
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "Geiß",
+          "lemma": "Geiß",
+          "translation": "cabra"
+        },
+        {
+          "token": "ging",
+          "lemma": "gehen",
+          "translation": "foi"
+        },
+        {
+          "token": "hinaus",
+          "lemma": "hinaus",
+          "translation": "para fora"
+        },
+        {
+          "token": "Wiese",
+          "lemma": "Wiese",
+          "translation": "prado"
+        },
+        {
+          "token": "Baum",
+          "lemma": "Baum",
+          "translation": "árvore"
+        },
+        {
+          "token": "lag",
+          "lemma": "liegen",
+          "translation": "estava deitado"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "schlief",
+          "lemma": "schlafen",
+          "translation": "dormia"
+        },
+        {
+          "token": "Äste",
+          "lemma": "Ast",
+          "translation": "galhos"
+        },
+        {
+          "token": "zitterten",
+          "lemma": "zittern",
+          "translation": "tremiam"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 32,
+      "text": "Sie betrachtete ihn von allen Seiten und sah, daß in seinem vollen Bauch etwas zappelte und sich regte.",
+      "tts_prompt": "[curious, hopeful] Sie betrachtete ihn von allen Seiten und sah, daß in seinem vollen Bauch etwas zappelte und sich regte.",
+      "words": [
+        {
+          "token": "betrachtete",
+          "lemma": "betrachten",
+          "translation": "observou"
+        },
+        {
+          "token": "Seiten",
+          "lemma": "Seite",
+          "translation": "lados"
+        },
+        {
+          "token": "sah",
+          "lemma": "sehen",
+          "translation": "viu"
+        },
+        {
+          "token": "vollen",
+          "lemma": "voll",
+          "translation": "cheio"
+        },
+        {
+          "token": "Bauch",
+          "lemma": "Bauch",
+          "translation": "barriga"
+        },
+        {
+          "token": "zappelte",
+          "lemma": "zappeln",
+          "translation": "se mexia"
+        },
+        {
+          "token": "regte",
+          "lemma": "regen",
+          "translation": "se movia"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 33,
+      "text": "„Ach Gott“, dachte sie, „sollten meine armen Kinder, die er zum Abendessen hinuntergewürgt hat, noch am Leben sein?“",
+      "tts_prompt": "[hopeful, anxious] „Ach Gott“, dachte sie, „sollten meine armen Kinder, die er zum Abendessen hinuntergewürgt hat, noch am Leben sein?“",
+      "words": [
+        {
+          "token": "Ach",
+          "lemma": "ach",
+          "translation": "Ah"
+        },
+        {
+          "token": "Gott",
+          "lemma": "Gott",
+          "translation": "Deus"
+        },
+        {
+          "token": "dachte",
+          "lemma": "denken",
+          "translation": "pensou"
+        },
+        {
+          "token": "sollten",
+          "lemma": "sollen",
+          "translation": "estariam"
+        },
+        {
+          "token": "armen",
+          "lemma": "arm",
+          "translation": "pobres"
+        },
+        {
+          "token": "Kinder",
+          "lemma": "Kind",
+          "translation": "filhos"
+        },
+        {
+          "token": "Abendessen",
+          "lemma": "Abendessen",
+          "translation": "jantar"
+        },
+        {
+          "token": "Leben",
+          "lemma": "Leben",
+          "translation": "vida"
+        }
+      ],
+      "exercise": {
+        "id": "ex_033",
+        "type": "word_select",
+        "prompt": "O que a mãe percebeu na barriga do lobo adormecido?",
+        "options": [
+          "Algo se mexendo",
+          "Pedras pesadas",
+          "Nada de especial",
+          "Água"
+        ],
+        "answer": "Algo se mexendo",
+        "source_segment_ids": [
+          31,
+          32,
+          33
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "text": "Da lief sie nach Hause, holte Schere, Nadel und Faden und schnitt dem Ungetüm den Wanst auf.",
+      "tts_prompt": "[determined, urgent] Da lief sie nach Hause, holte Schere, Nadel und Faden und schnitt dem Ungetüm den Wanst auf.",
+      "words": [
+        {
+          "token": "lief",
+          "lemma": "laufen",
+          "translation": "correu"
+        },
+        {
+          "token": "Hause",
+          "lemma": "Haus",
+          "translation": "casa"
+        },
+        {
+          "token": "holte",
+          "lemma": "holen",
+          "translation": "buscou"
+        },
+        {
+          "token": "Schere",
+          "lemma": "Schere",
+          "translation": "tesoura"
+        },
+        {
+          "token": "Nadel",
+          "lemma": "Nadel",
+          "translation": "agulha"
+        },
+        {
+          "token": "Faden",
+          "lemma": "Faden",
+          "translation": "fio"
+        },
+        {
+          "token": "schnitt",
+          "lemma": "schneiden",
+          "translation": "cortou"
+        },
+        {
+          "token": "Ungetüm",
+          "lemma": "Ungetüm",
+          "translation": "monstro"
+        },
+        {
+          "token": "Wanst",
+          "lemma": "Wanst",
+          "translation": "barrigão"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 35,
+      "text": "Kaum hatte sie einen Schnitt getan, da streckte schon ein Geißlein den Kopf heraus, und als sie weiterschnitt, sprangen alle sechs nacheinander hervor und waren alle noch am Leben.",
+      "tts_prompt": "[joyful, relieved] Kaum hatte sie einen Schnitt getan, da streckte schon ein Geißlein den Kopf heraus, und als sie weiterschnitt, sprangen alle sechs nacheinander hervor und waren alle noch am Leben.",
+      "words": [
+        {
+          "token": "Kaum",
+          "lemma": "kaum",
+          "translation": "Mal"
+        },
+        {
+          "token": "Schnitt",
+          "lemma": "Schnitt",
+          "translation": "corte"
+        },
+        {
+          "token": "streckte",
+          "lemma": "strecken",
+          "translation": "esticou"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabrito"
+        },
+        {
+          "token": "Kopf",
+          "lemma": "Kopf",
+          "translation": "cabeça"
+        },
+        {
+          "token": "heraus",
+          "lemma": "heraus",
+          "translation": "para fora"
+        },
+        {
+          "token": "sprangen",
+          "lemma": "springen",
+          "translation": "pularam"
+        },
+        {
+          "token": "sechs",
+          "lemma": "sechs",
+          "translation": "seis"
+        },
+        {
+          "token": "nacheinander",
+          "lemma": "nacheinander",
+          "translation": "um após o outro"
+        },
+        {
+          "token": "Leben",
+          "lemma": "Leben",
+          "translation": "vida"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 36,
+      "text": "Das war eine Freude! Sie herzten ihre liebe Mutter und hüpften wie ein Schneider, der Hochzeit hält.",
+      "tts_prompt": "[joyful, celebratory] Das war eine Freude! Sie herzten ihre liebe Mutter und hüpften wie ein Schneider, der Hochzeit hält.",
+      "words": [
+        {
+          "token": "Freude",
+          "lemma": "Freude",
+          "translation": "alegria"
+        },
+        {
+          "token": "herzten",
+          "lemma": "herzen",
+          "translation": "abraçaram"
+        },
+        {
+          "token": "liebe",
+          "lemma": "lieb",
+          "translation": "querida"
+        },
+        {
+          "token": "Mutter",
+          "lemma": "Mutter",
+          "translation": "mãe"
+        },
+        {
+          "token": "hüpften",
+          "lemma": "hüpfen",
+          "translation": "pularam"
+        },
+        {
+          "token": "Schneider",
+          "lemma": "Schneider",
+          "translation": "alfaiate"
+        },
+        {
+          "token": "Hochzeit",
+          "lemma": "Hochzeit",
+          "translation": "casamento"
+        }
+      ],
+      "exercise": {
+        "id": "ex_036",
+        "type": "word_select",
+        "prompt": "O que aconteceu quando a mãe cortou a barriga do lobo?",
+        "options": [
+          "Os 6 cabritos saíram vivos",
+          "O lobo acordou",
+          "Encontrou pedras",
+          "Só um sobreviveu"
+        ],
+        "answer": "Os 6 cabritos saíram vivos",
+        "source_segment_ids": [
+          34,
+          35,
+          36
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "text": "Die Mutter aber sagte: „Jetzt geht und sucht Wackersteine, damit wollen wir dem gottlosen Tier den Bauch füllen, solange es noch schläft.“",
+      "tts_prompt": "[calm, purposeful] Die Mutter aber sagte: „Jetzt geht und sucht Wackersteine, damit wollen wir dem gottlosen Tier den Bauch füllen, solange es noch schläft.“",
+      "words": [
+        {
+          "token": "Jetzt",
+          "lemma": "jetzt",
+          "translation": "Agora"
+        },
+        {
+          "token": "geht",
+          "lemma": "gehen",
+          "translation": "vão"
+        },
+        {
+          "token": "sucht",
+          "lemma": "suchen",
+          "translation": "procurem"
+        },
+        {
+          "token": "Wackersteine",
+          "lemma": "Wackerstein",
+          "translation": "pedras grandes"
+        },
+        {
+          "token": "gottlosen",
+          "lemma": "gottlos",
+          "translation": "maldito"
+        },
+        {
+          "token": "Tier",
+          "lemma": "Tier",
+          "translation": "animal"
+        },
+        {
+          "token": "Bauch",
+          "lemma": "Bauch",
+          "translation": "barriga"
+        },
+        {
+          "token": "füllen",
+          "lemma": "füllen",
+          "translation": "encher"
+        },
+        {
+          "token": "schläft",
+          "lemma": "schlafen",
+          "translation": "dorme"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 38,
+      "text": "Da schleppten die sieben Geißlein in aller Eile die Steine herbei und steckten sie dem Wolf in den Bauch, so viele als hineinwollten.",
+      "tts_prompt": "[hurried, purposeful] Da schleppten die sieben Geißlein in aller Eile die Steine herbei und steckten sie dem Wolf in den Bauch, so viele als hineinwollten.",
+      "words": [
+        {
+          "token": "schleppten",
+          "lemma": "schleppen",
+          "translation": "arrastaram"
+        },
+        {
+          "token": "sieben",
+          "lemma": "sieben",
+          "translation": "sete"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritos"
+        },
+        {
+          "token": "Eile",
+          "lemma": "Eile",
+          "translation": "pressa"
+        },
+        {
+          "token": "Steine",
+          "lemma": "Stein",
+          "translation": "pedras"
+        },
+        {
+          "token": "herbei",
+          "lemma": "herbei",
+          "translation": "até lá"
+        },
+        {
+          "token": "steckten",
+          "lemma": "stecken",
+          "translation": "colocaram"
+        },
+        {
+          "token": "Wolf",
+          "lemma": "Wolf",
+          "translation": "lobo"
+        },
+        {
+          "token": "Bauch",
+          "lemma": "Bauch",
+          "translation": "barriga"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 39,
+      "text": "Dann nähte ihn die Mutter in aller Geschwindigkeit wieder zu, daß er nichts merkte und sich nicht einmal regte.",
+      "tts_prompt": "[careful, quiet] Dann nähte ihn die Mutter in aller Geschwindigkeit wieder zu, daß er nichts merkte und sich nicht einmal regte.",
+      "words": [
+        {
+          "token": "nähte",
+          "lemma": "nähen",
+          "translation": "costurou"
+        },
+        {
+          "token": "Geschwindigkeit",
+          "lemma": "Geschwindigkeit",
+          "translation": "rapidez"
+        },
+        {
+          "token": "wieder",
+          "lemma": "wieder",
+          "translation": "de volta"
+        },
+        {
+          "token": "merkte",
+          "lemma": "merken",
+          "translation": "percebeu"
+        },
+        {
+          "token": "einmal",
+          "lemma": "einmal",
+          "translation": "sequer"
+        },
+        {
+          "token": "regte",
+          "lemma": "regen",
+          "translation": "se mexeu"
+        }
+      ],
+      "exercise": {
+        "id": "ex_039",
+        "type": "word_select",
+        "prompt": "O que os cabritos puseram na barriga do lobo antes de costurá-la?",
+        "options": [
+          "Pedras pesadas",
+          "Água",
+          "Areia",
+          "Comida"
+        ],
+        "answer": "Pedras pesadas",
+        "source_segment_ids": [
+          37,
+          38,
+          39
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "text": "Als der Wolf endlich ausgeschlafen hatte, machte er sich auf die Beine, und weil ihm die Steine im Magen großen Durst gemacht hatten, wollte er zu einem Brunnen gehen und trinken.",
+      "tts_prompt": "[calm narrator] Als der Wolf endlich ausgeschlafen hatte, machte er sich auf die Beine, und weil ihm die Steine im Magen großen Durst gemacht hatten, wollte er zu einem Brunnen gehen und trinken.",
+      "words": [
+        {
+          "token": "ausgeschlafen",
+          "lemma": "ausschlafen",
+          "translation": "dormido o suficiente"
+        },
+        {
+          "token": "Beine",
+          "lemma": "Bein",
+          "translation": "pés"
+        },
+        {
+          "token": "Steine",
+          "lemma": "Stein",
+          "translation": "pedras"
+        },
+        {
+          "token": "Magen",
+          "lemma": "Magen",
+          "translation": "estômago"
+        },
+        {
+          "token": "Durst",
+          "lemma": "Durst",
+          "translation": "sede"
+        },
+        {
+          "token": "Brunnen",
+          "lemma": "Brunnen",
+          "translation": "poço"
+        },
+        {
+          "token": "trinken",
+          "lemma": "trinken",
+          "translation": "beber"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 41,
+      "text": "Als er aber anfing zu gehen, stießen die Steine in seinem Bauch aneinander und rappelten. Da rief er: „Was rumpelt und pumpelt in meinem Bauch? Ich meinte, es wären sechs Geißlein, so ist’s lauter Wackerstein.“",
+      "tts_prompt": "[confused, grumbling wolf voice] Als er aber anfing zu gehen, stießen die Steine in seinem Bauch aneinander und rappelten. Da rief er: „Was rumpelt und pumpelt in meinem Bauch? Ich meinte, es wären sechs Geißlein, so ist’s lauter Wackerstein.“",
+      "words": [
+        {
+          "token": "anfing",
+          "lemma": "anfangen",
+          "translation": "começou"
+        },
+        {
+          "token": "stießen",
+          "lemma": "stoßen",
+          "translation": "bateram"
+        },
+        {
+          "token": "aneinander",
+          "lemma": "aneinander",
+          "translation": "uns nos outros"
+        },
+        {
+          "token": "rappelten",
+          "lemma": "rappeln",
+          "translation": "chacoalhavam"
+        },
+        {
+          "token": "rumpelt",
+          "lemma": "rumpeln",
+          "translation": "faz barulho"
+        },
+        {
+          "token": "pumpelt",
+          "lemma": "pumpeln",
+          "translation": "bate"
+        },
+        {
+          "token": "meinte",
+          "lemma": "meinen",
+          "translation": "pensava"
+        },
+        {
+          "token": "Geißlein",
+          "lemma": "Geißlein",
+          "translation": "cabritos"
+        },
+        {
+          "token": "Wackerstein",
+          "lemma": "Wackerstein",
+          "translation": "pedras"
+        }
+      ],
+      "exercise": null
+    },
+    {
+      "id": 42,
+      "text": "Und als er an den Brunnen kam und sich über das Wasser bückte und trinken wollte, da zogen ihn die schweren Steine hinein, und er mußte jämmerlich ersaufen.",
+      "tts_prompt": "[calm narrator, resolving] Und als er an den Brunnen kam und sich über das Wasser bückte und trinken wollte, da zogen ihn die schweren Steine hinein, und er mußte jämmerlich ersaufen.",
+      "words": [
+        {
+          "token": "Brunnen",
+          "lemma": "Brunnen",
+          "translation": "poço"
+        },
+        {
+          "token": "bückte",
+          "lemma": "bücken",
+          "translation": "se debruçou"
+        },
+        {
+          "token": "zogen",
+          "lemma": "ziehen",
+          "translation": "puxaram"
+        },
+        {
+          "token": "schweren",
+          "lemma": "schwer",
+          "translation": "pesadas"
+        },
+        {
+          "token": "Steine",
+          "lemma": "Stein",
+          "translation": "pedras"
+        },
+        {
+          "token": "jämmerlich",
+          "lemma": "jämmerlich",
+          "translation": "miseravelmente"
+        },
+        {
+          "token": "ersaufen",
+          "lemma": "ersaufen",
+          "translation": "se afogar"
+        }
+      ],
+      "exercise": {
+        "id": "ex_042",
+        "type": "word_select",
+        "prompt": "Como o lobo morreu no final da história?",
+        "options": [
+          "Afogou-se no poço",
+          "Foi morto pela mãe",
+          "Fugiu para a floresta",
+          "Morreu de fome"
+        ],
+        "answer": "Afogou-se no poço",
+        "source_segment_ids": [
+          40,
+          41,
+          42
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "text": "Als die sieben Geißlein das sahen, kamen sie herbeigelaufen, riefen laut: „Der Wolf ist tot! Der Wolf ist tot!“ und tanzten mit ihrer Mutter vor Freude um den Brunnen herum.",
+      "tts_prompt": "[joyful, triumphant] Als die sieben Geißlein das sahen, kamen sie herbeigelaufen, riefen laut: „Der Wolf ist tot! Der Wolf ist tot!“ und tanzten mit ihrer Mutter vor Freude um den Brunnen herum.",
+      "words": [
+        {
+          "token": "sahen",
+          "lemma": "sehen",
+          "translation": "viram"
+        },
+        {
+          "token": "herbeigelaufen",
+          "lemma": "herbeikommen",
+          "translation": "correram para cá"
+        },
+        {
+          "token": "riefen",
+          "lemma": "rufen",
+          "translation": "gritaram"
+        },
+        {
+          "token": "laut",
+          "lemma": "laut",
+          "translation": "alto"
+        },
+        {
+          "token": "tot",
+          "lemma": "tot",
+          "translation": "morto"
+        },
+        {
+          "token": "tanzten",
+          "lemma": "tanzen",
+          "translation": "dançaram"
+        },
+        {
+          "token": "Freude",
+          "lemma": "Freude",
+          "translation": "alegria"
+        },
+        {
+          "token": "Brunnen",
+          "lemma": "Brunnen",
+          "translation": "poço"
+        },
+        {
+          "token": "herum",
+          "lemma": "herum",
+          "translation": "ao redor"
+        }
+      ],
+      "exercise": {
+        "id": "ex_043",
+        "type": "word_select",
+        "prompt": "Como termina a história dos sete cabritos?",
+        "options": [
+          "Dançando de alegria ao redor do poço",
+          "Chorando pela perda",
+          "Fugindo para outra floresta",
+          "Esperando o lobo voltar"
+        ],
+        "answer": "Dançando de alegria ao redor do poço",
+        "source_segment_ids": [
+          43
+        ]
       }
     }
   ]
