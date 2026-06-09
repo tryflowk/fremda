@@ -95,7 +95,10 @@ export function ReadingPage() {
       return;
     }
 
-    tts.play(segment.tts_prompt || segment.text, {
+    // tts_prompt may carry a leading voice instruction like "[narrator voice] …"
+    // meant for the TTS engine, not to be read aloud — strip it.
+    const speakText = (segment.tts_prompt || segment.text).replace(/^\s*\[[^\]]*\]\s*/, '');
+    tts.play(speakText, {
       lang: book?.meta.source_language === 'de' ? 'de-DE'
         : book?.meta.source_language === 'fr' ? 'fr-FR'
         : book?.meta.source_language === 'it' ? 'it-IT'

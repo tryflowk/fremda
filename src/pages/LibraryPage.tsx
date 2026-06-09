@@ -81,7 +81,7 @@ export function LibraryPage() {
   }
 
   return (
-    <div className="min-h-dvh flex flex-col" style={{ background: 'var(--color-bg)' }}>
+    <div className="min-h-dvh flex flex-col overflow-x-hidden" style={{ background: 'var(--color-bg)' }}>
       {/* Header */}
       <header
         className="flex items-center justify-between px-5 py-4 border-b sticky top-0 z-30"
@@ -137,10 +137,10 @@ export function LibraryPage() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6, scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              className="absolute left-1/2 z-30 mt-1 rounded-2xl border shadow-2xl p-3"
+              className="fixed z-30 rounded-2xl border shadow-2xl p-3"
               style={{
                 top: 64,
-                transform: 'translateX(-50%)',
+                right: 16,
                 width: 'min(340px, calc(100vw - 32px))',
                 background: 'var(--color-surface)',
                 borderColor: 'var(--color-border)',
