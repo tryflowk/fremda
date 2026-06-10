@@ -6,6 +6,7 @@ import type { Book, Segment, WordToken } from '@/types/book';
 import { tts } from '@/lib/tts';
 import { useAuthContext } from '@/lib/auth';
 import { useProgress } from '@/hooks/useProgress';
+import { usePrefs } from '@/hooks/usePrefs';
 import { ExerciseOverlay } from '@/components/ExerciseOverlay';
 import { Spinner } from '@/components/Spinner';
 
@@ -15,6 +16,7 @@ export function ReadingPage() {
   const navigate = useNavigate();
   const { user } = useAuthContext();
   const { markSegmentDone, markExerciseDone } = useProgress(user?.id);
+  const { prefs } = usePrefs(user?.id);
 
   const [book, setBook] = useState<Book | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -280,9 +282,10 @@ export function ReadingPage() {
           onClick={silentNext}
           disabled={activeIdx === book.segments.length - 1 && !segment?.exercise}
           aria-label="Próxima frase sem áudio"
-          className="fixed right-3 z-20 w-12 h-12 rounded-full flex items-center justify-center border shadow-lg transition-all active:scale-90 disabled:opacity-30"
+          className="fixed z-20 w-12 h-12 rounded-full flex items-center justify-center border shadow-lg transition-all active:scale-90 disabled:opacity-30"
           style={{
             top: '33%',
+            ...(prefs.next_button_side === 'left' ? { left: 12 } : { right: 12 }),
             background: 'var(--color-surface)',
             borderColor: 'var(--color-border)',
             color: 'var(--color-accent)',
