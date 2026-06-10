@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Volume2, ChevronDown } from 'lucide-react';
 import type { Book, Segment, WordToken } from '@/types/book';
 import { tts } from '@/lib/tts';
 import { useAuthContext } from '@/lib/auth';
@@ -114,6 +114,14 @@ export function ReadingPage() {
         setIsPlaying(false);
       },
     });
+  }
+
+  // Silent reading: advance without TTS, but keep exercises and progress tracking
+  // (unlike SkipForward, which bypasses exercises).
+  function silentNext() {
+    tts.stop();
+    setIsPlaying(false);
+    onSegmentEnded();
   }
 
   function handlePlayPause() {
@@ -265,6 +273,24 @@ export function ReadingPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Silent-reading advance: next sentence without audio */}
+      {!showExercise && (
+        <button
+          onClick={silentNext}
+          disabled={activeIdx === book.segments.length - 1 && !segment?.exercise}
+          aria-label="Próxima frase sem áudio"
+          className="fixed right-3 z-20 w-12 h-12 rounded-full flex items-center justify-center border shadow-lg transition-all active:scale-90 disabled:opacity-30"
+          style={{
+            top: '33%',
+            background: 'var(--color-surface)',
+            borderColor: 'var(--color-border)',
+            color: 'var(--color-accent)',
+          }}
+        >
+          <ChevronDown size={22} />
+        </button>
+      )}
 
       {/* Exercise overlay */}
       {showExercise && segment?.exercise && (
