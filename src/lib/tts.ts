@@ -11,6 +11,18 @@ const TTS_URL = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_M
 
 const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
 
+// Pick the best available device voice for a language: exact region first,
+// then "enhanced"-class voices (iOS/Android ship better ones than the default).
+function pickVoice(lang: string): SpeechSynthesisVoice | null {
+  const voices = synth?.getVoices() ?? [];
+  const base = lang.split('-')[0];
+  const matches = voices.filter(v => v.lang.replace('_', '-').startsWith(base));
+  if (matches.length === 0) return null;
+  const exact = matches.filter(v => v.lang.replace('_', '-') === lang);
+  const pool = exact.length > 0 ? exact : matches;
+  return pool.find(v => /premium|enhanced|natural|neural|siri/i.test(v.name)) ?? pool[0];
+}
+
 export interface PlayOptions {
   lang?: string;
   rate?: number;
@@ -27,6 +39,8 @@ export const tts = {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = opts.lang ?? 'de-DE';
     u.rate = opts.rate ?? 1.0;
+    const voice = pickVoice(u.lang);
+    if (voice) u.voice = voice;
     u.onstart = () => opts.onStart?.();
     u.onend = () => opts.onEnd?.();
     u.onerror = (e) => {
@@ -43,6 +57,8 @@ export const tts = {
     const u = new SpeechSynthesisUtterance(token);
     u.lang = lang;
     u.rate = 0.85;
+    const voice = pickVoice(lang);
+    if (voice) u.voice = voice;
     synth.speak(u);
   },
 

@@ -3,10 +3,11 @@ import { supabase } from '@/lib/supabase';
 
 export interface Prefs {
   library_lang: string | null;
+  native_language: string | null;
   next_button_side: 'left' | 'right';
 }
 
-const DEFAULTS: Prefs = { library_lang: null, next_button_side: 'right' };
+const DEFAULTS: Prefs = { library_lang: null, native_language: null, next_button_side: 'right' };
 
 export function usePrefs(userId: string | undefined) {
   const [prefs, setPrefs] = useState<Prefs>(DEFAULTS);
@@ -18,7 +19,7 @@ export function usePrefs(userId: string | undefined) {
     if (!userId) return;
     supabase
       .from('user_prefs')
-      .select('library_lang,next_button_side')
+      .select('library_lang,native_language,next_button_side')
       .eq('user_id', userId)
       .maybeSingle()
       .then(({ data }) => {

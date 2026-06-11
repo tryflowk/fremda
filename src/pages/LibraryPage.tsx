@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, LogOut, ChevronDown, Settings, ShoppingBag, Volume2, Smartphone, X } from 'lucide-react';
+import { BookOpen, LogOut, ChevronDown, Settings, ShoppingBag, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthContext } from '@/lib/auth';
 import { useProgress } from '@/hooks/useProgress';
@@ -14,6 +14,18 @@ const LANGUAGES = [
   { code: 'en', flag: '🇺🇸', name: 'English' },
   { code: 'it', flag: '🇮🇹', name: 'Italiano' },
   { code: 'fr', flag: '🇫🇷', name: 'Français' },
+  { code: 'es', flag: '🇪🇸', name: 'Español' },
+];
+
+// Languages the learner can declare as their native one (drives which
+// translations/books they see — e.g. an American learning German).
+const NATIVE_LANGUAGES = [
+  { code: 'pt-BR', flag: '🇧🇷', name: 'Português' },
+  { code: 'en', flag: '🇺🇸', name: 'English' },
+  { code: 'es', flag: '🇪🇸', name: 'Español' },
+  { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
+  { code: 'fr', flag: '🇫🇷', name: 'Français' },
+  { code: 'it', flag: '🇮🇹', name: 'Italiano' },
 ];
 
 const FLAG: Record<string, string> = {
@@ -35,7 +47,6 @@ export function LibraryPage() {
   const [showLangPicker, setShowLangPicker] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [buying, setBuying] = useState<BookRow | null>(null);
-  const [buyTtsPro, setBuyTtsPro] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -73,8 +84,11 @@ export function LibraryPage() {
 
   const langBooks = books.filter(b => b.source_language === selectedLang);
   const myBooks = langBooks.filter(b => owned.has(b.id));
-  const storeBooks = langBooks.filter(b => !owned.has(b.id));
+  // Store offers only books translated to the learner's native language
+  const storeBooks = langBooks.filter(b =>
+    !owned.has(b.id) && (!prefs.native_language || b.target_language === prefs.native_language));
   const selectedLanguage = LANGUAGES.find(l => l.code === selectedLang)!;
+  const needsOnboarding = prefsLoaded && !prefs.native_language;
 
   async function handleOpen(bookId: string, lang: string) {
     await ensureInLibrary(bookId);
@@ -91,12 +105,10 @@ export function LibraryPage() {
       user_id: user.id,
       book_id: buying.id,
       purchased: true,
-      tts_pro: buyTtsPro,
     });
     setOwned(prev => new Set([...prev, buying.id]));
     setConfirming(false);
     setBuying(null);
-    setBuyTtsPro(false);
   }
 
   const progressPct = (bookId: string, total: number) => {
@@ -151,7 +163,7 @@ export function LibraryPage() {
 
           {store ? (
             <button
-              onClick={() => { setBuying(book); setBuyTtsPro(false); }}
+              onClick={() => setBuying(book)}
               className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all active:scale-95 border"
               style={{ borderColor: 'var(--color-accent)', color: 'var(--color-accent)' }}
             >
@@ -325,6 +337,26 @@ export function LibraryPage() {
               <p className="text-xs mt-2" style={{ color: 'var(--color-muted)' }}>
                 O botão de leitura sem áudio na tela do livro.
               </p>
+
+              <p className="text-sm font-medium mt-4 mb-2" style={{ color: 'var(--color-text)' }}>
+                Língua nativa
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {NATIVE_LANGUAGES.map(lang => (
+                  <button
+                    key={lang.code}
+                    onClick={() => savePrefs({ native_language: lang.code })}
+                    className="flex flex-col items-center gap-1 py-2 rounded-xl border text-xs font-medium transition-all active:scale-95"
+                    style={{
+                      borderColor: prefs.native_language === lang.code ? 'var(--color-accent)' : 'var(--color-border)',
+                      background: prefs.native_language === lang.code ? 'var(--color-surface-2)' : 'transparent',
+                      color: prefs.native_language === lang.code ? 'var(--color-accent)' : 'var(--color-muted)',
+                    }}
+                  >
+                    <span className="text-base leading-none">{lang.flag}</span> {lang.name}
+                  </button>
+                ))}
+              </div>
             </motion.div>
           </>
         )}
@@ -371,6 +403,45 @@ export function LibraryPage() {
         )}
       </main>
 
+      {/* Onboarding: pick native language on first visit */}
+      <AnimatePresence>
+        {needsOnboarding && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6"
+            style={{ background: 'var(--color-bg)' }}
+          >
+            <div className="max-w-sm w-full flex flex-col items-center gap-6 text-center">
+              <BookOpen size={40} style={{ color: 'var(--color-accent)' }} />
+              <div>
+                <h2 className="text-xl font-bold mb-1.5" style={{ color: 'var(--color-text)' }}>
+                  Bem-vindo ao Fremda!
+                </h2>
+                <p className="text-sm" style={{ color: 'var(--color-muted)' }}>
+                  Qual é a sua língua nativa? As traduções e exercícios serão nela.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5 w-full">
+                {NATIVE_LANGUAGES.map(lang => (
+                  <button
+                    key={lang.code}
+                    onClick={() => savePrefs({ native_language: lang.code })}
+                    className="flex items-center gap-2.5 px-4 py-3.5 rounded-xl border text-sm font-medium transition-all active:scale-95"
+                    style={{
+                      borderColor: 'var(--color-border)',
+                      background: 'var(--color-surface)',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    <span className="text-xl leading-none">{lang.flag}</span> {lang.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Purchase sheet */}
       <AnimatePresence>
         {buying && (
@@ -395,44 +466,6 @@ export function LibraryPage() {
               <p className="text-sm mb-5" style={{ color: 'var(--color-muted)' }}>
                 {buying.author}{buying.year ? `, ${buying.year}` : ''} · {FLAG[buying.source_language] ?? '🌐'} → {FLAG[buying.target_language] ?? '🌐'}
               </p>
-
-              <p className="text-sm font-medium mb-2" style={{ color: 'var(--color-text)' }}>Narração</p>
-              <div className="grid gap-2 mb-6">
-                <button
-                  onClick={() => setBuyTtsPro(false)}
-                  className="flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all"
-                  style={{
-                    borderColor: !buyTtsPro ? 'var(--color-accent)' : 'var(--color-border)',
-                    background: !buyTtsPro ? 'var(--color-surface-2)' : 'transparent',
-                  }}
-                >
-                  <Smartphone size={18} style={{ color: !buyTtsPro ? 'var(--color-accent)' : 'var(--color-muted)' }} />
-                  <div>
-                    <p className="text-sm font-medium" style={{ color: 'var(--color-text)' }}>Voz do celular</p>
-                    <p className="text-xs" style={{ color: 'var(--color-muted)' }}>Usa o leitor de voz do seu aparelho</p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setBuyTtsPro(true)}
-                  className="flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all"
-                  style={{
-                    borderColor: buyTtsPro ? 'var(--color-accent)' : 'var(--color-border)',
-                    background: buyTtsPro ? 'var(--color-surface-2)' : 'transparent',
-                  }}
-                >
-                  <Volume2 size={18} style={{ color: buyTtsPro ? 'var(--color-accent)' : 'var(--color-muted)' }} />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-                      Narração Pro
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                        style={{ background: 'var(--color-accent)', color: 'white' }}>
-                        EM BREVE
-                      </span>
-                    </p>
-                    <p className="text-xs" style={{ color: 'var(--color-muted)' }}>Áudio de estúdio, baixado no aparelho</p>
-                  </div>
-                </button>
-              </div>
 
               <button
                 onClick={confirmPurchase}

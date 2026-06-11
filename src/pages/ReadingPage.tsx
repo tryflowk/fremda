@@ -47,9 +47,15 @@ export function ReadingPage() {
         data = await r.json();
       }
       setBook(data);
+      // `from` is the id of the last COMPLETED segment. Ids are not monotonic
+      // (the editor inserts new segments with high ids mid-book), so match the
+      // exact id and resume at the next array position.
       const fromParam = parseInt(searchParams.get('from') ?? '0', 10);
-      const startIdx = data!.segments.findIndex(s => s.id >= fromParam);
-      setActiveIdx(Math.max(0, startIdx));
+      const exactIdx = data!.segments.findIndex(s => s.id === fromParam);
+      const startIdx = exactIdx >= 0
+        ? Math.min(exactIdx + 1, data!.segments.length - 1)
+        : Math.max(0, data!.segments.findIndex(s => s.id >= fromParam));
+      setActiveIdx(startIdx);
     }
     load();
   }, [bookId, searchParams]);
@@ -68,18 +74,19 @@ export function ReadingPage() {
     }
   }
 
-  const doAdvance = useCallback(async (fromIdx: number, direction: 1 | -1) => {
+  const doAdvance = useCallback((fromIdx: number, direction: 1 | -1) => {
     tts.stop();
     setIsPlaying(false);
     setShowExercise(false);
     const b = bookRef.current;
     if (!b) return;
     const nextIdx = Math.max(0, Math.min(b.segments.length - 1, fromIdx + direction));
+    // Advance the UI immediately; persist progress in the background.
+    setActiveIdx(nextIdx);
     if (direction > 0 && user) {
       const seg = b.segments[fromIdx];
-      if (seg) await markSegmentDone(bookId!, seg.id);
+      if (seg) void markSegmentDone(bookId!, seg.id);
     }
-    setActiveIdx(nextIdx);
   }, [user, bookId, markSegmentDone]);
 
   function playCurrentSegment() {
