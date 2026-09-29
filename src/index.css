@@ -1,53 +1,73 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #faf8f4;
-  --color-surface: #ffffff;
-  --color-surface-2: #f1ede5;
-  --color-border: #e4ded2;
-  --color-text: #2b2722;
-  --color-muted: #8c8576;
-  --color-accent: #6d5ce6;
-  --color-accent-light: #8678f0;
-  --color-success: #15803d;
-  --color-error: #dc2626;
-  --color-success-bg: #e9f7ee;
-  --color-error-bg: #fdeceb;
-  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --color-paper: #F5EFE3;
+  --color-card: #FBF7EF;
+  --color-sand: #EDE2D0;
+  --color-line: #E3D7C4;
+  --color-track: #E6DCCB;
+  --color-ink: #221F1B;
+  --color-ink-2: #4A443C;
+  --color-muted: #6B6358;
+  --color-faint: #9A9083;
+  --color-accent: #A8461F;
+  --color-accent-deep: #7E3316;
+  --color-ember: #E07A3F;
+  --color-peach: #F0C9A8;
+  --color-ok: #2F6B47;
+  --color-ok-bg: #E3EFE6;
+  --color-ok-ink: #1F4A31;
+  --color-bad: #A83A2A;
+  --color-bad-bg: #F6E1DC;
+  --color-bad-ink: #7A2618;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-book: 'Literata', Georgia, serif;
+  --font-ui: 'Instrument Sans', system-ui, sans-serif;
 }
 
 @layer base {
-  * {
-    box-sizing: border-box;
-  }
-
   html {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
-
   body {
     margin: 0;
     min-height: 100dvh;
     overflow-x: hidden;
   }
-
   #root {
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
   }
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 }
 
-@layer utilities {
-  .scrollbar-none {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+@layer components {
+  .btn-primary {
+    @apply flex h-14 w-full items-center justify-center rounded-full bg-accent text-lg font-semibold text-white shadow-[0_4px_0_rgba(34,31,27,.25)] transition active:translate-y-[2px] active:shadow-[0_2px_0_rgba(34,31,27,.25)] disabled:bg-track disabled:text-muted disabled:shadow-none disabled:active:translate-y-0;
   }
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
+  .btn-soft {
+    @apply flex h-10 items-center gap-2 rounded-full border border-[#D9CCB8] bg-card px-3.5 text-sm font-semibold text-ink-2 transition hover:bg-sand;
+  }
+  .card {
+    @apply rounded-[20px] border border-line bg-card;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[.12em];
   }
 }
