@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Book, BookEntry, Page, Segment } from '@/lib/types';
+import type { Book, BookEntry, Segment } from '@/lib/types';
 import {
   assetUrl, denselyGlossed, LANG_NAME, loadBook, loadCatalog, pageOf, paginate, piecesOf, SPEECH_LANG,
   type Piece,
@@ -9,21 +9,8 @@ import {
 import { actions, getState, streakOf, todayLog, useStore, wordKey } from '@/lib/store';
 import { speak, stopSpeaking } from '@/lib/tts';
 import { ExerciseCard } from '@/components/ExerciseCard';
-import { isSupported } from '@/lib/exercises';
+import { pageSteps } from '@/lib/generate';
 import { Bookmark, Close, Flame, Languages, OpenBook, Speaker } from '@/components/Icons';
-
-type Step = { kind: 'seg'; seg: number } | { kind: 'ex'; seg: number } | { kind: 'done' };
-
-function stepsOf(book: Book, page: Page): Step[] {
-  const out: Step[] = [];
-  for (const i of page.segs) {
-    out.push({ kind: 'seg', seg: i });
-    const ex = book.segments[i].exercise;
-    if (ex && isSupported(ex)) out.push({ kind: 'ex', seg: i });
-  }
-  out.push({ kind: 'done' });
-  return out;
-}
 
 interface Selection {
   seg: number;
@@ -54,7 +41,7 @@ function Reader({ bookId }: { bookId: string }) {
       const pgs = paginate(b);
       const pos = getState().books[bookId]?.pos ?? 0;
       const p = pageOf(pgs, pos);
-      const st = stepsOf(b, pgs[p]);
+      const st = pageSteps(b, pgs[p], b.meta.source_language, getState());
       const s = st.findIndex(x => x.kind === 'seg' && x.seg >= pos);
       setBook(b);
       setPageIdx(p);
@@ -67,12 +54,17 @@ function Reader({ bookId }: { bookId: string }) {
   const pages = useMemo(() => (book ? paginate(book) : []), [book]);
 
   const page = pageIdx !== null ? pages[pageIdx] : null;
-  const steps = useMemo(() => (book && page ? stepsOf(book, page) : []), [book, page]);
+  // Built once per page: saved words due now become part of this page's practice.
+  const steps = useMemo(
+    () => (book && page ? pageSteps(book, page, book.meta.source_language, getState()) : []),
+    [book, page],
+  );
   const cur = steps[step];
 
   const [sel, setSel] = useState<Selection | null>(null);
   const [showGloss, setShowGloss] = useState(false);
   const [session, setSession] = useState({ answered: 0, correct: 0, saved: 0, startSentences: 0 });
+  const [combo, setCombo] = useState(0);
 
   const lang = entry?.lang ?? 'de';
   const speechLang = SPEECH_LANG[lang];
@@ -107,10 +99,20 @@ function Reader({ bookId }: { bookId: string }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [cur, sel, advance]);
 
+  // Keep the sentence being read at the same comfortable height (about a third down the
+  // screen) instead of letting it drift towards the bottom edge as the page fills up.
   const currentRef = useRef<HTMLDivElement>(null);
+  const curKind = cur?.kind;
   useEffect(() => {
-    currentRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }, [step]);
+    if (curKind !== 'seg') return;
+    const id = requestAnimationFrame(() => {
+      const el = currentRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: Math.max(0, top - window.innerHeight * 0.3), behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [step, curKind]);
 
   const streak = streakOf(store.days);
 
@@ -218,6 +220,8 @@ function Reader({ bookId }: { bookId: string }) {
                 <Languages /> {showGloss ? 'Esconder tradução' : 'Ver tradução'}
               </button>
             </div>
+            {/* Room below, so even the last sentence can scroll up to reading height. */}
+            <div aria-hidden="true" className="h-[40vh] shrink-0" />
           </main>
 
           <footer className="sticky bottom-0 border-t border-track bg-paper px-5 pt-3.5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
@@ -231,9 +235,13 @@ function Reader({ bookId }: { bookId: string }) {
       {cur.kind === 'ex' && (
         <ExerciseCard
           key={`${pageIdx}-${step}`}
-          ex={book.segments[cur.seg].exercise!}
+          ex={cur.ex}
+          speechLang={speechLang}
+          combo={combo}
           onAnswer={ok => {
             actions.answer(ok);
+            if (cur.ex.review) actions.review(cur.ex.review, ok);
+            setCombo(c => (ok ? c + 1 : 0));
             setSession(s => ({ ...s, answered: s.answered + 1, correct: s.correct + (ok ? 1 : 0) }));
           }}
           onNext={advance}

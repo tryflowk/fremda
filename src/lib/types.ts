@@ -20,7 +20,10 @@ export interface WordToken {
   translation: string;
 }
 
-export type ExerciseType = 'word_select' | 'word_order' | 'fill_blank' | 'yes_no' | 'translate_word';
+export type ExerciseType =
+  | 'word_select' | 'word_order' | 'fill_blank' | 'yes_no' | 'translate_word'
+  // Made on the fly from the page (see lib/generate.ts).
+  | 'meaning' | 'cloze' | 'listen';
 
 export interface Exercise {
   id: string;
@@ -29,6 +32,17 @@ export interface Exercise {
   options?: string[];
   chips?: string[];
   answer: string;
+  /** Small label above the prompt ("Vocabulário", "Ouvido"...). */
+  label?: string;
+  /** Sentence shown under the prompt; `target` is highlighted (or blanked, for cloze). */
+  context?: string;
+  target?: string;
+  /** Text the card reads aloud (listening exercises). */
+  audio?: string;
+  /** Options are in the book's language, so they use the reading font and can be heard. */
+  foreignOptions?: boolean;
+  /** Saved-word key: answering also counts as a review of that word. */
+  review?: string;
 }
 
 export interface Segment {
