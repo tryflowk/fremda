@@ -1,21 +1,10 @@
 {
-  "name": "Fremda Libro",
-  "short_name": "Fremda",
-  "description": "Aprenda idiomas lendo literatura clássica",
-  "start_url": "/",
+  "name": "Verba",
+  "short_name": "Verba",
+  "description": "Aprenda um idioma lendo um clássico, frase a frase.",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#faf8f4",
-  "theme_color": "#6d5ce6",
-  "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#F5EFE3",
+  "theme_color": "#F5EFE3",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }

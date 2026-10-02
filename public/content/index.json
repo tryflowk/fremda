@@ -1,0 +1,38 @@
+[
+  {
+    "id": "grimm-wolf-geisslein",
+    "title": "Der Wolf und die sieben Geißlein",
+    "title_pt": "O lobo e os sete cabritinhos",
+    "author": "Irmãos Grimm",
+    "year": 1812,
+    "lang": "de",
+    "level": "Iniciante",
+    "blurb": "Um conto curto, de frases simples, com todas as palavras traduzidas.",
+    "cover": "#2F5D50",
+    "segments": 43
+  },
+  {
+    "id": "le-petit-prince-fr",
+    "title": "Le Petit Prince",
+    "title_pt": "O Pequeno Príncipe",
+    "author": "Antoine de Saint-Exupéry",
+    "year": 1943,
+    "lang": "fr",
+    "level": "Intermediário",
+    "blurb": "O piloto, o deserto e o menino que pede um desenho de carneiro.",
+    "cover": "#3B4A8C",
+    "segments": 999
+  },
+  {
+    "id": "white-nights-en",
+    "title": "White Nights",
+    "title_pt": "Noites Brancas",
+    "author": "Fiódor Dostoiévski",
+    "year": 1848,
+    "lang": "en",
+    "level": "Intermediário",
+    "blurb": "Quatro noites em São Petersburgo e um sonhador solitário.",
+    "cover": "#7E3316",
+    "segments": 917
+  }
+]
