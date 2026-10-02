@@ -1,3 +1,5 @@
+import { getState } from './store';
+
 // Text-to-speech on the device's own voices (Web Speech API): free and offline-capable.
 
 const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
@@ -17,7 +19,7 @@ export function speak(text: string, lang: string, opts: { rate?: number; onEnd?:
   synth.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
-  u.rate = opts.rate ?? 0.92;
+  u.rate = (opts.rate ?? 0.92) * getState().settings.voiceRate;
   const v = pickVoice(lang);
   if (v) u.voice = v;
   u.onend = () => opts.onEnd?.();

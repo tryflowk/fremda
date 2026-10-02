@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from 'react';
 import type { Lang } from './types';
 
-// Everything lives on the device for now (no account needed to start reading).
+// Progress lives on the device first, so reading never waits on the network. With an
+// account it is also copied to the cloud (lib/sync.ts) and merged across devices.
 
 export interface SavedWord {
   key: string;
@@ -10,9 +11,12 @@ export interface SavedWord {
   lang: Lang;
   bookId: string;
   sentence: string;
+  /** Leitner box: how many times in a row it was remembered. */
   box: number;
   due: string;
   added: string;
+  /** Last change (ms), so the newest copy wins when devices are merged. */
+  updated?: number;
 }
 
 export interface DayLog {
@@ -22,21 +26,48 @@ export interface DayLog {
   reviewed: number;
 }
 
+export interface Settings {
+  goal: number;
+  /** 1 = normal, below 1 = slower voice. */
+  voiceRate: number;
+  /** Dotted underline under words that have a translation. */
+  hints: boolean;
+  /** Bring saved words back as exercises between pages. */
+  reviewInReading: boolean;
+  updated?: number;
+}
+
 export interface State {
   books: Record<string, { pos: number }>;
   words: Record<string, SavedWord>;
+  /** Words removed on this device (key → ms), so a merge doesn't bring them back. */
+  removed: Record<string, number>;
   days: Record<string, DayLog>;
-  goal: number;
+  settings: Settings;
   lastBook: string | null;
 }
 
 const KEY = 'verba:v1';
-const EMPTY: State = { books: {}, words: {}, days: {}, goal: 15, lastBook: null };
+export const DEFAULT_SETTINGS: Settings = { goal: 15, voiceRate: 1, hints: true, reviewInReading: true };
+const EMPTY: State = { books: {}, words: {}, removed: {}, days: {}, settings: DEFAULT_SETTINGS, lastBook: null };
+
+/** Fill in fields older saves don't have. */
+export function normalize(raw: Partial<State> & { goal?: number }): State {
+  const settings = { ...DEFAULT_SETTINGS, ...(raw.goal ? { goal: raw.goal } : {}), ...raw.settings };
+  return {
+    books: raw.books ?? {},
+    words: raw.words ?? {},
+    removed: raw.removed ?? {},
+    days: raw.days ?? {},
+    settings,
+    lastBook: raw.lastBook ?? null,
+  };
+}
 
 function load(): State {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? { ...EMPTY, ...JSON.parse(raw) } : EMPTY;
+    return raw ? normalize(JSON.parse(raw)) : EMPTY;
   } catch {
     return EMPTY;
   }
@@ -55,7 +86,7 @@ function set(next: State) {
   listeners.forEach(l => l());
 }
 
-function subscribe(cb: () => void) {
+export function subscribe(cb: () => void) {
   listeners.add(cb);
   return () => {
     listeners.delete(cb);
@@ -64,6 +95,11 @@ function subscribe(cb: () => void) {
 
 export function getState(): State {
   return state;
+}
+
+/** Replace everything, e.g. with the result of merging in the cloud copy. */
+export function replaceState(next: State) {
+  set(next);
 }
 
 /** The whole (immutable) state; derive what you need with the helpers below. */
@@ -85,6 +121,12 @@ function bumpDay(patch: Partial<DayLog>) {
   return { ...state.days, [t]: next };
 }
 
+/**
+ * Days until a word comes back, by box. Box 0 is "still learning": it comes back on the
+ * next page you read, until you get it right once.
+ */
+const INTERVALS = [0, 1, 3, 7, 16, 35];
+
 export const actions = {
   readSentence(bookId: string, nextPos: number) {
     const prev = state.books[bookId]?.pos ?? 0;
@@ -98,36 +140,40 @@ export const actions = {
   openBook(bookId: string) {
     if (state.lastBook !== bookId) set({ ...state, lastBook: bookId });
   },
-  setPos(bookId: string, pos: number) {
-    set({ ...state, books: { ...state.books, [bookId]: { pos } } });
-  },
   answer(correct: boolean) {
     set({ ...state, days: bumpDay({ answered: 1, correct: correct ? 1 : 0 }) });
   },
-  toggleWord(w: Omit<SavedWord, 'box' | 'due' | 'added'>) {
+  saveWord(w: Omit<SavedWord, 'box' | 'due' | 'added' | 'updated'>) {
+    if (state.words[w.key]) return;
+    const removed = { ...state.removed };
+    delete removed[w.key];
+    set({
+      ...state,
+      removed,
+      words: { ...state.words, [w.key]: { ...w, box: 0, due: today(), added: today(), updated: Date.now() } },
+    });
+  },
+  removeWord(key: string) {
+    if (!state.words[key]) return;
     const words = { ...state.words };
-    if (words[w.key]) delete words[w.key];
-    else words[w.key] = { ...w, box: 0, due: today(1), added: today() };
-    set({ ...state, words });
+    delete words[key];
+    set({ ...state, words, removed: { ...state.removed, [key]: Date.now() } });
   },
   review(key: string, remembered: boolean) {
     const w = state.words[key];
     if (!w) return;
     const box = remembered ? Math.min(w.box + 1, INTERVALS.length - 1) : 0;
-    const due = remembered ? today(INTERVALS[box]) : today();
+    const due = today(remembered ? INTERVALS[box] : 0);
     set({
       ...state,
-      words: { ...state.words, [key]: { ...w, box, due } },
+      words: { ...state.words, [key]: { ...w, box, due, updated: Date.now() } },
       days: bumpDay({ reviewed: 1 }),
     });
   },
-  setGoal(goal: number) {
-    set({ ...state, goal });
+  setSettings(patch: Partial<Settings>) {
+    set({ ...state, settings: { ...state.settings, ...patch, updated: Date.now() } });
   },
 };
-
-/** Days until the next review, by box (a light Leitner schedule). */
-const INTERVALS = [1, 2, 4, 8, 16, 32];
 
 export function wordKey(lang: Lang, token: string) {
   return `${lang}:${token.toLocaleLowerCase()}`;
@@ -137,7 +183,7 @@ export function dueWords(s: State): SavedWord[] {
   const t = today();
   return Object.values(s.words)
     .filter(w => w.due <= t)
-    .sort((a, b) => a.due.localeCompare(b.due));
+    .sort((a, b) => a.box - b.box || a.due.localeCompare(b.due));
 }
 
 /** Consecutive days with reading, ending today (or yesterday, if today hasn't started yet). */
@@ -154,4 +200,38 @@ export function streakOf(days: State['days']): number {
 
 export function todayLog(s: State): DayLog {
   return s.days[today()] ?? { sentences: 0, answered: 0, correct: 0, reviewed: 0 };
+}
+
+/** Combine two copies of the progress (this device and the cloud) without losing anything. */
+export function merge(a: State, b: State): State {
+  const books: State['books'] = { ...a.books };
+  for (const [id, v] of Object.entries(b.books)) books[id] = { pos: Math.max(books[id]?.pos ?? 0, v.pos) };
+
+  const removed: State['removed'] = { ...a.removed };
+  for (const [k, t] of Object.entries(b.removed)) removed[k] = Math.max(removed[k] ?? 0, t);
+
+  const words: State['words'] = {};
+  for (const w of [...Object.values(a.words), ...Object.values(b.words)]) {
+    const cur = words[w.key];
+    if (!cur || (w.updated ?? 0) > (cur.updated ?? 0)) words[w.key] = w;
+  }
+  for (const [k, t] of Object.entries(removed)) if (words[k] && (words[k].updated ?? 0) < t) delete words[k];
+  // A word saved again after being removed clears its tombstone.
+  for (const k of Object.keys(words)) delete removed[k];
+
+  const days: State['days'] = { ...a.days };
+  for (const [d, v] of Object.entries(b.days)) {
+    const c = days[d];
+    days[d] = c
+      ? {
+          sentences: Math.max(c.sentences, v.sentences),
+          answered: Math.max(c.answered, v.answered),
+          correct: Math.max(c.correct, v.correct),
+          reviewed: Math.max(c.reviewed, v.reviewed),
+        }
+      : v;
+  }
+
+  const settings = (b.settings.updated ?? 0) > (a.settings.updated ?? 0) ? b.settings : a.settings;
+  return { books, words, removed, days, settings, lastBook: a.lastBook ?? b.lastBook };
 }

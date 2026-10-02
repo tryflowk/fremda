@@ -68,6 +68,11 @@ export default function Review() {
           <Link to="/" className="btn-primary mt-4 no-underline">
             Voltar ao início
           </Link>
+          {Object.keys(store.words).length > 0 && (
+            <Link to="/palavras" className="h-12 font-semibold text-accent">
+              Ver todas as palavras guardadas
+            </Link>
+          )}
         </main>
       ) : (
         <>
@@ -101,6 +106,16 @@ export default function Review() {
                     {word.translation}
                   </motion.div>
                 )}
+                <button
+                  className="self-start text-sm font-semibold text-muted underline-offset-4 hover:underline"
+                  onClick={() => {
+                    actions.removeWord(word.key);
+                    setRevealed(false);
+                    setQueue(q => q.slice(1));
+                  }}
+                >
+                  Remover das guardadas
+                </button>
               </motion.div>
             </AnimatePresence>
           </main>

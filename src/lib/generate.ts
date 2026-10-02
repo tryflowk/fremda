@@ -1,7 +1,7 @@
 import type { Book, Exercise, Lang, Page, Segment, WordToken } from './types';
 import { isSupported } from './exercises';
 import { canSpeak } from './tts';
-import { dueWords, type State } from './store';
+import { dueWords, type SavedWord, type State } from './store';
 
 // Exercises made on the fly from the page being read, mixed in with the book's own
 // comprehension questions so every page practices vocabulary, spelling and listening.
@@ -143,21 +143,50 @@ function listen(book: Book, segs: number[], rnd: Rng): Exercise | null {
   };
 }
 
-function savedWord(book: Book, lang: Lang, state: State, rnd: Rng): Exercise | null {
-  const w = dueWords(state).find(d => d.lang === lang);
-  if (!w) return null;
+/**
+ * A saved word coming back for review. The format changes as the word matures: first
+ * recognize the meaning, then recall the word from its meaning, then catch it by ear.
+ */
+function savedWord(book: Book, w: SavedWord, rnd: Rng): Exercise | null {
+  const formats: ('meaning' | 'reverse' | 'ear')[] = canSpeak ? ['meaning', 'reverse', 'ear'] : ['meaning', 'reverse'];
+  const format = formats[Math.min(w.box, formats.length - 1)];
+  const base = { id: `gen-saved-${w.key}`, label: 'Palavra que você guardou', review: w.key };
+  if (format === 'reverse') {
+    const upper = (s: string) => s[0] !== s[0].toLocaleLowerCase();
+    const wrong = distractors(
+      w.token,
+      poolOf(book).filter(p => upper(p.token) === upper(w.token)).map(p => p.token),
+      rnd,
+    );
+    if (wrong.length === 3)
+      return {
+        ...base,
+        type: 'meaning',
+        prompt: `Como se diz “${w.translation}”?`,
+        options: [w.token, ...wrong],
+        answer: w.token,
+        foreignOptions: true,
+      };
+  }
   const wrong = distractors(w.translation, poolOf(book).map(p => p.translation), rnd);
   if (wrong.length < 3) return null;
+  if (format === 'ear')
+    return {
+      ...base,
+      type: 'listen',
+      prompt: 'Ouça a palavra. O que ela significa?',
+      audio: w.token,
+      options: [w.translation, ...wrong],
+      answer: w.translation,
+    };
   return {
-    id: `gen-saved-${w.key}`,
+    ...base,
     type: 'meaning',
-    label: 'Palavra que você guardou',
     prompt: `Você lembra o que significa “${w.token}”?`,
     context: w.sentence,
     target: w.token,
     options: [w.translation, ...wrong],
     answer: w.translation,
-    review: w.key,
   };
 }
 
@@ -168,6 +197,8 @@ function tidy(ex: Exercise): Exercise {
     .replace(/\s+([?.!])/g, '$1');
   return { ...ex, prompt };
 }
+
+const MAX_REVIEWS_PER_PAGE = 3;
 
 export function pageSteps(book: Book, page: Page, lang: Lang, state: State): Step[] {
   const rnd = rngOf(`${book.meta.id}:${page.index}`);
@@ -190,8 +221,23 @@ export function pageSteps(book: Book, page: Page, lang: Lang, state: State): Ste
   if (generate) {
     const second = page.index % 2 === 0 ? listen(book, page.segs, rnd) ?? cloze(book, page.segs, rnd, skip) : cloze(book, page.segs, rnd, skip);
     if (second) steps.push({ kind: 'ex', ex: second });
-    const saved = savedWord(book, lang, state, rnd);
-    if (saved) steps.push({ kind: 'ex', ex: saved });
+  }
+
+  // Saved words due for review are spread through the page, a few at a time.
+  if (state.settings.reviewInReading) {
+    const reviews = dueWords(state)
+      .filter(w => w.lang === lang)
+      .slice(0, MAX_REVIEWS_PER_PAGE)
+      .map(w => savedWord(book, w, rnd))
+      .filter((e): e is Exercise => !!e);
+    reviews.forEach((ex, j) => {
+      // The last one closes the page; the others land after every n / (count) sentences.
+      if (j === reviews.length - 1) return steps.push({ kind: 'ex', ex });
+      const after = page.segs[Math.max(0, Math.round(((j + 1) * n) / reviews.length) - 1)];
+      let at = steps.findIndex(s => s.kind === 'seg' && s.seg === after) + 1;
+      while (at < steps.length && steps[at].kind === 'ex') at++;
+      steps.splice(at, 0, { kind: 'ex', ex });
+    });
   }
 
   steps.push({ kind: 'done' });

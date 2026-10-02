@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import type { BookEntry } from '@/lib/types';
 import { LANG_CODE, LANG_NAME, loadCatalog } from '@/lib/books';
-import { actions, dueWords, streakOf, today, todayLog, useStore } from '@/lib/store';
+import { dueWords, streakOf, today, todayLog, useStore } from '@/lib/store';
 import { BookCover } from '@/components/BookCover';
-import { Cards, Flame } from '@/components/Icons';
+import { Cards, Cloud, Flame, Gear } from '@/components/Icons';
+import { useSync } from '@/lib/sync';
 
 const WEEKDAY = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-const GOALS = [10, 15, 25, 40];
 
 export default function Home() {
   const store = useStore();
+  const { email } = useSync();
+  const goal = store.settings.goal;
   const [books, setBooks] = useState<BookEntry[]>([]);
   useEffect(() => {
     loadCatalog().then(setBooks);
@@ -36,11 +38,20 @@ export default function Home() {
     <div className="mx-auto flex min-h-dvh w-full max-w-[480px] flex-col gap-6 px-5 pt-7 pb-10">
       <header className="flex items-center justify-between">
         <h1 className="m-0 font-display text-[28px] font-semibold tracking-[-.01em]">Verba</h1>
-        <div
-          className="flex h-9 items-center gap-1.5 rounded-full border border-line bg-card px-3 font-semibold text-accent"
-          aria-label={`Sequência de ${streak} dias`}
-        >
-          <Flame size={18} lit={streak > 0} /> {streak} {streak === 1 ? 'dia' : 'dias'}
+        <div className="flex items-center gap-2">
+          <div
+            className="flex h-9 items-center gap-1.5 rounded-full border border-line bg-card px-3 font-semibold text-accent"
+            aria-label={`Sequência de ${streak} dias`}
+          >
+            <Flame size={18} lit={streak > 0} /> {streak} {streak === 1 ? 'dia' : 'dias'}
+          </div>
+          <Link
+            to="/ajustes"
+            aria-label="Ajustes"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-card text-ink-2"
+          >
+            <Gear size={18} />
+          </Link>
         </div>
       </header>
 
@@ -89,24 +100,20 @@ export default function Home() {
       )}
 
       <div className="grid grid-cols-2 gap-3">
-        <button
-          className="card flex flex-col gap-2 p-4 text-left"
-          onClick={() => actions.setGoal(GOALS[(GOALS.indexOf(store.goal) + 1) % GOALS.length])}
-          aria-label={`Meta de hoje: ${todays.sentences} de ${store.goal} frases. Toque para mudar a meta.`}
-        >
+        <div className="card flex flex-col gap-2 p-4" aria-label={`Meta de hoje: ${todays.sentences} de ${goal} frases`}>
           <span className="text-[13px] font-semibold text-muted">Meta de hoje</span>
           <span className="flex items-baseline gap-1">
             <span className="font-display text-[30px] font-semibold">{todays.sentences}</span>
-            <span className="text-muted">/ {store.goal} frases</span>
+            <span className="text-muted">/ {goal} frases</span>
           </span>
           <span className="h-2 overflow-hidden rounded-full bg-track">
             <span
               className="block h-full rounded-full bg-accent"
-              style={{ width: `${Math.min(1, todays.sentences / store.goal) * 100}%` }}
+              style={{ width: `${Math.min(1, todays.sentences / goal) * 100}%` }}
             />
           </span>
-        </button>
-        <Link to="/revisar" className="card flex flex-col gap-2 p-4 text-ink no-underline">
+        </div>
+        <Link to={due.length || !totalWords ? '/revisar' : '/palavras'} className="card flex flex-col gap-2 p-4 text-ink no-underline">
           <span className="flex items-center justify-between text-[13px] font-semibold text-muted">
             Revisar palavras <Cards size={18} />
           </span>
@@ -123,6 +130,18 @@ export default function Home() {
           </span>
         </Link>
       </div>
+
+      {!email && (totalWords > 0 || Object.keys(store.books).length > 0) && (
+        <Link to="/ajustes" className="card flex items-center gap-3 p-4 text-ink no-underline">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-accent">
+            <Cloud />
+          </span>
+          <span className="flex flex-1 flex-col">
+            <span className="text-[15px] font-semibold">Salve seu progresso</span>
+            <span className="text-[13px] text-muted">Entre com seu e-mail para não perder livros e palavras.</span>
+          </span>
+        </Link>
+      )}
 
       <section className="flex flex-col gap-3">
         <h2 className="m-0 font-display text-xl font-semibold">Sua estante</h2>

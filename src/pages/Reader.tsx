@@ -205,6 +205,7 @@ function Reader({ bookId }: { bookId: string }) {
                       interlinear={isCur && showGloss}
                       selected={sel?.seg === i ? sel.piece : null}
                       savedWords={store.words}
+                      hints={store.settings.hints}
                       lang={lang}
                       onTap={(pi, p) => tapWord(i, pi, p)}
                     />
@@ -255,7 +256,7 @@ function Reader({ bookId }: { bookId: string }) {
           sentences={page.segs.length}
           session={session}
           todaySentences={todayLog(store).sentences}
-          goal={store.goal}
+          goal={store.settings.goal}
           streak={streak}
           lastPage={lastPage}
           onNext={nextPage}
@@ -288,6 +289,15 @@ function Reader({ bookId }: { bookId: string }) {
                       Essa palavra não tem tradução no livro ainda. Toque em “Ver tradução” para as que têm.
                     </div>
                   )}
+                  {isSaved && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-peach px-2.5 py-0.5 text-[13px] font-semibold text-ink"
+                    >
+                      <Bookmark filled size={14} /> Guardada. Ela volta nos exercícios.
+                    </motion.div>
+                  )}
                   {sel.gloss?.lemma && sel.gloss.lemma.toLowerCase() !== sel.gloss.token.toLowerCase() && (
                     <div className="mt-1 text-[13px] text-[#CFC5B6]">forma básica: {sel.gloss.lemma}</div>
                   )}
@@ -310,22 +320,24 @@ function Reader({ bookId }: { bookId: string }) {
                 {sel.gloss && (
                   <button
                     onClick={() => {
-                      actions.toggleWord({
-                        key: savedKey,
-                        token: sel.gloss!.token,
-                        translation: sel.gloss!.translation,
-                        lang,
-                        bookId,
-                        sentence: book.segments[sel.seg].text,
-                      });
+                      if (isSaved) actions.removeWord(savedKey);
+                      else
+                        actions.saveWord({
+                          key: savedKey,
+                          token: sel.gloss!.token,
+                          translation: sel.gloss!.translation,
+                          lang,
+                          bookId,
+                          sentence: book.segments[sel.seg].text,
+                        });
                       setSession(s => ({ ...s, saved: s.saved + (isSaved ? -1 : 1) }));
                     }}
                     aria-pressed={isSaved}
                     className={`flex h-11 flex-1 items-center justify-center gap-2 rounded-full font-semibold ${
-                      isSaved ? 'bg-peach text-ink' : 'bg-paper text-ink'
+                      isSaved ? 'border border-peach text-peach' : 'bg-paper text-ink'
                     }`}
                   >
-                    <Bookmark filled={isSaved} /> {isSaved ? 'Guardada' : 'Guardar'}
+                    <Bookmark filled={isSaved} /> {isSaved ? 'Remover' : 'Guardar'}
                   </button>
                 )}
               </div>
@@ -347,12 +359,13 @@ function Sentence(props: {
   interlinear: boolean;
   selected: number | null;
   savedWords: Record<string, unknown>;
+  hints: boolean;
   lang: BookEntry['lang'];
   onTap: (pieceIndex: number, p: Piece) => void;
 }) {
-  const { seg, current, interlinear, selected, savedWords, lang, onTap } = props;
+  const { seg, current, interlinear, selected, savedWords, hints, lang, onTap } = props;
   const pieces = useMemo(() => piecesOf(seg), [seg]);
-  const hint = !denselyGlossed(seg);
+  const hint = hints && !denselyGlossed(seg);
 
   return (
     <div>
@@ -372,10 +385,12 @@ function Sentence(props: {
         {pieces.map((p, i) => {
           if (!p.word) return <span key={i}>{p.text}</span>;
           const saved = p.gloss && savedWords[wordKey(lang, p.gloss.token)];
+          // Saved words stay marked wherever they appear: a solid terracotta underline.
+          const savedDeco = saved ? 'underline decoration-accent decoration-[2.5px] underline-offset-[5px]' : '';
           const deco = selected === i
-            ? 'bg-[#E8D3BA]'
+            ? `bg-[#E8D3BA] ${savedDeco}`
             : saved
-              ? 'underline decoration-accent decoration-dotted decoration-2 underline-offset-[5px]'
+              ? `${savedDeco} ${current ? '' : 'text-ink-2'}`
               : hint && p.gloss && current
                 ? 'underline decoration-[#C9BBA6] decoration-dotted decoration-[1.5px] underline-offset-[5px]'
                 : '';
