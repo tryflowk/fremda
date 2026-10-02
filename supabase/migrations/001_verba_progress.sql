@@ -13,3 +13,6 @@ create policy "insert own progress" on public.verba_progress
   for insert to authenticated with check ((select auth.uid()) = user_id);
 create policy "update own progress" on public.verba_progress
   for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+
+-- Progress is only for signed-in owners; nothing to show before sign-in.
+revoke all on public.verba_progress from anon;
