@@ -6,9 +6,9 @@ import { getState, merge, normalize, replaceState, subscribe, type State } from 
 // state; each device merges it with what it has (see merge in store.ts), so reading keeps
 // working offline and nothing is lost when two devices were used.
 
-const url = import.meta.env.VITE_SUPABASE_URL ?? 'https://nevekjsbhaxpgxpinkxi.supabase.co';
+const url = import.meta.env.VITE_VERBA_SUPABASE_URL ?? 'https://vpftkzboelxgncieblqf.supabase.co';
 // Publishable key: safe to ship in the browser, access is limited by row-level security.
-const key = import.meta.env.VITE_SUPABASE_KEY ?? 'sb_publishable_S_lVrjRJpwmQ0OIN5NgX_Q_g9LdJhUS';
+const key = import.meta.env.VITE_VERBA_SUPABASE_KEY ?? 'sb_publishable_sH5DYrdYrDynMcbbxQ_DQA_RtdB7pgL';
 
 export const supabase = createClient(url, key, {
   // PKCE puts the sign-in code in ?code=, which doesn't collide with the hash router.
