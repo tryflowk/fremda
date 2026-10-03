@@ -10,7 +10,8 @@ import { actions, getState, streakOf, todayLog, useStore, wordKey } from '@/lib/
 import { speak, stopSpeaking } from '@/lib/tts';
 import { ExerciseCard } from '@/components/ExerciseCard';
 import { pageSteps } from '@/lib/generate';
-import { Bookmark, Close, Flame, Languages, OpenBook, Speaker } from '@/components/Icons';
+import { Bookmark, Close, Flame, Languages, Speaker } from '@/components/Icons';
+import { Burst, Ring, Sprig, StarField } from '@/components/Decor';
 
 interface Selection {
   seg: number;
@@ -184,7 +185,7 @@ function Reader({ bookId }: { bookId: string }) {
           aria-valuenow={Math.round(progress * 100)}
         >
           <motion.div
-            className="h-full rounded-full bg-accent"
+            className="h-full rounded-full bg-gradient-to-r from-accent to-ember shadow-[inset_0_-3px_0_rgba(0,0,0,.12),inset_0_2px_0_rgba(255,255,255,.35)]"
             initial={false}
             animate={{ width: `${Math.max(progress, 0.02) * 100}%` }}
             transition={{ type: 'spring', stiffness: 120, damping: 20 }}
@@ -462,63 +463,90 @@ function PageDone(props: {
   const { pageNumber, pageCount, sentences, session, todaySentences, goal, streak, lastPage, chapterTitle, chapterPagesLeft } = props;
   const plural = (n: number) => (n === 1 ? '1 página' : `${n} páginas`);
   const goalHit = todaySentences >= goal;
+  const chapterDone = !!chapterTitle && chapterPagesLeft === 0;
+  const big = lastPage || chapterDone;
   return (
-    <>
-      <motion.main
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-1 flex-col items-center justify-center gap-5 px-7 text-center"
-      >
-        <OpenBook />
-        <h2 className="m-0 font-display text-[30px] leading-[1.15] font-semibold">
-          {lastPage ? 'Você terminou o livro!' : chapterTitle && chapterPagesLeft === 0 ? 'Capítulo concluído!' : `Página ${pageNumber} lida!`}
-        </h2>
-        <p className="m-0 font-book text-[17px] text-ink-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="night fixed inset-0 z-30 mx-auto flex w-full max-w-[480px] flex-col overflow-y-auto"
+    >
+      <StarField />
+      <Sprig className="pointer-events-none absolute -left-6 top-10 h-56 text-leather-2/80" />
+      <Sprig flip className="pointer-events-none absolute -right-6 top-16 h-60 text-leather-2/80" />
+      <main className="relative flex flex-1 flex-col items-center justify-center gap-5 px-7 pt-10 text-center">
+        <div className="relative flex h-36 w-36 items-center justify-center">
+          <div className="absolute inset-0 rounded-full bg-[radial-gradient(closest-side,rgba(255,214,150,.55),transparent)]" aria-hidden="true" />
+          <Burst n={big ? 18 : 12} radius={big ? 130 : 100} />
+          <motion.img
+            src={`${import.meta.env.BASE_URL}icons/icon-192.png`}
+            alt=""
+            initial={{ scale: 0.4, rotate: -12, opacity: 0 }}
+            animate={{ scale: 1, rotate: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 14 }}
+            className="relative h-24 w-24 rounded-[24px] shadow-[0_0_40px_rgba(255,214,150,.5)]"
+          />
+        </div>
+        <motion.h2
+          initial={{ y: 12, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.15 }}
+          className="m-0 font-display text-[34px] leading-[1.1] font-semibold text-glow"
+        >
+          {lastPage ? 'Você terminou o livro!' : chapterDone ? 'Capítulo concluído!' : `Página ${pageNumber} lida!`}
+        </motion.h2>
+        <p className="m-0 font-book text-[17px] text-paper/75">
           {lastPage
             ? 'Que jornada. Escolha o próximo na sua estante.'
-            : chapterTitle && chapterPagesLeft > 0
-              ? `${chapterPagesLeft === 1 ? 'Falta' : 'Faltam'} ${plural(chapterPagesLeft)} para o fim do capítulo.`
-              : `${pageCount - pageNumber === 1 ? 'Falta' : 'Faltam'} ${plural(pageCount - pageNumber)} para o fim do livro.`}
+            : chapterDone
+              ? `Você fechou “${chapterTitle}”. ${pageCount - pageNumber === 1 ? 'Falta' : 'Faltam'} ${plural(pageCount - pageNumber)} no livro.`
+              : chapterTitle
+                ? `${chapterPagesLeft === 1 ? 'Falta' : 'Faltam'} ${plural(chapterPagesLeft)} para o fim do capítulo.`
+                : `${pageCount - pageNumber === 1 ? 'Falta' : 'Faltam'} ${plural(pageCount - pageNumber)} para o fim do livro.`}
         </p>
         <div className="grid w-full grid-cols-3 gap-2.5">
-          <Stat value={sentences} label="frases" />
-          <Stat value={session.answered ? `${session.correct}/${session.answered}` : '–'} label="acertos" />
-          <Stat value={Math.max(0, session.saved)} label="palavras guardadas" />
+          <Stat value={sentences} label="frases" delay={0.25} />
+          <Stat value={session.answered ? `${session.correct}/${session.answered}` : '–'} label="acertos" delay={0.35} />
+          <Stat value={Math.max(0, session.saved)} label="palavras guardadas" delay={0.45} />
         </div>
-        <div className="card w-full p-4 text-left">
-          <div className="flex items-center justify-between text-sm font-semibold">
-            <span className="flex items-center gap-1.5 text-accent">
-              <Flame /> {streak} {streak === 1 ? 'dia seguido' : 'dias seguidos'}
+        <div className="flex w-full items-center gap-4 rounded-[20px] border border-white/10 bg-white/[.06] p-4 text-left backdrop-blur">
+          <Ring value={todaySentences / goal} size={56} stroke={6} track="rgba(255,255,255,.12)" color={goalHit ? 'var(--color-ok-bright)' : 'var(--color-gold)'}>
+            <Flame size={20} lit={streak > 0} />
+          </Ring>
+          <div className="flex flex-1 flex-col gap-0.5">
+            <span className="font-semibold text-gold">
+              {streak} {streak === 1 ? 'dia seguido' : 'dias seguidos'}
             </span>
-            <span className="text-muted">
-              {Math.min(todaySentences, goal)}/{goal} frases hoje
+            <span className="text-sm text-paper/70">
+              {goalHit ? 'Meta de hoje cumprida. Até amanhã?' : `${Math.min(todaySentences, goal)} de ${goal} frases hoje`}
             </span>
           </div>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-track">
-            <div className="h-full rounded-full bg-accent" style={{ width: `${Math.min(1, todaySentences / goal) * 100}%` }} />
-          </div>
-          {goalHit && <div className="mt-2.5 font-book text-[15px] text-ok-ink">Meta de hoje cumprida. Até amanhã?</div>}
         </div>
-      </motion.main>
-      <footer className="flex flex-col gap-2 px-5 pt-3.5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      </main>
+      <footer className="relative flex flex-col gap-2 px-5 pt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         {!lastPage && (
-          <button className="btn-primary" onClick={props.onNext} autoFocus>
-            Próxima página
+          <button className="btn-gold" onClick={props.onNext} autoFocus>
+            {chapterDone ? 'Próximo capítulo' : 'Próxima página'}
           </button>
         )}
-        <button className="h-12 font-semibold text-accent" onClick={props.onHome}>
+        <button className="h-12 font-semibold text-paper/75" onClick={props.onHome}>
           {lastPage ? 'Voltar à estante' : 'Parar por hoje'}
         </button>
       </footer>
-    </>
+    </motion.div>
   );
 }
 
-function Stat({ value, label }: { value: string | number; label: string }) {
+function Stat({ value, label, delay = 0 }: { value: string | number; label: string; delay?: number }) {
   return (
-    <div className="card px-1.5 py-3.5">
-      <div className="font-display text-[26px] font-semibold">{value}</div>
-      <div className="text-xs text-muted">{label}</div>
-    </div>
+    <motion.div
+      initial={{ y: 14, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay, type: 'spring', stiffness: 300, damping: 22 }}
+      className="rounded-[18px] border border-white/10 bg-white/[.06] px-1.5 py-3.5"
+    >
+      <div className="font-display text-[28px] font-semibold text-glow">{value}</div>
+      <div className="text-xs text-paper/60">{label}</div>
+    </motion.div>
   );
 }

@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { SPEECH_LANG } from '@/lib/books';
 import { actions, dueWords, useStore, type SavedWord } from '@/lib/store';
 import { speak } from '@/lib/tts';
-import { Close, OpenBook, Speaker } from '@/components/Icons';
+import { Close, Speaker } from '@/components/Icons';
+import { Burst, StarField } from '@/components/Decor';
 
 function highlight(sentence: string, token: string) {
   const i = sentence.toLowerCase().indexOf(token.toLowerCase());
@@ -55,21 +56,26 @@ export default function Review() {
       </header>
 
       {!word ? (
-        <main className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
-          <OpenBook />
-          <h1 className="m-0 font-display text-[28px] font-semibold">
+        <main className="night relative flex flex-1 flex-col items-center justify-center gap-4 overflow-hidden px-8 text-center">
+          <StarField />
+          <div className="relative flex h-32 w-32 items-center justify-center">
+            <div className="absolute inset-0 rounded-full bg-[radial-gradient(closest-side,rgba(255,214,150,.5),transparent)]" aria-hidden="true" />
+            {total > 0 && <Burst n={14} radius={110} />}
+            <img src={`${import.meta.env.BASE_URL}icons/icon-192.png`} alt="" className="relative h-20 w-20 rounded-[20px] shadow-[0_0_36px_rgba(255,214,150,.5)]" />
+          </div>
+          <h1 className="relative m-0 font-display text-[30px] font-semibold text-glow">
             {total ? 'Revisão feita!' : 'Nada para revisar agora'}
           </h1>
-          <p className="m-0 font-book text-[17px] text-ink-2">
+          <p className="relative m-0 font-book text-[17px] text-paper/75">
             {total
               ? `Você revisou ${total} ${total === 1 ? 'palavra' : 'palavras'}. Elas voltam em alguns dias, na hora certa de não esquecer.`
               : 'Enquanto lê, toque numa palavra e escolha “Guardar”. Ela aparece aqui no dia seguinte.'}
           </p>
-          <Link to="/" className="btn-primary mt-4 no-underline">
+          <Link to="/" className="btn-gold relative mt-4">
             Voltar ao início
           </Link>
           {Object.keys(store.words).length > 0 && (
-            <Link to="/palavras" className="h-12 font-semibold text-accent">
+            <Link to="/palavras" className="relative flex h-12 items-center font-semibold text-gold">
               Ver todas as palavras guardadas
             </Link>
           )}

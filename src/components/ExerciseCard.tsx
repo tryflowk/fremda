@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Exercise } from '@/lib/types';
 import { speak } from '@/lib/tts';
-import { Speaker } from '@/components/Icons';
+import { Flame, Speaker } from '@/components/Icons';
+import { Burst, Star } from '@/components/Decor';
+import { buzz } from '@/lib/buzz';
 
 const norm = (s: string) =>
   s.normalize('NFD').replace(/\p{M}/gu, '').replace(/[.,!?;:“”"'«»]/g, '').trim().toLowerCase();
@@ -30,6 +32,10 @@ interface Props {
   /** Right answers in a row before this one. */
   combo: number;
 }
+
+const PRAISE = ['Isso mesmo!', 'Perfeito!', 'Mandou bem!', 'Exato!', 'Muito bem!'];
+const NUDGE = ['Quase!', 'Por pouco!', 'Não foi dessa vez'];
+const pickBy = (xs: string[], seed: string) => xs[[...seed].reduce((h, c) => h + c.charCodeAt(0), 0) % xs.length];
 
 const wordRe = (w: string) =>
   new RegExp(`(?<![\\p{L}\\p{M}])${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{M}])`, 'u');
@@ -74,7 +80,9 @@ export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props)
   const commit = (value: string) => {
     if (answered) return;
     setPicked(value);
-    onAnswer(norm(value) === norm(ex.answer));
+    const ok = norm(value) === norm(ex.answer);
+    buzz(ok ? 18 : [40, 50, 40]);
+    onAnswer(ok);
     // Hear it right once the gap is filled.
     if (ex.type === 'cloze' && ex.context) speak(ex.context, speechLang);
   };
@@ -93,7 +101,9 @@ export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props)
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-6 pt-6 pb-4">
-        <div className="eyebrow text-accent">{ex.label ?? 'Sobre o que você leu'}</div>
+        <div className="eyebrow flex items-center gap-1.5 self-start rounded-full bg-sand px-3 py-1.5 text-accent">
+          <Star size={10} /> {ex.label ?? 'Sobre o que você leu'}
+        </div>
         <h2 className="font-display text-[26px] leading-[1.2] font-semibold text-balance">{ex.prompt}</h2>
 
         {ex.passage &&
@@ -178,15 +188,15 @@ export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props)
           <div className="mt-1 flex flex-col gap-2.5">
             {options.map(o => {
               let tone = 'border-line bg-card text-ink';
-              if (answered && norm(o) === norm(correctAnswer)) tone = 'border-ok bg-ok-bg text-ok-ink';
-              else if (answered && o === picked) tone = 'border-bad bg-bad-bg text-bad-ink';
+              if (answered && norm(o) === norm(correctAnswer)) tone = 'border-ok-bright bg-ok-bg text-ok-ink';
+              else if (answered && o === picked) tone = 'animate-shake border-bad-bright bg-bad-bg text-bad-ink';
               else if (answered) tone = 'border-line bg-card text-faint';
               return (
                 <button
                   key={o}
                   onClick={() => commit(o)}
                   disabled={answered}
-                  className={`min-h-14 rounded-2xl border-2 px-4 py-3 text-left transition active:scale-[.98] ${
+                  className={`option ${
                     ex.foreignOptions ? 'font-book text-[18px] leading-snug' : 'text-[17px] font-semibold'
                   } ${tone}`}
                 >
@@ -197,50 +207,70 @@ export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props)
           </div>
         )}
 
-        {answered && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            role="status"
-            className={`rounded-2xl px-4 py-3.5 ${correct ? 'bg-ok-bg text-ok-ink' : 'bg-bad-bg text-bad-ink'}`}
-          >
-            <div className="flex items-center justify-between gap-3 text-[17px] font-semibold">
-              <span>{correct ? 'Isso mesmo!' : 'Quase!'}</span>
-              {correct && combo + 1 >= 3 && (
-                <motion.span
-                  initial={{ scale: 0.6 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 14 }}
-                  className="rounded-full bg-ok px-2.5 py-0.5 text-[13px] text-white"
-                >
-                  {combo + 1} seguidas
-                </motion.span>
-              )}
-            </div>
-            {!correct && (
-              <div className="mt-1 font-book text-[15px]">
-                Resposta certa: <strong>{correctAnswer}</strong>
-              </div>
-            )}
-          </motion.div>
-        )}
       </div>
 
-      <div className="border-t border-track px-5 pt-3.5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        {answered ? (
-          <button className="btn-primary" onClick={onNext} autoFocus>
+      {answered ? (
+        <motion.div
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+          role="status"
+          className={`relative px-5 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] ${correct ? 'bg-ok-bg text-ok-ink' : 'bg-bad-bg text-bad-ink'}`}
+        >
+          {correct && <Burst className="-top-6 h-0" radius={110} />}
+          <div className="mb-3.5 flex items-center gap-3">
+            <motion.span
+              initial={{ scale: 0.3, rotate: -30 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white ${correct ? 'bg-ok-bright' : 'bg-bad-bright'}`}
+            >
+              {correct ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              )}
+            </motion.span>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <span className="font-display text-[22px] leading-tight font-semibold">{correct ? pickBy(PRAISE, ex.id) : pickBy(NUDGE, ex.id)}</span>
+              {!correct && (
+                <span className="font-book text-[15px]">
+                  Resposta certa: <strong>{correctAnswer}</strong>
+                </span>
+              )}
+            </div>
+            {correct && combo + 1 >= 3 && (
+              <motion.span
+                initial={{ scale: 0.4, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 12, delay: 0.15 }}
+                className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-night px-3 py-1.5 text-[13px] font-semibold text-gold shadow-[0_0_18px_rgba(242,194,123,.45)]"
+              >
+                <Flame size={15} /> {combo + 1} seguidas
+              </motion.span>
+            )}
+          </div>
+          <button className={correct ? 'btn-ok' : 'btn-bad'} onClick={onNext} autoFocus>
             Continuar
           </button>
-        ) : isOrder ? (
-          <button className="btn-primary" disabled={!canCheck} onClick={() => commit(sentence)}>
-            {canCheck ? 'Verificar' : 'Monte a frase'}
-          </button>
-        ) : (
-          <button className="btn-primary" disabled>
-            Escolha uma resposta
-          </button>
-        )}
-      </div>
+        </motion.div>
+      ) : (
+        <div className="border-t border-track px-5 pt-3.5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          {isOrder ? (
+            <button className="btn-primary" disabled={!canCheck} onClick={() => commit(sentence)}>
+              {canCheck ? 'Verificar' : 'Monte a frase'}
+            </button>
+          ) : (
+            <button className="btn-primary" disabled>
+              Escolha uma resposta
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

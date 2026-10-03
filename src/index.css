@@ -20,6 +20,14 @@
   --color-bad: #A83A2A;
   --color-bad-bg: #F6E1DC;
   --color-bad-ink: #7A2618;
+  /* Night: the leather-and-lamplight of the app icon, for everything around the reading. */
+  --color-night: #1C110D;
+  --color-leather: #3B2018;
+  --color-leather-2: #5A2F1F;
+  --color-gold: #F2C27B;
+  --color-glow: #FFE6B3;
+  --color-ok-bright: #58A86F;
+  --color-bad-bright: #D9573F;
   --font-display: 'Fraunces', Georgia, serif;
   --font-book: 'Literata', Georgia, serif;
   --font-ui: 'Instrument Sans', system-ui, sans-serif;
@@ -58,8 +66,29 @@
 }
 
 @layer components {
+  /* Chunky, pressable buttons: a darker lip underneath that the button sinks into. */
   .btn-primary {
-    @apply flex h-14 w-full items-center justify-center rounded-full bg-accent text-lg font-semibold text-white shadow-[0_4px_0_rgba(34,31,27,.25)] transition active:translate-y-[2px] active:shadow-[0_2px_0_rgba(34,31,27,.25)] disabled:bg-track disabled:text-muted disabled:shadow-none disabled:active:translate-y-0;
+    @apply flex h-14 w-full items-center justify-center rounded-2xl bg-accent text-lg font-semibold tracking-[.01em] text-white shadow-[0_5px_0_var(--color-accent-deep)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_var(--color-accent-deep)] disabled:bg-track disabled:text-muted disabled:shadow-[0_5px_0_#D8CCB8] disabled:active:translate-y-0;
+  }
+  .btn-gold {
+    @apply flex h-14 w-full items-center justify-center rounded-2xl bg-gold text-lg font-semibold text-night no-underline shadow-[0_5px_0_#B9813D,0_0_40px_rgba(242,194,123,.35)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_#B9813D,0_0_40px_rgba(242,194,123,.35)];
+  }
+  .btn-ok {
+    @apply flex h-14 w-full items-center justify-center rounded-2xl bg-ok-bright text-lg font-semibold text-white shadow-[0_5px_0_var(--color-ok)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_var(--color-ok)];
+  }
+  .btn-bad {
+    @apply flex h-14 w-full items-center justify-center rounded-2xl bg-bad-bright text-lg font-semibold text-white shadow-[0_5px_0_var(--color-bad-ink)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_var(--color-bad-ink)];
+  }
+  /* The icon's warm night: dark leather lit from above by a lamp. */
+  .night {
+    background:
+      radial-gradient(120% 70% at 50% 0%, rgba(255, 196, 120, 0.22), transparent 60%),
+      radial-gradient(80% 50% at 50% 100%, rgba(168, 70, 31, 0.25), transparent 70%),
+      linear-gradient(180deg, var(--color-leather) 0%, var(--color-night) 100%);
+    color: var(--color-paper);
+  }
+  .option {
+    @apply min-h-14 rounded-2xl border-2 border-b-[5px] px-4 py-3 text-left transition-[transform,border-width,margin] duration-100 active:translate-y-[3px] active:border-b-2 active:mb-[3px];
   }
   .btn-soft {
     @apply flex h-10 items-center gap-2 rounded-full border border-[#D9CCB8] bg-card px-3.5 text-sm font-semibold text-ink-2 transition hover:bg-sand;
@@ -70,4 +99,26 @@
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[.12em];
   }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: .25; transform: scale(.7) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(12deg); }
+}
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(3px); }
+}
+.animate-twinkle { animation: twinkle 3.2s ease-in-out infinite; }
+.animate-drift { animation: drift 5s ease-in-out infinite; }
+.animate-shake { animation: shake .42s ease-in-out; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-twinkle, .animate-drift, .animate-shake { animation: none; }
 }
