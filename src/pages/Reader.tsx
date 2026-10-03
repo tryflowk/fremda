@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Book, BookEntry, Segment } from '@/lib/types';
 import {
-  assetUrl, denselyGlossed, LANG_NAME, loadBook, loadCatalog, pageOf, paginate, piecesOf, SPEECH_LANG,
+  assetUrl, chapterOf, denselyGlossed, LANG_NAME, loadBook, loadCatalog, pageOf, paginate, piecesOf, SPEECH_LANG,
   type Piece,
 } from '@/lib/books';
 import { actions, getState, streakOf, todayLog, useStore, wordKey } from '@/lib/store';
@@ -69,8 +69,18 @@ function Reader({ bookId }: { bookId: string }) {
   const lang = entry?.lang ?? 'de';
   const speechLang = SPEECH_LANG[lang];
 
+  // A second tap right after the first (a double tap, or a tap landing on the button that
+  // just took the old one's place) must not skip the sentence that only just appeared.
+  const lastMove = useRef(0);
+  const tooSoon = () => {
+    const now = performance.now();
+    if (now - lastMove.current < 450) return true;
+    lastMove.current = now;
+    return false;
+  };
+
   const advance = useCallback(() => {
-    if (!cur || cur.kind === 'done') return;
+    if (!cur || cur.kind === 'done' || tooSoon()) return;
     if (cur.kind === 'seg') actions.readSentence(bookId, cur.seg + 1);
     stopSpeaking();
     setSel(null);
@@ -79,7 +89,7 @@ function Reader({ bookId }: { bookId: string }) {
   }, [cur, bookId, steps.length]);
 
   const nextPage = () => {
-    if (pageIdx === null) return;
+    if (pageIdx === null || tooSoon()) return;
     setPageIdx(pageIdx + 1);
     setStep(0);
     setSession({ answered: 0, correct: 0, saved: 0, startSentences: todayLog(store).sentences });
@@ -141,6 +151,13 @@ function Reader({ bookId }: { bookId: string }) {
     steps.findIndex(s => s.kind === 'seg' && s.seg === i) <= step,
   );
   const lastPage = pageIdx === pages.length - 1;
+  const chapter = chapterOf(pages, pageIdx!);
+  const chapterPagesLeft = chapter.end - pageIdx!;
+  // Sentences still to read in this chapter, counting the current one.
+  const chapterLeft =
+    page.segs.length -
+    (cur.kind === 'seg' ? page.segs.indexOf(cur.seg) : page.segs.length) +
+    pages.slice(pageIdx! + 1, chapter.end + 1).reduce((n, p) => n + p.segs.length, 0);
 
   const tapWord = (seg: number, piece: number, p: Piece) => {
     setSel({ seg, piece, text: p.text, gloss: p.gloss });
@@ -185,9 +202,16 @@ function Reader({ bookId }: { bookId: string }) {
             <div className="eyebrow mt-2 text-muted">
               {entry.author} · {LANG_NAME[lang]}
             </div>
-            <h1 className="mt-1.5 mb-6 font-display text-[26px] leading-[1.15] font-semibold">
+            <h1 className="mt-1.5 font-display text-[26px] leading-[1.15] font-semibold">
               {page.title ?? entry.title}
             </h1>
+            <p className="mt-1.5 mb-6 text-[15px] text-muted">
+              {chapterPagesLeft > 0
+                ? `${chapter.title ? 'Neste capítulo' : 'No livro'}: mais ${chapterPagesLeft === 1 ? '1 página' : `${chapterPagesLeft} páginas`} depois desta`
+                : chapterLeft > 1
+                  ? `Última página ${chapter.title ? 'do capítulo' : 'do livro'}: faltam ${chapterLeft} frases`
+                  : `Última frase ${chapter.title ? 'do capítulo' : 'do livro'}`}
+            </p>
             <div className="flex flex-col gap-4">
               {visibleSegs.map(i => {
                 const isCur = i === cur.seg;
@@ -259,6 +283,8 @@ function Reader({ bookId }: { bookId: string }) {
           goal={store.settings.goal}
           streak={streak}
           lastPage={lastPage}
+          chapterTitle={chapter.title}
+          chapterPagesLeft={chapterPagesLeft}
           onNext={nextPage}
           onHome={() => navigate('/')}
         />
@@ -428,10 +454,13 @@ function PageDone(props: {
   goal: number;
   streak: number;
   lastPage: boolean;
+  chapterTitle: string | null;
+  chapterPagesLeft: number;
   onNext: () => void;
   onHome: () => void;
 }) {
-  const { pageNumber, pageCount, sentences, session, todaySentences, goal, streak, lastPage } = props;
+  const { pageNumber, pageCount, sentences, session, todaySentences, goal, streak, lastPage, chapterTitle, chapterPagesLeft } = props;
+  const plural = (n: number) => (n === 1 ? '1 página' : `${n} páginas`);
   const goalHit = todaySentences >= goal;
   return (
     <>
@@ -442,10 +471,14 @@ function PageDone(props: {
       >
         <OpenBook />
         <h2 className="m-0 font-display text-[30px] leading-[1.15] font-semibold">
-          {lastPage ? 'Você terminou o livro!' : `Página ${pageNumber} lida!`}
+          {lastPage ? 'Você terminou o livro!' : chapterTitle && chapterPagesLeft === 0 ? 'Capítulo concluído!' : `Página ${pageNumber} lida!`}
         </h2>
         <p className="m-0 font-book text-[17px] text-ink-2">
-          {lastPage ? 'Que jornada. Escolha o próximo na sua estante.' : `Faltam ${pageCount - pageNumber} páginas para o fim do livro.`}
+          {lastPage
+            ? 'Que jornada. Escolha o próximo na sua estante.'
+            : chapterTitle && chapterPagesLeft > 0
+              ? `${chapterPagesLeft === 1 ? 'Falta' : 'Faltam'} ${plural(chapterPagesLeft)} para o fim do capítulo.`
+              : `${pageCount - pageNumber === 1 ? 'Falta' : 'Faltam'} ${plural(pageCount - pageNumber)} para o fim do livro.`}
         </p>
         <div className="grid w-full grid-cols-3 gap-2.5">
           <Stat value={sentences} label="frases" />

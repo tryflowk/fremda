@@ -16,7 +16,7 @@ npm run build   # gera dist/, um site estático (funciona em qualquer caminho)
 - `public/content/<id>/book.json`: cada livro, dividido em frases (`segments`) com as palavras traduzidas (`words`) e um exercício a cada poucas frases.
 - `src/lib/books.ts`: carrega os livros, divide em páginas e alinha as palavras traduzidas com o texto.
 - `src/lib/store.ts`: progresso, sequência de dias, ajustes e palavras guardadas, salvos primeiro no próprio aparelho (`localStorage`).
-- `src/lib/sync.ts`: login por e-mail (Supabase) e cópia do progresso na nuvem, mesclada entre aparelhos. A tabela está em `supabase/migrations/`.
+- `src/lib/sync.ts`: login por e-mail (Supabase) e cópia do progresso na nuvem, mesclada entre aparelhos. A tabela está em `supabase/migrations/`. O login aceita o link ou o código numérico do e-mail; o código precisa de `{{ .Token }}` no modelo "Magic Link" do Supabase (Authentication → Emails), porque o link só funciona no mesmo navegador que pediu o acesso.
 - `src/lib/generate.ts`: exercícios montados a partir de cada página e revisão espaçada das palavras guardadas.
 - `src/pages/`: início (`Home`), leitura (`Reader`), revisão (`Review`), lista de palavras (`Words`) e ajustes (`Settings`).
 

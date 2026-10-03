@@ -61,6 +61,15 @@ export function paginate(book: Book): Page[] {
   return pages;
 }
 
+/** The chapter a page belongs to: pages from one titled page up to the next. */
+export function chapterOf(pages: Page[], pageIdx: number) {
+  let start = pageIdx;
+  while (start > 0 && pages[start].title === null) start--;
+  let end = pageIdx;
+  while (end + 1 < pages.length && pages[end + 1].title === null) end++;
+  return { title: pages[start].title, start, end };
+}
+
 export function pageOf(pages: Page[], segIndex: number): number {
   const i = pages.findIndex(p => p.segs[p.segs.length - 1] >= segIndex);
   return i === -1 ? pages.length - 1 : i;

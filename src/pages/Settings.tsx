@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { actions, useStore } from '@/lib/store';
-import { sendLoginLink, signOut, useSync } from '@/lib/sync';
+import { forgetPendingEmail, pendingEmail, sendLoginLink, signOut, useSync, verifyCode } from '@/lib/sync';
 import { speak } from '@/lib/tts';
 import { ArrowLeft, Cloud, Speaker } from '@/components/Icons';
 
@@ -77,9 +77,10 @@ export default function Settings() {
 }
 
 function Account() {
-  const { email, status } = useSync();
-  const [input, setInput] = useState('');
-  const [sent, setSent] = useState(false);
+  const { email, status, linkFailed } = useSync();
+  const [input, setInput] = useState(() => pendingEmail() ?? '');
+  const [sent, setSent] = useState(() => !!pendingEmail());
+  const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -109,9 +110,55 @@ function Account() {
         e continuar em qualquer lugar.
       </p>
       {sent ? (
-        <p className="m-0 rounded-2xl bg-ink-2 px-4 py-3 font-book text-[15px]">
-          Enviamos um link para <strong>{input}</strong>. Abra o e-mail neste aparelho e toque no link para entrar.
-        </p>
+        <form
+          className="flex flex-col gap-2.5"
+          onSubmit={async e => {
+            e.preventDefault();
+            setBusy(true);
+            const err = await verifyCode(input.trim(), code.trim());
+            setBusy(false);
+            if (err) setError('Código inválido ou vencido. Confira o último e-mail ou peça outro.');
+          }}
+        >
+          <p className="m-0 rounded-2xl bg-ink-2 px-4 py-3 font-book text-[15px] leading-snug">
+            {linkFailed ? (
+              <>O link abriu em outro navegador (por exemplo, dentro do app de e-mail), então o acesso não chegou aqui. </>
+            ) : (
+              <>Enviamos um e-mail para <strong className="break-all">{input}</strong>. </>
+            )}
+            Digite aqui o código de acesso que vem nele.
+          </p>
+          <input
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            pattern="[0-9]*"
+            maxLength={10}
+            placeholder="Código do e-mail"
+            value={code}
+            onChange={e => {
+              setCode(e.target.value.replace(/\D/g, ''));
+              setError(null);
+            }}
+            className="h-12 rounded-full border border-ink-2 bg-paper px-4 text-center text-[20px] tracking-[0.3em] text-ink outline-none focus:border-peach"
+            aria-label="Código de acesso"
+          />
+          <button className="btn-primary" disabled={busy || code.length < 6}>
+            {busy ? 'Entrando…' : 'Entrar'}
+          </button>
+          {error && <p className="m-0 text-sm text-peach">{error}</p>}
+          <button
+            type="button"
+            className="h-10 self-start text-sm font-semibold text-[#CFC5B6] underline underline-offset-4"
+            onClick={() => {
+              forgetPendingEmail();
+              setSent(false);
+              setCode('');
+              setError(null);
+            }}
+          >
+            Usar outro e-mail ou pedir novo código
+          </button>
+        </form>
       ) : (
         <form
           className="flex flex-col gap-2.5"
@@ -137,8 +184,13 @@ function Account() {
             className="h-12 rounded-full border border-ink-2 bg-paper px-4 text-[16px] text-ink outline-none focus:border-peach"
             aria-label="Seu e-mail"
           />
+          {linkFailed && (
+            <p className="m-0 font-book text-[15px] leading-snug text-[#CFC5B6]">
+              O link abriu em outro navegador, então o acesso não chegou aqui. Peça um código e digite-o nesta tela.
+            </p>
+          )}
           <button className="btn-primary" disabled={busy || !input.includes('@')}>
-            {busy ? 'Enviando…' : 'Receber link de acesso'}
+            {busy ? 'Enviando…' : 'Receber código de acesso'}
           </button>
           {error && <p className="m-0 text-sm text-peach">{error}</p>}
         </form>

@@ -60,6 +60,7 @@ function Context({ ex, answered, correct }: { ex: Exercise; answered: boolean; c
 export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props) {
   const [picked, setPicked] = useState<string | null>(null);
   const [built, setBuilt] = useState<number[]>([]);
+  const [showPassage, setShowPassage] = useState(false);
 
   const options = useMemo(
     () => (ex.type === 'yes_no' ? ['Sim', 'Não'] : shuffle(ex.options ?? [], ex.id)),
@@ -94,6 +95,24 @@ export function ExerciseCard({ ex, onAnswer, onNext, speechLang, combo }: Props)
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-6 pt-6 pb-4">
         <div className="eyebrow text-accent">{ex.label ?? 'Sobre o que você leu'}</div>
         <h2 className="font-display text-[26px] leading-[1.2] font-semibold text-balance">{ex.prompt}</h2>
+
+        {ex.passage &&
+          (showPassage ? (
+            <div className="card flex items-start gap-3 p-4">
+              <p className="m-0 max-h-[36vh] flex-1 overflow-y-auto font-book text-[17px] leading-[1.6] text-ink-2">{ex.passage}</p>
+              <button
+                onClick={() => speak(ex.passage!, speechLang)}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line"
+                aria-label="Ouvir o trecho"
+              >
+                <Speaker />
+              </button>
+            </div>
+          ) : (
+            <button className="self-start text-[16px] font-semibold text-accent underline underline-offset-4" onClick={() => setShowPassage(true)}>
+              Rever o trecho
+            </button>
+          ))}
 
         {ex.context && (
           <div className="card flex items-start gap-3 p-4">

@@ -43,6 +43,10 @@ export interface Exercise {
   foreignOptions?: boolean;
   /** Saved-word key: answering also counts as a review of that word. */
   review?: string;
+  /** Book questions: the segments (by id) the question is about. */
+  source_segment_ids?: number[];
+  /** The passage a comprehension question is about, shown on request. */
+  passage?: string;
 }
 
 export interface Segment {
