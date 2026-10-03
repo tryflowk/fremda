@@ -190,12 +190,32 @@ function savedWord(book: Book, w: SavedWord, rnd: Rng): Exercise | null {
   };
 }
 
-/** Old exercise prompts sometimes mention segment numbers, which mean nothing to a reader. */
-function tidy(ex: Exercise): Exercise {
-  const prompt = ex.prompt
-    .replace(/\s*\(?\b(?:n[oa]s?|d[oa]s?|em|entre)\s+(?:os\s+)?segmentos?\s+[\d\s,–-]+(?:e\s+\d+)?\)?/giu, '')
-    .replace(/\s+([?.!])/g, '$1');
-  return { ...ex, prompt };
+/** "os últimos três segmentos", "segmentos 49-52"... the phrases old prompts use for "the text". */
+const SEGS = String.raw`(?:(?:os|o|estes|este|nestes|neste)\s+)?(?:(?:últimos|últimas|três|anteriores|lidos|próximos|primeiro)\s+)*segmentos?(?:\s+(?:anteriores|lidos|seguintes|apresentados))?(?:\s+\d+(?:\s*(?:-|–|a|e|,)\s*\d+)*)?`;
+const SEGS_LEAD = new RegExp(String.raw`^\s*(?:de acordo com|segundo|com base n?)\s+${SEGS}\s*[,:]?\s*`, 'iu');
+const SEGS_INLINE = new RegExp(String.raw`,?\s*\(?\b(?:de acordo com|segundo|com base em)?\s*(?:n[oa]s?|d[oa]s?|em|entre|nestes|neste)?\s*${SEGS}\)?`, 'giu');
+
+/** Old exercise prompts mention segment numbers, which mean nothing to a reader. */
+export function tidyPrompt(prompt: string): string {
+  const p = prompt
+    .replace(/\s*(?:Baseie-se|Escolha a resposta correta com base)[^?.!]*segment[^?.!]*[.!]?/giu, '')
+    .replace(SEGS_LEAD, '')
+    .replace(SEGS_INLINE, '')
+    .replace(/\s+([?.!,])/g, '$1')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return p.charAt(0).toLocaleUpperCase() + p.slice(1);
+}
+
+/**
+ * A book's own comprehension question. It is asked in Portuguese, so it also carries the
+ * passage it is about, in the book's language, to look back at.
+ */
+function bookQuestion(book: Book, ex: Exercise, at: number): Exercise {
+  const ids = new Set(ex.source_segment_ids ?? []);
+  const from = book.segments.slice(0, at + 1).filter(s => ids.has(s.id) && s.segment_type !== 'chapter_title');
+  const passage = (from.length ? from : book.segments.slice(Math.max(0, at - 2), at + 1)).map(s => s.text.trim()).join(' ');
+  return { ...ex, prompt: tidyPrompt(ex.prompt), passage };
 }
 
 const MAX_REVIEWS_PER_PAGE = 3;
@@ -211,7 +231,7 @@ export function pageSteps(book: Book, page: Page, lang: Lang, state: State): Ste
   page.segs.forEach((i, k) => {
     steps.push({ kind: 'seg', seg: i });
     const ex = book.segments[i].exercise;
-    if (ex && isSupported(ex)) steps.push({ kind: 'ex', ex: tidy(ex) });
+    if (ex && isSupported(ex)) steps.push({ kind: 'ex', ex: ex.type === 'word_select' ? bookQuestion(book, ex, i) : { ...ex, prompt: tidyPrompt(ex.prompt) } });
     else if (generate && k === mid - 1) {
       const m = meaning(book, page.segs.slice(0, k + 1), rnd, skip);
       if (m) steps.push({ kind: 'ex', ex: m });
